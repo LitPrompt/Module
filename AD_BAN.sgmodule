@@ -1,5 +1,5 @@
-#!name=小火箭去广告
-#!desc=屏蔽广告 
+#!name=去广告
+#!desc=屏蔽大部分社交软件广告与YouTubne视频广告
 
 [Rule]
 DOMAIN-SUFFIX,ad.12306.cn,REJECT

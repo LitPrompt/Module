@@ -1,1 +1,1 @@
-# ShadowRocketAD_BAN
+# 自用的小火箭去广告规则与一些备份

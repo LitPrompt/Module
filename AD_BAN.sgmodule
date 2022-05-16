@@ -28946,4 +28946,5 @@ DOMAIN-SUFFIX,zzxxli.club,REJECT
 DOMAIN-SUFFIX,zzyonghao.com,REJECT
 DOMAIN-SUFFIX,zzyytt.top,REJECT
 
-
+[Script]
+YouTube去广告 = type=http-request,pattern=^https?:\/\/.+?\.googlevideo\.com\/.+&(oad|ctier)=(?!A),script-path=https://choler.github.io/Surge/Script/YouTube.js,script-update-interval=0,enable = false

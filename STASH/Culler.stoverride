@@ -11,4 +11,4 @@ script-providers:
     interval: 86400
 
 rules:
-  - DOMAIN-SUFFIX,http://ip-api.com/json,百度直连
+  - DOMAIN-SUFFIX,ip-api.com,百度直连

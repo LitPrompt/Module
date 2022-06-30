@@ -1,8 +1,8 @@
-$httpClient.get("https://api.my-ip.io", function (error, response, data) {
-    var ip1=data})
+var ip=data
+$httpClient.get("https://api.my-ip.io", function (error, response, data) {})
+$httpClient.get(`http://ip-api.com/json/${ip}`, function (error, response, data1) {
 
-$httpClient.get(`http://ip-api.com/json/${ip1}?lang=zh-CN`, function (error, response, data) {
-    let jsonData1 = JSON.parse(data)
+    let jsonData1 = JSON.parse(data1)
     let city2 = jsonData1.city
     let ip2 = jsonData1.query
 

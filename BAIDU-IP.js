@@ -1,5 +1,6 @@
 $httpClient.get("http://ip-api.com/json", function (error, response, data) {
     let jsonData = JSON.parse(data)
+    let country = jsonData.country
     let city = jsonData.city
     let ip = jsonData.query
 

@@ -1,8 +1,9 @@
 let url = "http://ip-api.com/json"
 
 $httpClient.get(url, function (error, response, data) {
-    let isp = jsonData.isp
-    let ip = jsonData.query
+    let jsonData = JSON.parse(data)
+    // let isp = jsonData.isp
+    // let ip = jsonData.query
 
     body={
         title: "当前免流信息",

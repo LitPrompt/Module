@@ -7,7 +7,7 @@ $httpClient.get("http://ip-api.com/json", function (error, response, data) {
         title: "当前免流信息",
         content: `免流IP：${ip}\n地区：${country} - ${city}`,
         backgroundColor: "#268F81",
-        icon: "globe.asia.australia.fill",
+        icon: "pills.circle.fill",
     }
     $done(body)
 })

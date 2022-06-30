@@ -1,5 +1,11 @@
+var getip=$httpClient.get('https://api.my-ip.io', function (error, response, data) {
+    let query=data
+    return query
+    })
+    
+let url="http://ip-api.com/json"+getip
 
-$httpClient.get("http://ip-api.com/json/", function (error, response, data) {
+$httpClient.get(url, function (error, response, data) {
     let jsonData1 = JSON.parse(data)
     let city1 = jsonData1.city
     let ip1 = jsonData1.query

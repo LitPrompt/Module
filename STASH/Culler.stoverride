@@ -1,6 +1,6 @@
 #SUBSCRIBED https://raw.githubusercontent.com/QGCliveDavis/ShadowRocket_Module/main/STASH/Culler.stoverride
 name: 百度直连信息面板
-desc: 显示免流地区，需名为百度直连的本地代理
+desc: 显示免流地区，需名为百度直连的本地代理(与IP信息面板同api会冲突，二选一开启)
 
 tiles:
   - name: FreeCellar-Tile

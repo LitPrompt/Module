@@ -1,13 +1,11 @@
-let url = "http://ip-api.com/json"
-
-$httpClient.get(url, function (error, response, data) {
-    let jsonData = JSON.parse(data)
-    let isp = jsonData.isp
-    let ip = jsonData.query
+$httpClient.get("http://ip-api.com/json", function (error, response, data) {
+    let jsonData1 = JSON.parse(data)
+    let city1 = jsonData1.city
+    let ip1 = jsonData1.query
 
     body={
         title: "当前免流信息",
-        content: `IP信息：${ip}\n运营商：${isp}\n`,
+        content: `免流IP：${ip1}\n地区：${city1}`,
         backgroundColor: "#663399",
         icon: "network",
     }

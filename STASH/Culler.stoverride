@@ -1,0 +1,7 @@
+tiles:
+  - name: FreeCellar-Tile
+    interval: 600
+script-providers:
+  FreeCellar-Tile:
+    url: https://raw.githubusercontent.com/QGCliveDavis/ShadowRocket_Module/main/STASH/BAIDU-IP.js
+    interval: 86400

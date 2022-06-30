@@ -3,7 +3,7 @@ var getip=$httpClient.get('https://api.my-ip.io', function (error, response, dat
     return query
     })
     
-let url="http://ip-api.com/json"+getip
+let url=`http://ip-api.com/json/${getip}`
 
 $httpClient.get(url, function (error, response, data1) {
     let jsonData1 = JSON.parse(data1)

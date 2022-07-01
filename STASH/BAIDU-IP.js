@@ -8,7 +8,7 @@ $httpClient.get("https://forge.speedtest.cn/api/location/info", function (error,
         title: "当前免流信息",
         content: `${isp}\n${ip}\n${region}`,
         backgroundColor: "#268F81",
-        icon: "iphone.circle.fill",
+        icon: "personalhotspot",
     }
     $done(body)
 })

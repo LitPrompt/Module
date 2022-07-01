@@ -6,7 +6,7 @@ tiles:
     interval: 600
 script-providers:
   BaiduCellar-Tile:
-    url: https://raw.githubusercontent.com/QGCliveDavis/ShadowRocket_Module/main/STASH/BAIDU-IP.js
+    url: https://raw.githubusercontent.com/QGCliveDavis/Module/main/STASH/BAIDU-IP.js
     interval: 86400
 
 rules:

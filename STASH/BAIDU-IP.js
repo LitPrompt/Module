@@ -1,12 +1,15 @@
 $httpClient.get("https://forge.speedtest.cn/api/location/info", function (error, response, data) {
-    let dataObject = JSON.parse(data);
-    let { country, province, city, ip } = dataObject;
+    let jsonData  = JSON.parse(data);
+    // let { country, province, city, ip } = dataObject;
     // let region = `地区：${country} ${province} ${city}`;
-    city = `地区：${city}`;
-    ip = `免流IP：${ip}`;
+    let country = jsonData.country
+    let province = jsonData.province
+    let city = jsonData.city
+    let ip = jsonData.ip
+    // ip = `免流IP：${ip}`;
     body={
         title: "当前免流信息",
-        content: `${ip}\n${city}`,
+        content: `免流IP：${ip}\n运营商：${isp}\n地区：${country} ${province} ${city}`,
         backgroundColor: "#268F81",
         icon: "iphone.circle.fill",
     }

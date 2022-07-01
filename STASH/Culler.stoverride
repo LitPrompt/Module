@@ -1,11 +1,11 @@
 name: 百度直连信息面板
-desc: 显示免流地区，需名为百度直连的本地代理(由IP信息Tile面板修改而来，二选一开启)
+desc: 显示免流地区，需名为百度直连的本地代理
 
 tiles:
-  - name: FreeCellar-Tile
+  - name: BaiduCellar-Tile
     interval: 600
 script-providers:
-  FreeCellar-Tile:
+  BaiduCellar-Tile:
     url: https://raw.githubusercontent.com/QGCliveDavis/ShadowRocket_Module/main/STASH/BAIDU-IP.js
     interval: 86400
 

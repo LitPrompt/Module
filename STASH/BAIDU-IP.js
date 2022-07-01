@@ -5,7 +5,7 @@ $httpClient.get("https://forge.speedtest.cn/api/location/info", function (error,
     ip = `免流IP：${ip}`;
     body={
         title: "当前免流信息",
-        content: `${ip}\n${region}`,
+        content: `${ip}\n${country}`,
         backgroundColor: "#268F81",
         icon: "iphone.circle.fill",
     }

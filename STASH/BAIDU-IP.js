@@ -1,7 +1,6 @@
 $httpClient.get("https://forge.speedtest.cn/api/location/info", function (error, response, data) {
     const dataObject = JSON.parse(data);
-    let { country, country_code, province, city, ip } = dataObject;
-    // country = country_code == "CN" ? "中国" : country;
+    let { country, province, city, ip } = dataObject;
     const region = `地区：${country} ${province} ${city}`;
     ip = `免流IP：${ip}`;
     body={

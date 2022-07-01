@@ -10,4 +10,4 @@ script-providers:
     interval: 86400
 
 rules:
-  - DOMAIN-SUFFIX,ip-api.com,百度直连
+  - DOMAIN-KEYWORD,forge.speedtest.cn,百度直连

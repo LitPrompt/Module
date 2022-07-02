@@ -7,8 +7,8 @@ $httpClient.get("https://forge.speedtest.cn/api/location/info", function (error,
     body={
         title: "当前免流信息",
         content: `${isp}\n${ip}\n${region}`,
-        backgroundColor: "#268F81",
-        icon: "personalhotspot",
+        backgroundColor: "#FF6600",
+        icon: "antenna.radiowaves.left.and.right.circle.fill",
     }
     $done(body)
 })

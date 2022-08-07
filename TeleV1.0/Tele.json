@@ -8,7 +8,7 @@
    {
       "id": "Tele_Check",
       "name": "电信流量查询v1.0",
-      "keys": ["Tele_CK,Packge,Packge_items"],
+      "keys": ["Tele_CK","Packge","Packge_items"],
       "settings": [        
        {
           "id": "Tele_CK",

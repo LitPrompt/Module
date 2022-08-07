@@ -34,6 +34,7 @@ $httpClient.post(
  	 //usageAmount = (usageAmount/1024).toFixed(2) //转换成mb保留 两位小数
  	balanceAmount=(balanceAmount/1048576).toFixed(2) //转化成gb保留两位小数
   	Used=((This-Last)/1024).toFixed(3)//转化成mb保留三位小数
+
   	if(Used!=0){$persistentStore.write(usageAmount,Store)}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
  	check()
  
@@ -41,6 +42,8 @@ $httpClient.post(
   }
  
 )
+
+
 
 function CellularChoose()
 {

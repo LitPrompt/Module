@@ -14,7 +14,7 @@
           "id": "Tele_CK",
           "name": "电信Cookie",
           "val": "",
-          "type": "textarea",
+          "type": "text",
           "placeholder": "Cookie",
           "autoGrow": true,
           "rows": 1,

@@ -29,13 +29,13 @@ $httpClient.post(
   	CellularChoose()
   
   	This=usageAmount //将当前查询的值存到This中
- 	 Last=$persistentStore.read(Store) //将上次查询到的值存到Store中
+ 	Last=$persistentStore.read(Store) //将上次查询到的值存到Store中
 
  	 //usageAmount = (usageAmount/1024).toFixed(2) //转换成mb保留 两位小数
- 	 balanceAmount=(balanceAmount/1048576).toFixed(2) //转化成gb保留两位小数
+ 	balanceAmount=(balanceAmount/1048576).toFixed(2) //转化成gb保留两位小数
   	Used=((This-Last)/1024).toFixed(3)//转化成mb保留三位小数
   	if(Used!=0){$persistentStore.write(usageAmount,Store)}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
- 		check()
+ 	check()
  
   	$done()
   }
@@ -45,26 +45,26 @@ $httpClient.post(
 function CellularChoose()
 {
  	productOFFName = jsonData.items[i].productOFFName
- 	 ratableResourcename = jsonData.items[i].items[j].ratableResourcename
- 	 balanceAmount = jsonData.items[i].items[j].balanceAmount
- 	 usageAmount = jsonData.items[i].items[j].usageAmount
+ 	ratableResourcename = jsonData.items[i].items[j].ratableResourcename
+ 	balanceAmount = jsonData.items[i].items[j].balanceAmount
+ 	usageAmount = jsonData.items[i].items[j].usageAmount
 }
 
 function check()
-  {
-   if(This-Last>0)
 {
-	console.log('当前使用：'+This+' KB')
-   	console.log('上次使用：'+Last+' KB')
-   	console.log('当前'+productOFFName+ratableResourcename+'跳点为：'+Used+' MB')
-  }
+   if(This-Last>0)
+	{
+		console.log('当前使用：'+This+' KB')
+  	 	console.log('上次使用：'+Last+' KB')
+  	 	console.log('当前'+productOFFName+ratableResourcename+'跳点为：'+Used+' MB')
+ 	}
    else 
-  {
-  	 console.log('当前使用：'+This+' KB')
-  	 console.log('上次使用：'+Last+' KB')
-  	 console.log('无跳点')
-  	 console.log(productOFFName+ratableResourcename+'已使用：'+(usageAmount/1024).toFixed(2) +' MB')
- 	  console.log(productOFFName+ratableResourcename+'剩余：'+balanceAmount +' GB')
-  }
-  }
+  	{
+  		console.log('当前使用：'+This+' KB')
+  		console.log('上次使用：'+Last+' KB')
+  		console.log('无跳点')
+  		console.log(productOFFName+ratableResourcename+'已使用：'+(usageAmount/1024).toFixed(2) +' MB')
+ 		console.log(productOFFName+ratableResourcename+'剩余：'+balanceAmount +' GB')
+   }
+}
 

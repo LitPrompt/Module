@@ -1,9 +1,9 @@
 {
-  "id": "moi",
-  "name": "moicookie",
-  "author": "@moi",
+  "id": "alt",
+  "name": "电信V1.0",
+  "author": "@Alt_store",
   "icon": "https://raw.githubusercontent.com/smartmimi/conf/master/boxjs/moi.jpg",
-  "repo": "https://github.com/smartmimi/conf/tree/master/boxjs",
+  "repo": "https://github.com/QGCliveDavis/Module",
   "apps": [
    {
       "id": "Tele_Check",
@@ -20,11 +20,10 @@
           "rows": 1,
           "desc": "输入电信cookie"
         }
-    
     ],
-      "author": "@moi",
-      "repo": "https://github.com/smartmimi/conf/master/boxjs",
-      "script": "https://github.com/smartmimi/conf/tree/master/surge/nekoneko.js",
+      "author": "@Alt_store",
+      "repo": "https://github.com/QGCliveDavis/Module",
+      "script": "https://github.com/QGCliveDavis/Module/blob/main/TeleV1.0/10000.js",
       "icons": ["https://raw.githubusercontent.com/smartmimi/conf/master/boxjs/weekly_notes.jpg","https://raw.githubusercontent.com/smartmimi/conf/master/boxjs/weekly_notes.jpg"]
     }
   ]

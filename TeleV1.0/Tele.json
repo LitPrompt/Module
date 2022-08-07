@@ -8,7 +8,7 @@
    {
       "id": "Tele_Check",
       "name": "电信流量查询v1.0",
-      "keys": ["Tele_CK"],
+      "keys": ["Tele_CK,Packge,Packge_items"],
       "settings": [        
        {
           "id": "Tele_CK",
@@ -19,6 +19,26 @@
           "autoGrow": true,
           "rows": 1,
           "desc": "输入电信cookie"
+        },
+        {
+          "id": "Packge",
+          "name": "包名选择",
+          "val": "",
+          "type": "text",
+          "placeholder": "Packge",
+          "autoGrow": true,
+          "rows": 1,
+          "desc": "输入数字选择包"
+        },
+        {
+          "id": "Packge_items",
+          "name": "电信Cookie",
+          "val": "",
+          "type": "text",
+          "placeholder": "Packge_items",
+          "autoGrow": true,
+          "rows": 1,
+          "desc": "输入数字选择items"
         }
     ],
       "author": "@Alt_store",

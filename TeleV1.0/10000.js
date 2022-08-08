@@ -88,6 +88,13 @@ function unlimit_CellularChoose() //定向选择
   	unlimitusageAmount = jsonData.items[x].items[y].usageAmount //已用
 }
 
+function notice()
+{
+	for(var s=0;jsonData.items[s].offerType=11;s++)
+	var brond = jsonData.items[s].productOFFName
+	$notification.post(brond,"" , '免：'+unlimitUsed+' '+'跳：'+limitUsed)
+
+}
 
 function limit_check()
 {
@@ -108,7 +115,6 @@ function limit_check()
  else 
    {
    	console.log('无跳点')
-	$notification.post(limitproductOFFName,"" , limitproductOFFName+'累计已使用：'+limitusageAmount+' GB')
     console.log('通用当前使用：'+limitThis+' GB')
     console.log('通用上次使用：'+limitLast+' GB')
     console.log(limitproductOFFName+'累计已使用：'+limitusageAmount+' GB')

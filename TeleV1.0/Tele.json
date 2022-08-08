@@ -45,7 +45,7 @@
           "name": "定向包",
           "val": "0",
           "type": "text",
-          "placeholder": "输入当前正在使用的通用包的序号",
+          "placeholder": "输入当前正在使用的定向包的序号",
           "autoGrow": true,
           "rows": 1,
           "desc": "输入数字选择productOFFName,默认从0开始"

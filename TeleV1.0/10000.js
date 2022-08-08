@@ -64,7 +64,7 @@ $httpClient.post(
   	if(unlimitUsed!=0){$persistentStore.write(unlimitusageAmount,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
   	//$done()
    	limit_check()
-  	console.log("")
+
   	unlimit_check()
 
    	$done()
@@ -108,7 +108,6 @@ function limit_check()
  else 
    {
    	console.log('无跳点')
-   	console.log("")
 	$notification.post(limitproductOFFName, `${limitLast}\n${limitThis}\n`, limitbalanceAmount)
     console.log('通用当前使用：'+limitThis+' GB')
     console.log('通用上次使用：'+limitLast+' GB')

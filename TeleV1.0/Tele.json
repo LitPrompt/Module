@@ -1,7 +1,7 @@
 {
   "id": "alt",
   "name": "@花猫的订阅",
-  "author": "@Alt_store",
+  "author": "@Alt_Option",
   "icon": "https://raw.githubusercontent.com/QGCliveDavis/Module/main/TeleV1.0/Cat.png",
   "repo": "https://github.com/QGCliveDavis/Module",
   "apps": [
@@ -61,7 +61,7 @@
           "desc": "输入数字选择productOFFName下的items，默认0"
         }
     ],
-      "author": "@Alt_store",
+      "author": "@Alt_Option",
       "repo": "https://github.com/QGCliveDavis/Module",
       "script": "https://github.com/QGCliveDavis/Module/blob/main/TeleV1.0/10000.js",
       "icons": ["https://raw.githubusercontent.com/QGCliveDavis/Module/main/TeleV1.0/Cat.png","https://raw.githubusercontent.com/QGCliveDavis/Module/main/TeleV1.0/Cat.png"]

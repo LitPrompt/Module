@@ -15,7 +15,7 @@
           "name": "是否禁用定时通知",
           "val": false,
           "type": "boolean",
-          "desc": "开启后将定时通知流量信息"
+          "desc": "开启后将在流量变化时通知流量信息"
         },     
         {
           "id": "Tele_CK",

@@ -9,8 +9,15 @@
       "id": "Tele_Check",
       "name": "电信流量查询v1.0",
       "keys": ["Tele_CK","limit","limit_items","unlimit","unlimit_items"],
-      "settings": [        
-       {
+      "settings": [   
+        {
+          "id": "notice_switch",
+          "name": "是否禁用定时通知",
+          "val": false,
+          "type": "boolean",
+          "desc": "开启后将定时通知流量信息"
+        },     
+        {
           "id": "Tele_CK",
           "name": "电信Cookie",
           "val": "",

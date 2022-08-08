@@ -101,6 +101,11 @@ function notice()
 			$notification.post(brond+'     免 '+unlimitUsed+' MB '+'       跳 '+limitUsed+' MB',"" ,"")
 		}
 	}
+	else
+	{
+		$notification.post(brond+'     免 '+unlimitUsed+' MB '+'       跳 '+limitUsed+' MB',"" ,"")
+
+	}
 }
 
 function limit_check()

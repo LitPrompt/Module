@@ -91,10 +91,10 @@ function unlimit_CellularChoose() //定向选择
 
 function limit_check()
 {
-  	limitThis=(limitThis/1048576).toFixed(3) //转化成gb保留两位小数
-  	limitLast=(limitLast/1048576).toFixed(3) //转化成gb保留两位小数
-   	limitusageAmount=(limitusageAmount/1048576).toFixed(3)
-	limitbalanceAmount=(limitbalanceAmount/1048576).toFixed(3) //转化成gb保留两位小数
+  	limitThis=(limitThis/1048576).toFixed(3) //本次查询用量转化成gb保留两位小数
+  	limitLast=(limitLast/1048576).toFixed(3) //上次查询用量转化成gb保留两位小数
+   	limitusageAmount=(limitusageAmount/1048576).toFixed(3)// 通用已使用量
+	limitbalanceAmount=(limitbalanceAmount/1048576).toFixed(3) //通用剩余转化成gb保留两位小数
    
   if(limitThis-limitLast>0)
  {
@@ -108,7 +108,7 @@ function limit_check()
  else 
    {
    	console.log('无跳点')
-	$notification.post(limitproductOFFName, `${limitLast}\n${limitThis}\n`, limitbalanceAmount)
+	$notification.post(limitproductOFFName, limitLast, limitbalanceAmount)
     console.log('通用当前使用：'+limitThis+' GB')
     console.log('通用上次使用：'+limitLast+' GB')
     console.log(limitproductOFFName+'累计已使用：'+limitusageAmount+' GB')

@@ -50,8 +50,10 @@ $httpClient.post(
   	unlimitThis=unlimitusageAmount //将当前查询的值存到unlimitThis中
  	unlimitLast=$persistentStore.read(unlimitStore) //将上次查询到的值存到unlimitStore中
 
+	limit_CellularChoose()
+	unlimit_CellularChoose()
  	limit_check()
- 	unlimit_CellularChoose()
+	unlimit_check()
 
   	$done()
   }

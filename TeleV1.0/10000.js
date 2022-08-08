@@ -109,6 +109,7 @@ function limit_check()
    {
    	console.log('无跳点')
    	console.log("")
+	$notification.post("title", "subtitle", "body")
     console.log('通用当前使用：'+limitThis+' GB')
     console.log('通用上次使用：'+limitLast+' GB')
     console.log(limitproductOFFName+'累计已使用：'+limitusageAmount+' GB')

@@ -95,7 +95,7 @@ function notice()
 {
 	for(var s=0;jsonData.items[s].offerType==11;s++)
 	var brond = jsonData.items[s].productOFFName
-	if(notice_switch==true)
+	if(notice_switch)
 	{
 		if(limitUsed>0||unlimitUsed>0)
 		{

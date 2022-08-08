@@ -7,6 +7,8 @@ var x =  $persistentStore.read("unlimit");
 
 var y =  $persistentStore.read("unlimit_items");
 
+var notice_switch=true
+
 //这需要你有json取数基础，后期会优化，对https://e.189.cn/store/user/package_detail.do给出的数据选取
 
 var jsonData //存储json数据
@@ -92,8 +94,13 @@ function notice()
 {
 	for(var s=0;jsonData.items[s].offerType==11;s++)
 	var brond = jsonData.items[s].productOFFName
-	$notification.post(brond+'     免 '+unlimitUsed+' MB '+'       跳 '+limitUsed+' MB',"" ,"")
-
+	if(notice_switch==true)
+	{
+		if(limitUsed>0||unlimitUsed>0)
+		{
+			$notification.post(brond+'     免 '+unlimitUsed+' MB '+'       跳 '+limitUsed+' MB',"" ,"")
+		}
+	}
 }
 
 function limit_check()

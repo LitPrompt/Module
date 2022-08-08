@@ -48,7 +48,7 @@ $httpClient.post(
 		//console.log(limitUsed)
 	unlimitUsed=((unlimitThis-unlimitLast)/1024).toFixed(3)//免流转化成mb保留三位小数
 
-	if(limitUsed!=0){$persistentStore.write(limitusageAmount,"c")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
+	if(limitUsed!=0){$persistentStore.write(limitusageAmount,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
 		
 	if(unlimitUsed!=0){$persistentStore.write(unlimitusageAmount,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
  	//$done()

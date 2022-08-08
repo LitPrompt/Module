@@ -48,17 +48,19 @@ $httpClient.post(
     jsonData = JSON.parse(data)
   	limit_CellularChoose()
 		unlimit_CellularChoose()
-  
+    
   	limitThis=limitusageAmount //将当前查询的值存到limitThis中
 		unlimitThis=unlimitusageAmount //将当前查询的值存到unlimitThis中
 		
 	 	limitLast=$persistentStore.read("limitStore") //将上次查询到的值存到limitStore中
+		//limitLast =1000
 		unlimitLast=$persistentStore.read("unlimitStore") //将上次查询到的值存到unlimitStore中
 		
-		limitUsed=((limitThis-limitLast)/1024).toFixed(3)//转化成mb保留三位小数
-		unlimitUsed=((unlimitThis-unlimitLast)/1048576).toFixed(3)//转化成mb保留三位小数
+		limitUsed=((limitThis-limitLast)/1024).toFixed(3)//通用跳点转化成mb保留三位小数
+		//console.log(limitUsed)
+		unlimitUsed=((unlimitThis-unlimitLast)/1024).toFixed(3)//免流转化成mb保留三位小数
 
-		if(limitUsed!=0){$persistentStore.write(limitusageAmount,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
+		if(limitUsed!=0){$persistentStore.write(limitusageAmount,"c")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
 		
 		if(unlimitUsed!=0){$persistentStore.write(unlimitusageAmount,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
  	//$done()
@@ -98,7 +100,7 @@ function limit_check()
 	{
 			console.log('通用当前使用：'+limitThis+' GB')
   	 	console.log('通用上次使用：'+limitLast+' GB')
-  	 	console.log('当前'+productOFFName+'跳点为：'+limitUsed+' MB')
+  	 	console.log('当前'+limitproductOFFName+'跳点为：'+limitUsed+' MB')
  	}
 	else 
   	{
@@ -121,7 +123,7 @@ function unlimit_check()
 	{
 		console.log('定向当前使用：'+unlimitThis+' GB')
   	 	console.log('定向上次使用：'+unlimitLast+' GB')
-  	 	console.log('当前'+unlimitproductOFFName+'已免流量为：'+unlimitUsed+' GB')
+  	 	console.log('当前'+unlimitproductOFFName+'已免流量为：'+unlimitUsed+' MB')
  	}
 	else 
   	{

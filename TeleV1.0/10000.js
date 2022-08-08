@@ -92,7 +92,7 @@ function notice()
 {
 	for(var s=0;jsonData.items[s].offerType==11;s++)
 	var brond = jsonData.items[s].productOFFName
-	$notification.post(brond+'     免 '+unlimitUsed+' MB '+' 跳 '+limitUsed+' MB',"" , "")
+	$notification.post(brond+'     免 '+unlimitUsed+' MB '+'     跳 '+limitUsed+' MB',"" , "")
 
 }
 

@@ -7,7 +7,8 @@ var x =  $persistentStore.read("unlimit");
 
 var y =  $persistentStore.read("unlimit_items");
 
-var notice_switch=true
+var notice_switch=$persistentStore.read("notice_switch");
+
 
 //这需要你有json取数基础，后期会优化，对https://e.189.cn/store/user/package_detail.do给出的数据选取
 

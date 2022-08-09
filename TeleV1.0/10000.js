@@ -6,14 +6,13 @@ var j =  $persistentStore.read("limit_items");
 var x =  $persistentStore.read("unlimit");
 
 var y =  $persistentStore.read("unlimit_items");
-
 var nt = $persistentStore.read("notice_switch");
 
 
 //这需要你有json取数基础，后期会优化，对https://e.189.cn/store/user/package_detail.do给出的数据选取
 
 var jsonData //存储json数据
-
+var brond //卡名
 var unlimitproductOFFName //定向包名
 var unlimitratableAmount //定向包总
 var unlimitbalanceAmount //定向剩余量
@@ -56,7 +55,7 @@ $httpClient.post(
    	limitThis=limitusageAmount //将当前查询的值存到limitThis中
   	unlimitThis=unlimitusageAmount //将当前查询的值存到unlimitThis中
   
-   limitLast=$persistentStore.read("limitStore") //将上次查询到的值存到limitStore中
+    limitLast=$persistentStore.read("limitStore") //将上次查询到的值存到limitStore中
   	unlimitLast=$persistentStore.read("unlimitStore") //将上次查询到的值存到unlimitStore中
   
   	limitUsed=((limitThis-limitLast)/1024).toFixed(3) //跳点转成mb保留三位
@@ -67,9 +66,8 @@ $httpClient.post(
   	if(unlimitUsed!=0){$persistentStore.write(unlimitusageAmount,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
   	//$done()
    	limit_check()
-	notice()
   	unlimit_check()
-
+	notice()
    	$done()
   }
  
@@ -93,20 +91,28 @@ function unlimit_CellularChoose() //定向选择
 
 function notice()
 {
+
+	var mian = `免：${unlimitUsed} M `;
+	var tiao = `跳：${limitUsed} M`;
+	var limitleft = `通用剩余：${limitbalanceAmount} G `;
+	var unlimitleft = `定向剩余：${unlimitbalanceAmount} G`;
+
 	for(var s=0;jsonData.items[s].offerType==11;s++)
-	var brond = jsonData.items[s].productOFFName
+	brond = jsonData.items[s].productOFFName
 	if(nt=="true")
 	{
 		if(limitUsed>0||unlimitUsed>0)
-		{
-			$notification.post(brond+'   免 '+unlimitUsed+' MB '+'    跳 '+limitUsed+' MB',"" ,"")
-		}
+		{$notification.post(brond+'   免 '+unlimitUsed+' MB '+'    跳 '+limitUsed+' MB',"" ,"")}
 	}
 	else
-	{
-		$notification.post(brond+'   免 '+unlimitUsed+' MB '+'    跳 '+limitUsed+' MB',"" ,"")
-
-	}
+	{$notification.post(brond+'   免 '+unlimitUsed+' MB '+'    跳 '+limitUsed+' MB',"" ,"")}
+	
+	body={
+        title: brond,
+        content: `${mian}${tiao}\n${limitleft}${unlimitleft}`,
+        backgroundColor: "#666699",
+        icon: "dial.max.fill",
+    }
 }
 
 function limit_check()

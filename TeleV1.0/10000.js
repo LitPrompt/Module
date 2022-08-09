@@ -106,16 +106,14 @@ function notice()
 
 function tiles()
 {
-	var mian = `免：${unlimitUsed} M `;
-	var tiao = `跳：${limitUsed} M`;
-	var limitleft = `${limitproductOFFName}剩余：${limitbalanceAmount} G `;
-	var unlimitleft = `${unlimitproductOFFName}剩余：${unlimitbalanceAmount} G`;
+	var mian = "免："+unlimitUsed+" M" ;
+	var tiao = "跳："+limitUsed+" M";
+	var limitleft = limitproductOFFName+"剩余："+limitbalanceAmount+" G";
+	var unlimitleft = unlimitproductOFFName+"剩余："+unlimitbalanceAmount+" G";
 
 	body={
         title: brond,
-       // content: [`${mian}${tiao}\n${limitleft}${unlimitleft}`],
-	    content: "kkkkk",
-
+        content: [`${mian}${tiao}\n${limitleft}${unlimitleft}`],
         backgroundColor: "#009944",
         icon: "dial.max.fill",
     }

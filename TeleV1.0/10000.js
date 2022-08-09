@@ -25,8 +25,8 @@ var limitratableAmount //通用包总量
 var limitbalanceAmount //通用剩余量
 var limitusageAmount //通用使用量
 
-var lastminites
-var thisminites
+var lastminutes
+var thisminutes
 var limitLast
 var limitThis //通用与定向的使用量
 var unlimitThis
@@ -36,7 +36,7 @@ var timeStore
 var limitStore 
 var unlimitStore //定义通用与定向的存储池key
 
-var minitesused
+var minutesused
 var limitUsed 
 var unlimitUsed //通用差值与定向差值
 
@@ -61,15 +61,15 @@ $httpClient.post(
 	dateObj = $script.startTime//获取时间
 	Minutes = dateObj.getMinutes();//获取分钟
     
-	thisminites=Minutes //将当前查询的时间存到thisminite中
+	thisminutes=Minutes //将当前查询的时间存到thisminute中
    	limitThis=limitusageAmount //将当前查询的值存到limitThis中
   	unlimitThis=unlimitusageAmount //将当前查询的值存到unlimitThis中
   
-    lastminites=$persistentStore.read("timeStore") //将上次查询到的时间读出来
+    lastminutes=$persistentStore.read("timeStore") //将上次查询到的时间读出来
     limitLast=$persistentStore.read("limitStore") //将上次查询到的值读出来
   	unlimitLast=$persistentStore.read("unlimitStore") //将上次查询到的值读出来
 
-  	minitesused=thisminites-lastminites //时间差
+  	minutesused=thisminutes-lastminutes //时间差
   	limitUsed=((limitThis-limitLast)/1024).toFixed(3) //跳点转成mb保留三位
   	unlimitUsed=((unlimitThis-unlimitLast)/1024).toFixed(2)//免流转化成mb保留两位小数
 
@@ -108,14 +108,14 @@ function notice()
 	brond = jsonData.items[s].productOFFName
 	if(nt=="true")
 	{  	
-		$persistentStore.write(thisminites,"timeStore") 
+		$persistentStore.write(thisminutes,"timeStore") 
 		if(limitUsed>0||unlimitUsed>0)
-		{$notification.post(brond+'  耗时:'+minitesused+'分钟','免'+unlimitUsed+' MB '+' 跳 '+limitUsed+'MB','',"")}
+		{$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' MB '+' 跳 '+limitUsed+'MB','',"")}
 	}
 	else
 	{
-		$notification.post(brond+'  耗时:'+minitesused+'分钟','免'+unlimitUsed+' MB '+' 跳 '+limitUsed+'MB','',"")
-		$persistentStore.write(thisminites,"timeStore")  
+		$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' MB '+' 跳 '+limitUsed+'MB','',"")
+		$persistentStore.write(thisminutes,"timeStore")  
 
 	}
 }

@@ -113,7 +113,9 @@ function tiles()
 
 	body={
         title: brond,
-        content: [`${mian}${tiao}\n${limitleft}${unlimitleft}`],
+       // content: [`${mian}${tiao}\n${limitleft}${unlimitleft}`],
+	    content: "kkkkk",
+
         backgroundColor: "#009944",
         icon: "dial.max.fill",
     }

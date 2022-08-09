@@ -126,7 +126,6 @@ function tiles()
 	var tiao = "跳："+limitUsed+" M";
 	var limitleft = limitproductOFFName+"剩余："+limitbalanceAmount+" G";
 	var unlimitleft = unlimitproductOFFName+"剩余："+unlimitbalanceAmount+" G";
-	console.log(unlimitleft)
 	body={
         title: "测试信息" ,
         content: `${mian}${tiao}\n${limitleft}\n${unlimitleft}`,

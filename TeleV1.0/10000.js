@@ -99,12 +99,12 @@ function notice()
 	{
 		if(limitUsed>0||unlimitUsed>0)
 		{
-			$notification.post(brond+'     免 '+unlimitUsed+' MB '+'       跳 '+limitUsed+' MB',"" ,"")
+			$notification.post(brond+'   免 '+unlimitUsed+' MB '+'    跳 '+limitUsed+' MB',"" ,"")
 		}
 	}
 	else
 	{
-		$notification.post(brond+'     免 '+unlimitUsed+' MB '+'       跳 '+limitUsed+' MB',"" ,"")
+		$notification.post(brond+'   免 '+unlimitUsed+' MB '+'    跳 '+limitUsed+' MB',"" ,"")
 
 	}
 }

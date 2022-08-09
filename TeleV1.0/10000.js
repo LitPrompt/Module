@@ -12,6 +12,8 @@ var nt = $persistentStore.read("notice_switch");
 //这需要你有json取数基础，后期会优化，对https://e.189.cn/store/user/package_detail.do给出的数据选取
 
 var jsonData //存储json数据
+var Minutes
+var dateObj
 var brond //卡名
 var unlimitproductOFFName //定向包名
 var unlimitratableAmount //定向包总
@@ -23,14 +25,18 @@ var limitratableAmount //通用包总量
 var limitbalanceAmount //通用剩余量
 var limitusageAmount //通用使用量
 
+var lastminites
+var thisminites
 var limitLast
 var limitThis //通用与定向的使用量
 var unlimitThis
 var unlimitLast //通用与定向当前使用量
 
+var timeStore
 var limitStore 
 var unlimitStore //定义通用与定向的存储池key
 
+var minitesused
 var limitUsed 
 var unlimitUsed //通用差值与定向差值
 
@@ -51,24 +57,29 @@ $httpClient.post(
     jsonData = JSON.parse(data)
    	limit_CellularChoose()
   	unlimit_CellularChoose()
+
+	dateObj = $script.startTime//获取时间
+	Minutes = dateObj.getMinutes();//获取分钟
     
+	thisminites=Minutes //将当前查询的时间存到thisminite中
    	limitThis=limitusageAmount //将当前查询的值存到limitThis中
   	unlimitThis=unlimitusageAmount //将当前查询的值存到unlimitThis中
   
-    limitLast=$persistentStore.read("limitStore") //将上次查询到的值存到limitStore中
-  	unlimitLast=$persistentStore.read("unlimitStore") //将上次查询到的值存到unlimitStore中
-  
+    lastminites=$persistentStore.read("timeStore") //将上次查询到的时间读出来
+    limitLast=$persistentStore.read("limitStore") //将上次查询到的值读出来
+  	unlimitLast=$persistentStore.read("unlimitStore") //将上次查询到的值读出来
+
+  	//minitesused=thisminites-lastminites //时间差
   	limitUsed=((limitThis-limitLast)/1024).toFixed(3) //跳点转成mb保留三位
   	unlimitUsed=((unlimitThis-unlimitLast)/1024).toFixed(2)//免流转化成mb保留两位小数
 
   	if(limitUsed!=0){$persistentStore.write(limitusageAmount,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
-  
   	if(unlimitUsed!=0){$persistentStore.write(unlimitusageAmount,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
   	
    	limit_check()
   	unlimit_check()
 	notice()
-	tiles()
+	//tiles()
 	$done()
   }
  
@@ -96,13 +107,18 @@ function notice()
 	for(var s=0;jsonData.items[s].offerType==11;s++)
 	brond = jsonData.items[s].productOFFName
 	if(nt=="true")
-	{
+	{  	
+		$persistentStore.write(thisminites,"timeStore") 
 		if(limitUsed>0||unlimitUsed>0)
 		{$notification.post(brond+'   免 '+unlimitUsed+' MB '+'    跳 '+limitUsed+' MB',"" ,"")}
 	}
 	else
-	{$notification.post(brond+'   免 '+unlimitUsed+' MB '+'    跳 '+limitUsed+' MB',"" ,"")}
+	{
+		$notification.post(brond+'   免 '+unlimitUsed+' MB '+'    跳 '+limitUsed+' MB',"" ,"")
+		$persistentStore.write(thisminites,"timeStore")  
+
 	}
+}
 
 function tiles()
 {

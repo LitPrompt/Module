@@ -6,9 +6,6 @@ cron:
     - name: TelecomV1.0
       cron: '*/5 * * * *' # at every 5th minute
       timeout: 10 # optional
-tiles:
-  - name: TelecomV1.0
-    interval: 7200
 
 script-providers:
   TelecomV1.0:

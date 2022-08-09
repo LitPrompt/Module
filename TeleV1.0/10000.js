@@ -112,7 +112,7 @@ function tiles()
 	var unlimitleft = `${unlimitproductOFFName}剩余：${unlimitbalanceAmount} G`;
 
 	body={
-        title: brond,
+        title: `${brond}`,
         content: `${mian}${tiao}\n${limitleft}${unlimitleft}`,
         backgroundColor: "#666699",
         icon: "dial.max.fill",

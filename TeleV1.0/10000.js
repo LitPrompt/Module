@@ -68,18 +68,7 @@ $httpClient.post(
    	limit_check()
   	unlimit_check()
 	notice()
-	var mian = "免："+unlimitUsed+" M  " ;
-	var tiao = "跳："+limitUsed+" M";
-	var limitleft = limitproductOFFName+"剩余："+limitbalanceAmount+" G";
-	var unlimitleft = unlimitproductOFFName+"剩余："+unlimitbalanceAmount+" G";
-
-	body={
-        title: brond ,
-        content: `${mian}${tiao}\n${limitleft}\n${unlimitleft}`,
-        backgroundColor: "#009944",
-        icon: "dial.max.fill",
-    }
-	$done(body)	
+	tiles()
 	$done()
   }
  
@@ -121,7 +110,7 @@ function tiles()
 	var tiao = "跳："+limitUsed+" M";
 	var limitleft = limitproductOFFName+"剩余："+limitbalanceAmount+" G";
 	var unlimitleft = unlimitproductOFFName+"剩余："+unlimitbalanceAmount+" G";
-
+	console.log(unlimitleft)
 	body={
         title: brond ,
         content: `${mian}${tiao}\n${limitleft}\n${unlimitleft}`,

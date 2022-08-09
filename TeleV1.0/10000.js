@@ -68,7 +68,8 @@ $httpClient.post(
    	limit_check()
   	unlimit_check()
 	notice()
-   	$done()
+	tiles()
+	$done()
   }
  
 )
@@ -92,11 +93,6 @@ function unlimit_CellularChoose() //定向选择
 function notice()
 {
 
-	var mian = `免：${unlimitUsed} M `;
-	var tiao = `跳：${limitUsed} M`;
-	var limitleft = `通用剩余：${limitbalanceAmount} G `;
-	var unlimitleft = `定向剩余：${unlimitbalanceAmount} G`;
-
 	for(var s=0;jsonData.items[s].offerType==11;s++)
 	brond = jsonData.items[s].productOFFName
 	if(nt=="true")
@@ -106,13 +102,22 @@ function notice()
 	}
 	else
 	{$notification.post(brond+'   免 '+unlimitUsed+' MB '+'    跳 '+limitUsed+' MB',"" ,"")}
-	
+	}
+
+function tiles()
+{
+	var mian = `免：${unlimitUsed} M `;
+	var tiao = `跳：${limitUsed} M`;
+	var limitleft = `${limitproductOFFName}剩余：${limitbalanceAmount} G `;
+	var unlimitleft = `${unlimitproductOFFName}剩余：${unlimitbalanceAmount} G`;
+
 	body={
-        title: "brond",
+        title: brond,
         content: `${mian}${tiao}\n${limitleft}${unlimitleft}`,
         backgroundColor: "#666699",
         icon: "dial.max.fill",
     }
+
 }
 
 function limit_check()

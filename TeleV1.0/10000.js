@@ -113,13 +113,12 @@ function tiles()
 
 	body={
         title: brond,
-        //content: [`${mian}${tiao}\n${limitleft}${unlimitleft}`],
-		content: mian,
+        content: `${mian}${tiao}\n${limitleft}${unlimitleft}`,
 
         backgroundColor: "#009944",
         icon: "dial.max.fill",
     }
-
+	$done(body)
 }
 
 function limit_check()

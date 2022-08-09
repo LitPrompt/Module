@@ -64,11 +64,22 @@ $httpClient.post(
   	if(limitUsed!=0){$persistentStore.write(limitusageAmount,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
   
   	if(unlimitUsed!=0){$persistentStore.write(unlimitusageAmount,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
-  	//$done()
+  	
    	limit_check()
   	unlimit_check()
 	notice()
-	tiles()
+	var mian = "免："+unlimitUsed+" M  " ;
+	var tiao = "跳："+limitUsed+" M";
+	var limitleft = limitproductOFFName+"剩余："+limitbalanceAmount+" G";
+	var unlimitleft = unlimitproductOFFName+"剩余："+unlimitbalanceAmount+" G";
+
+	body={
+        title: brond ,
+        content: `${mian}${tiao}\n${limitleft}\n${unlimitleft}`,
+        backgroundColor: "#009944",
+        icon: "dial.max.fill",
+    }
+	$done(body)	
 	$done()
   }
  

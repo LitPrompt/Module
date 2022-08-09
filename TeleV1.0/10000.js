@@ -69,7 +69,7 @@ $httpClient.post(
     limitLast=$persistentStore.read("limitStore") //将上次查询到的值读出来
   	unlimitLast=$persistentStore.read("unlimitStore") //将上次查询到的值读出来
 
-  	//minitesused=thisminites-lastminites //时间差
+  	minitesused=thisminites-lastminites //时间差
   	limitUsed=((limitThis-limitLast)/1024).toFixed(3) //跳点转成mb保留三位
   	unlimitUsed=((unlimitThis-unlimitLast)/1024).toFixed(2)//免流转化成mb保留两位小数
 
@@ -110,11 +110,11 @@ function notice()
 	{  	
 		$persistentStore.write(thisminites,"timeStore") 
 		if(limitUsed>0||unlimitUsed>0)
-		{$notification.post(brond+'   免 '+unlimitUsed+' MB '+'    跳 '+limitUsed+' MB',"" ,"")}
+		{$notification.post(brond+'  耗时:'+minitesused+'分钟','免'+unlimitUsed+' MB '+' 跳 '+limitUsed+'MB','',"")}
 	}
 	else
 	{
-		$notification.post(brond+'   免 '+unlimitUsed+' MB '+'    跳 '+limitUsed+' MB',"" ,"")
+		$notification.post(brond+'  耗时:'+minitesused+'分钟','免'+unlimitUsed+' MB '+' 跳 '+limitUsed+'MB','',"")
 		$persistentStore.write(thisminites,"timeStore")  
 
 	}

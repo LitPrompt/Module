@@ -128,11 +128,12 @@ function notice()
 	brond = jsonData.items[s].productOFFName
 	if(nt=="true")
 	{  	
-		$persistentStore.write(thisminutes,"minutestimeStore") 
-		$persistentStore.write(thishours,"hourstimeStore")
 		if(limitUsed>0||unlimitUsed>0)
-		{$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' MB '+' 跳 '+limitUsed+'MB','')}
-	}
+		{
+			$persistentStore.write(thishours,"hourstimeStore")
+			$persistentStore.write(thisminutes,"minutestimeStore") 
+			$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' MB '+' 跳 '+limitUsed+'MB','')}
+		}
 	else
 	{
 		$persistentStore.write(thisminutes,"minutestimeStore")  

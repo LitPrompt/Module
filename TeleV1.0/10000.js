@@ -59,6 +59,10 @@ $httpClient.post(
   
    //console.log(data)
     jsonData = JSON.parse(data)
+	var logininfo=jsonData.result
+	if(logininfo==-10001){
+		$notification.post("Cookies错误或已过期❌","请尝试重新抓取Cookies(不抓没得用了！)","")
+		$done()}
    	limit_CellularChoose()
   	unlimit_CellularChoose()
 
@@ -94,6 +98,13 @@ $httpClient.post(
  
 )
 
+//  retableResourceID:
+// 定向：3312000
+// 本月通用；3311000
+// 通用结转；3321000
+
+
+
 function limit_CellularChoose() //通用选择
 {
   	limitproductOFFName = jsonData.items[i].productOFFName
@@ -120,13 +131,13 @@ function notice()
 		$persistentStore.write(thisminutes,"minutestimeStore") 
 		$persistentStore.write(thishours,"hourstimeStore")
 		if(limitUsed>0||unlimitUsed>0)
-		{$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' MB '+' 跳 '+limitUsed+'MB','',"")}
+		{$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' MB '+' 跳 '+limitUsed+'MB','')}
 	}
 	else
 	{
 		$persistentStore.write(thisminutes,"minutestimeStore")  
 		$persistentStore.write(thishours,"hourstimeStore")
-		$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' MB '+' 跳 '+limitUsed+'MB','',"")
+		$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' MB '+' 跳 '+limitUsed+'MB','')
 	}
 }
 

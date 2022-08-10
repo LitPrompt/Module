@@ -97,7 +97,7 @@ $httpClient.post(
 function limit_CellularChoose() //通用选择
 {
   	limitproductOFFName = jsonData.items[i].productOFFName
-  	limitratableAmount = jsonData.items[i].items[j].limitratableAmount//总
+  	limitratableAmount = jsonData.items[i].items[j].ratableAmount//总
   	limitbalanceAmount = jsonData.items[i].items[j].balanceAmount //剩
   	limitusageAmount = jsonData.items[i].items[j].usageAmount //已用
 }
@@ -105,7 +105,7 @@ function limit_CellularChoose() //通用选择
 function unlimit_CellularChoose() //定向选择
 {
   	unlimitproductOFFName = jsonData.items[x].productOFFName
-  	unlimitratableAmount = jsonData.items[x].items[y].unlimitratableAmount //总
+  	unlimitratableAmount = jsonData.items[x].items[y].ratableAmount //总
   	unlimitbalanceAmount = jsonData.items[x].items[y].balanceAmount //剩
   	unlimitusageAmount = jsonData.items[x].items[y].usageAmount //已用
 }

@@ -84,7 +84,7 @@ $httpClient.post(
 	hoursused=thishours-lasthours
 
 	if(hoursused>=0){minutesused=(thisminutes-lastminutes)+hoursused*60} //上次查询的时间等于当前查询的时间
-	else{minutesused=(60-lastminutes)+thisminutes} 
+	else{minutesused=(59-lastminutes)+thisminutes} 
 
   	limitUsed=((limitThis-limitLast)/1024).toFixed(3) //跳点转成mb保留三位
   	unlimitUsed=((unlimitThis-unlimitLast)/1024).toFixed(2)//免流转化成mb保留两位小数

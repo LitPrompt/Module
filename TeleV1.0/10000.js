@@ -40,6 +40,7 @@ var minutestimeStore
 var limitStore 
 var unlimitStore //定义通用与定向的存储池key
 
+var hoursused
 var minutesused
 var limitUsed 
 var unlimitUsed //通用差值与定向差值以及时间差值
@@ -79,9 +80,11 @@ $httpClient.post(
     lastminutes=$persistentStore.read("minutestimeStore") //将上次查询到的时间读出来
     limitLast=$persistentStore.read("limitStore") //将上次查询到的值读出来
   	unlimitLast=$persistentStore.read("unlimitStore") //将上次查询到的值读出来
-	
-	if(lasthours==thishours){minutesused=thisminutes-lastminutes} //上次查询的时间等于当前查询的时间
-	else{minutesused=thisminutes+(60-lastminutes)} 
+
+	hoursused=thishours-lasthours
+
+	if(hoursused>=0){minutesused=(thisminutes-lastminutes)+hoursused*60} //上次查询的时间等于当前查询的时间
+	else{minutesused=(60-lastminutes)+thisminutes} 
 
   	limitUsed=((limitThis-limitLast)/1024).toFixed(3) //跳点转成mb保留三位
   	unlimitUsed=((unlimitThis-unlimitLast)/1024).toFixed(2)//免流转化成mb保留两位小数

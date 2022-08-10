@@ -80,7 +80,7 @@ $httpClient.post(
     limitLast=$persistentStore.read("limitStore") //将上次查询到的值读出来
   	unlimitLast=$persistentStore.read("unlimitStore") //将上次查询到的值读出来
 	
-	if(lasthours=thishours){minutesused=thisminutes-lastminutes} //上次查询的时间等于当前查询的时间
+	if(lasthours==thishours){minutesused=thisminutes-lastminutes} //上次查询的时间等于当前查询的时间
 	else{minutesused=thisminutes+(60-lastminutes)} 
 
   	limitUsed=((limitThis-limitLast)/1024).toFixed(3) //跳点转成mb保留三位

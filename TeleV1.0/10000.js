@@ -132,13 +132,14 @@ function notice()
 
 function tiles()
 {
-	var mian = "免："+unlimitUsed+" M  " ;
-	var tiao = "跳："+limitUsed+" M";
-	var limitleft = "剩余："+limitbalanceAmount+" G";
-	var unlimitleft = "剩余："+unlimitbalanceAmount+" G";
+	//var mian = "免："+unlimitUsed+" M  " ;
+	//var tiao = "跳："+limitUsed+" M";
+	//var limitleft = "剩余："+limitbalanceAmount+" G";
+	//var unlimitleft = "剩余："+unlimitbalanceAmount+" G";
 	body={
         title: "测试信息" ,
-        content: `${mian}${tiao}\n${limitleft}\n${unlimitleft}`,
+        //content: `${mian}${tiao}\n${limitleft}\n${unlimitleft}`,
+		content: 'test',
         backgroundColor: "#009944",
         icon: "dial.max.fill",
     }

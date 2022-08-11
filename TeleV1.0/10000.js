@@ -25,10 +25,10 @@ var limitThis //通用与定向的上次使用量
 var unlimitThis
 var unlimitLast //通用与定向当前使用量
 
-var hourstimeStore
-var minutestimeStore
-var limitStore 
-var unlimitStore //定义通用与定向的存储池key
+//var hourstimeStore
+//var minutestimeStore
+//var limitStore 
+//var unlimitStore //定义通用与定向的存储池key
 
 var hoursused
 var minutesused
@@ -207,9 +207,9 @@ function cellular()//流量包取值均为kb未转换
 function cellular_choose()
 {
 var x = $persistentStore.read("limititems");
-var y = $persistentStore.read("limititems_next");
-var o = $persistentStore.read("unlimititems");
-var p = $persistentStore.read("umlimititems_next");
+var y = $persistentStore.read('limititems_next');
+var o = $persistentStore.read('unlimititems');
+var p = $persistentStore.read('unlimititems_next');
 
 limitusagetotal=jsonData.items[x].items[y].usageAmount//特定通用使用量
 limitbalancetotal=jsonData.items[x].items[y].balanceAmount

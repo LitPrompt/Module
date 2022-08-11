@@ -136,16 +136,15 @@ function tiles()
 	//var tiao = "跳："+limitUsed+" M";
 	//var limitleft = "剩余："+limitbalanceAmount+" G";
 	//var unlimitleft = "剩余："+unlimitbalanceAmount+" G";
-	body={
-        title: "测试信息" ,
-        content: `${brond} ${brond}\n${brond}\n${brond}`,
-		//content: 'test',
-        backgroundColor: "#009944",
-        icon: "dial.max.fill",
-    }
-    console.log("111")
+	console.log("面板执行")
 
-	$done(body);
+	body={
+        title: "当前免流信息",
+        content: `${brond}\n${brond}\n${brond}`,
+        backgroundColor: "#FF6600",
+        icon: "antenna.radiowaves.left.and.right.circle.fill",
+    }
+    $done(body)
 }
 
 function cellular()//流量包取值均为kb未转换

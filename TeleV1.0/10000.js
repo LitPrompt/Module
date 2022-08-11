@@ -90,7 +90,7 @@ $httpClient.post(
   if(unlimitUsed!=0){$persistentStore.write(unlimitusagetotal,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
 //*******
 		notice()//通知部分
-	tiles()
+	    tiles()
 		$done()
   }
  
@@ -136,10 +136,10 @@ function tiles()
 	//var tiao = "跳："+limitUsed+" M";
 	//var limitleft = "剩余："+limitbalanceAmount+" G";
 	//var unlimitleft = "剩余："+unlimitbalanceAmount+" G";
-	console.log("面板执行")
+	//console.log("面板执行")
 
 	body={
-        title: "当前免流信息",
+        title: "测试信息",
         content: `${brond}\n${brond}\n${brond}`,
         backgroundColor: "#FF6600",
         icon: "antenna.radiowaves.left.and.right.circle.fill",

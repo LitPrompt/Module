@@ -70,7 +70,7 @@ $httpClient.post(
 	hoursused=thishours-lasthours
 
 	if(hoursused>=0){minutesused=(thisminutes-lastminutes)+hoursused*60} //上次查询的时间大于等于当前查询的时间
-	else{minutesused=(60-lastminutes)+thisminutes} 
+	else if(hoursused<0&&lasthours==23){minutesused=(60-lastminutes)+lasthours*60+thisminutes} 
 //******
 
 	cellular()//取值部分

@@ -1,4 +1,5 @@
 var ns = $persistentStore.read("notice_switch");
+var auto = $persistentStore.read("auto_switch");
 const Cookies = $persistentStore.read("Tele_CK");
 
 var jsonData //存储json数据
@@ -72,8 +73,12 @@ $httpClient.post(
 	if(hoursused>=0){minutesused=(thisminutes-lastminutes)+hoursused*60} //上次查询的时间大于等于当前查询的时间
 	else if(hoursused<0&&lasthours==23){minutesused=(60-lastminutes)+thishours*60+thisminutes} 
 //******
+	i = jsonData.items.length;//获取第一个items长度
 
-	cellular()//取值部分
+	if(auto=="true")
+	{cellular()}//取值部分
+	else
+	{cellular_choose()}
 
 //流量判断部分
 	limitThis=limitusagetotal //将当前查询的值存到limitThis中
@@ -121,10 +126,11 @@ for(var s=0;s+1<=i;s++)
 		{
 			$persistentStore.write(thishours,"hourstimeStore")
 			$persistentStore.write(thisminutes,"minutestimeStore") 
-			$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' MB '+' 跳'+limitUsed+' MB','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')	
+			$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' MB '+' 跳'+limitUsed+' MB','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')
 		  //console.log(brond+'  耗时:'+minutesused+'分钟'+'  总免 '+unlimitusagetotal+' GB')
-		//console.log('免'+unlimitUsed+' MB '+' 跳 '+limitUsed+'MB'+'剩余 '+limitbalancetotal+'GB')
-	  }
+		  //console.log('免'+unlimitUsed+' MB '+' 跳 '+limitUsed+'MB'+'剩余 '+limitbalancetotal+'GB')
+		}
+	}
 	else//默认定时通知
 	{
 		$persistentStore.write(thisminutes,"minutestimeStore")  
@@ -154,7 +160,6 @@ function tiles()
 
 function cellular()//流量包取值均为kb未转换
 {
-		i = jsonData.items.length;//获取第一个items长度
 		
 		//console.log(i)
 		for(var a=1;a<=i;a++)
@@ -185,7 +190,7 @@ function cellular()//流量包取值均为kb未转换
 			limitbalancetotal+=Number(limitbalanceAmount)//余量累加
 			limitusagetotal+=Number(limitusageAmount)//使用累加
 		}
-	 }
+	}
 	}
 	//console.log(unlimitratabletotal)
 	//console.log(unlimitbalancetotal)
@@ -198,4 +203,20 @@ function cellular()//流量包取值均为kb未转换
 	
 }
 
+	
+function cellular_choose()
+{
+var x = $persistentStore.read("limititems");
+var y = $persistentStore.read("limititems_next");
+var o = $persistentStore.read("unlimititems");
+var p = $persistentStore.read("umlimititems_next");
+
+limitusagetotal=jsonData.items[x].items[y].usageAmount//特定通用使用量
+limitbalancetotal=jsonData.items[x].items[y].balanceAmount
+limitratabletotal=jsonData.items[x].items[y].ratableAmount
+
+unlimitusagetotal=jsonData.items[o].items[p].usageAmount//特定定向使用量
+unlimitbalancetotal=jsonData.items[o].items[p].balanceAmount
+unlimitratabletotal=jsonData.items[o].items[p].ratableAmount
+}
 	

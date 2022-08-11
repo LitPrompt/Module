@@ -8,7 +8,7 @@
    {
       "id": "Tele_Check",
       "name": "电信流量查询v1.0",
-      "keys": ["Tele_CK","hourstimeStore","minutestimeStore","limitStore","unlimitStore"],
+      "keys": ["Tele_CK","limititems","limititems_next","unlimititems","unlimititems_next","hourstimeStore","minutestimeStore","limitStore","unlimitStore"],
       "settings": [   
         {
           "id": "notice_switch",
@@ -16,7 +16,14 @@
           "val": false,
           "type": "boolean",
           "desc": "开启后将在流量变化时通知流量信息"
-        },     
+        },    
+        {
+          "id": "auto_switch",
+          "name": "是否开启自动选择包(默认自动选包)",
+          "val": true,
+          "type": "boolean",
+          "desc": "数据包不能正确选择的,只能开启开关对特定包监控"
+        },      
         {
           "id": "Tele_CK",
           "name": "电信Cookie",
@@ -26,7 +33,35 @@
           "autoGrow": true,
           "rows": 1,
           "desc": "输入电信cookie"
-        }
+        },
+        {
+          "id": "limititems",
+          "name": "通用包",
+          "val": "",
+          "type": "text",
+          "desc": "选择通用包"
+        },  
+        {
+          "id": "limititems_next",
+          "name": "通用下属包",
+          "val": "",
+          "type": "text",
+          "desc": "选择通用下属包"
+        },     
+        {
+          "id": "unlimititems",
+          "name": "定向包",
+          "val": "",
+          "type": "text",
+          "desc": "选择定向包"
+        },     
+        {
+          "id": "unlimititems_next",
+          "name": "定向下属包",
+          "val": "",
+          "type": "text",
+          "desc": "选择定向下属包"
+        }   
     ],
       "author": "@Alt_Option",
       "repo": "https://github.com/QGCliveDavis/Module",

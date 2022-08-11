@@ -46,7 +46,7 @@ $httpClient.post(
   (error, response, data) => {
   
    //console.log(data)
-  jsonData = JSON.parse(data)
+  	jsonData = JSON.parse(data)
 	var logininfo=jsonData.result
 	if(logininfo==-10001)
 	{
@@ -57,13 +57,13 @@ $httpClient.post(
 //时间判断部分****
 	dateObj = $script.startTime//获取时间
 	Minutes = dateObj.getMinutes();//获取分钟
-  Hours = dateObj.getHours(); //获取小时
+  	Hours = dateObj.getHours(); //获取小时
 
-  thishours=Hours //将当前查询的小时存到hours中
+  	thishours=Hours //将当前查询的小时存到hours中
 	thisminutes=Minutes //将当前查询的时间存到thisminute中
 	
 	lasthours = $persistentStore.read("hourstimeStore")
-  lastminutes=$persistentStore.read("minutestimeStore") //将上次查询到的时间读出来
+  	lastminutes=$persistentStore.read("minutestimeStore") //将上次查询到的时间读出来
 	if(lasthours==undefined){lasthours=Hours}//初次查询的判断
 	if(lastminutes==undefined){lastminutes=Minutes}
 	
@@ -77,21 +77,23 @@ $httpClient.post(
 
 //流量判断部分
 	limitThis=limitusagetotal //将当前查询的值存到limitThis中
-  unlimitThis=unlimitusagetotal //将当前查询的值存到unlimitThis中
+  	unlimitThis=unlimitusagetotal //将当前查询的值存到unlimitThis中
 	limitLast=$persistentStore.read("limitStore") //将上次查询到的值读出来
-  unlimitLast=$persistentStore.read("unlimitStore") //将上次查询到的值读出来
+  	unlimitLast=$persistentStore.read("unlimitStore") //将上次查询到的值读出来
 	if(limitLast==undefined){limitLast=0}//初次查询的判断
 	if(unlimitLast==undefined){unlimitLast=0}
 	
-  limitUsed=((limitThis-limitLast)/1024).toFixed(3) //跳点转成mb保留三位
-  unlimitUsed=((unlimitThis-unlimitLast)/1024).toFixed(2)//免流使用转化成mb保留两位小数
-	
-  if(limitUsed!=0){$persistentStore.write(limitusagetotal,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
-  if(unlimitUsed!=0){$persistentStore.write(unlimitusagetotal,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
+  	limitUsed=((limitThis-limitLast)/1024).toFixed(3) //跳点转成mb保留三位
+	if(unlimitUsed<=1000)
+	{unlimitUsed=((unlimitThis-unlimitLast)/1024).toFixed(2)}//免流使用转化成mb保留两位小数
+	else{unlimitUsed=((unlimitThis-unlimitLast)/1048576).toFixed(2)}//免流转换成gb
+
+  	if(limitUsed!=0){$persistentStore.write(limitusagetotal,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
+  	if(unlimitUsed!=0){$persistentStore.write(unlimitusagetotal,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
 //*******
-		notice()//通知部分
-	    tiles()
-		$done()
+	notice()//通知部分
+	tiles()
+	$done()
   }
  
 )

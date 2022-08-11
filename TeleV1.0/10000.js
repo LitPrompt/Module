@@ -90,7 +90,7 @@ $httpClient.post(
   if(unlimitUsed!=0){$persistentStore.write(unlimitusagetotal,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
 //*******
 		notice()//通知部分
-	//tiles()
+	tiles()
 		$done()
   }
  
@@ -134,8 +134,8 @@ function tiles()
 {
 	var mian = "免："+unlimitUsed+" M  " ;
 	var tiao = "跳："+limitUsed+" M";
-	var limitleft = limitproductOFFName+"剩余："+limitbalanceAmount+" G";
-	var unlimitleft = unlimitproductOFFName+"剩余："+unlimitbalanceAmount+" G";
+	var limitleft = "剩余："+limitbalanceAmount+" G";
+	var unlimitleft = "剩余："+unlimitbalanceAmount+" G";
 	body={
         title: "测试信息" ,
         content: `${mian}${tiao}\n${limitleft}\n${unlimitleft}`,

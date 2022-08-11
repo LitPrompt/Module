@@ -107,7 +107,7 @@ $httpClient.post(
 function notice()
 {
 
-	for(var s=0;jsonData.items[s].offerType==11;s++)//从json中筛选出卡名
+	for(var s=0;jsonData.items[s].offerType!=11;s++)//从json中筛选出卡名
 	brond = jsonData.items[s].productOFFName
 	limitbalancetotal=(limitbalancetotal/1048576).toFixed(2) //剩余转成mb保留两位
   unlimitusagetotal=(unlimitusagetotal/1048576).toFixed(2)//总免使用转化成gb保留两位小数

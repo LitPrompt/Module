@@ -8,7 +8,7 @@
    {
       "id": "Tele_Check",
       "name": "电信流量查询v1.0",
-      "keys": ["Tele_CK","hourstimeStore","minutestimeStore","limitStore","unlimitStore"],
+      "keys": ["Tele_CK","limititems","limititems_next","unlimititems","unlimititems_next","hourstimeStore","minutestimeStore","limitStore","unlimitStore"],
       "settings": [   
         {
           "id": "notice_switch",

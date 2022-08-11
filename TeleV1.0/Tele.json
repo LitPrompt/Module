@@ -38,6 +38,9 @@
           "id": "limititems",
           "name": "通用包",
           "val": "",
+          "placeholder": "通用包",
+          "autoGrow": true,
+          "rows": 1,
           "type": "text",
           "desc": "选择通用包"
         },  
@@ -45,6 +48,9 @@
           "id": "limititems_next",
           "name": "通用下属包",
           "val": "",
+          "placeholder": "通用下属包",
+          "autoGrow": true,
+          "rows": 1,
           "type": "text",
           "desc": "选择通用下属包"
         },     
@@ -52,6 +58,9 @@
           "id": "unlimititems",
           "name": "定向包",
           "val": "",
+          "placeholder": "定向包",
+          "autoGrow": true,
+          "rows": 1,
           "type": "text",
           "desc": "选择定向包"
         },     
@@ -59,6 +68,9 @@
           "id": "unlimititems_next",
           "name": "定向下属包",
           "val": "",
+          "placeholder": "定向下属包",
+          "autoGrow": true,
+          "rows": 1,
           "type": "text",
           "desc": "选择定向下属包"
         }   

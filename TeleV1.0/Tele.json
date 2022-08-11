@@ -8,7 +8,7 @@
    {
       "id": "Tele_Check",
       "name": "电信流量查询v1.0",
-      "keys": ["Tele_CK","limititems","limititems_next","unlimititems","unlimititems_next","hourstimeStore","minutestimeStore","limitStore","unlimitStore"],
+      "keys": ["Tele_CK","hourstimeStore","minutestimeStore","limitStore","unlimitStore"],
       "settings": [   
         {
           "id": "notice_switch",
@@ -43,7 +43,7 @@
           "rows": 1,
           "type": "text",
           "desc": "选择通用包"
-        },  
+        },
         {
           "id": "limititems_next",
           "name": "通用下属包",
@@ -53,7 +53,7 @@
           "rows": 1,
           "type": "text",
           "desc": "选择通用下属包"
-        },     
+        },
         {
           "id": "unlimititems",
           "name": "定向包",
@@ -63,7 +63,7 @@
           "rows": 1,
           "type": "text",
           "desc": "选择定向包"
-        },     
+        },
         {
           "id": "unlimititems_next",
           "name": "定向下属包",
@@ -73,7 +73,7 @@
           "rows": 1,
           "type": "text",
           "desc": "选择定向下属包"
-        }   
+        }
     ],
       "author": "@Alt_Option",
       "repo": "https://github.com/QGCliveDavis/Module",

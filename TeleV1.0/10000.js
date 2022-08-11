@@ -138,8 +138,8 @@ function tiles()
 	//var unlimitleft = "剩余："+unlimitbalanceAmount+" G";
 	body={
         title: "测试信息" ,
-        //content: `${mian}${tiao}\n${limitleft}\n${unlimitleft}`,
-		content: 'test',
+        content: `${brond}${brond}\n${brond}\n${brond}`,
+		//content: 'test',
         backgroundColor: "#009944",
         icon: "dial.max.fill",
     }

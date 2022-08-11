@@ -8,7 +8,7 @@
    {
       "id": "Tele_Check",
       "name": "电信流量查询v1.0",
-      "keys": ["Tele_CK","limit","limit_items","unlimit","unlimit_items"],
+      "keys": ["Tele_CK","hourstimeStore","minutestimeStore","limitStore","unlimitStore"],
       "settings": [   
         {
           "id": "notice_switch",
@@ -26,46 +26,6 @@
           "autoGrow": true,
           "rows": 1,
           "desc": "输入电信cookie"
-        },
-        {
-          "id": "limit",
-          "name": "通用包",
-          "val": "0",
-          "type": "text",
-          "placeholder": "输入当前正在使用的通用包的序号",
-          "autoGrow": true,
-          "rows": 1,
-          "desc": "输入数字选择productOFFName,默认从0开始"
-        },
-        {
-          "id": "limit_items",
-          "name": "通用包下属包",
-          "val": "0",
-          "type": "text",
-          "placeholder": "特定通用包可能包含上月流量，需要选择",
-          "autoGrow": true,
-          "rows": 1,
-          "desc": "输入数字选择productOFFName下的items，默认0"
-        },
-        {
-          "id": "unlimit",
-          "name": "定向包",
-          "val": "0",
-          "type": "text",
-          "placeholder": "输入当前正在使用的定向包的序号",
-          "autoGrow": true,
-          "rows": 1,
-          "desc": "输入数字选择productOFFName,默认从0开始"
-        },
-        {
-          "id": "unlimit_items",
-          "name": "定向包下属包",
-          "val": "0",
-          "type": "text",
-          "placeholder": "定向包应该没下属包，默认选择0既第一个",
-          "autoGrow": true,
-          "rows": 1,
-          "desc": "输入数字选择productOFFName下的items，默认0"
         }
     ],
       "author": "@Alt_Option",

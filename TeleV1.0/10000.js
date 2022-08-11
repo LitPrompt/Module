@@ -92,7 +92,7 @@ $httpClient.post(
   	if(unlimitUsed!=0){$persistentStore.write(unlimitusagetotal,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
 //*******
 	notice()//通知部分
-	tiles()
+	//tiles()
 	$done()
   }
  

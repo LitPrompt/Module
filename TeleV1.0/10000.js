@@ -121,7 +121,7 @@ for(var s=0;s+1<=i;s++)
 		{
 			$persistentStore.write(thishours,"hourstimeStore")
 			$persistentStore.write(thisminutes,"minutestimeStore") 
-			$notification.post(brond+'  耗时:'+minutesused+'分钟','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB','免'+unlimitUsed+' MB '+' 跳'+limitUsed+' MB')		}
+			$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' MB '+' 跳'+limitUsed+' MB','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')	
 		  //console.log(brond+'  耗时:'+minutesused+'分钟'+'  总免 '+unlimitusagetotal+' GB')
 		//console.log('免'+unlimitUsed+' MB '+' 跳 '+limitUsed+'MB'+'剩余 '+limitbalancetotal+'GB')
 	  }
@@ -129,7 +129,7 @@ for(var s=0;s+1<=i;s++)
 	{
 		$persistentStore.write(thisminutes,"minutestimeStore")  
 		$persistentStore.write(thishours,"hourstimeStore")
-		$notification.post(brond+'  耗时:'+minutesused+'分钟','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB','免'+unlimitUsed+' MB '+' 跳'+limitUsed+' MB')		//console.log(brond+'  耗时:'+minutesused+'分钟'+'  总免'+unlimitusagetotal+' GB')
+		$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' MB '+' 跳'+limitUsed+' MB','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')	
 		//console.log('免'+unlimitUsed+' MB '+' 跳'+limitUsed+' MB '+' 剩余'+limitbalancetotal+' GB')
 		
 	}

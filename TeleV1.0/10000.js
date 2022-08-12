@@ -89,13 +89,15 @@ $httpClient.post(
 	if(unlimitLast==undefined){unlimitLast=0}
 	
   	limitUsed=((limitThis-limitLast)/1024).toFixed(3) //跳点转成mb保留三位
-	if(unlimitUsed<=1000)
-	{unlimitUsed=((unlimitThis-unlimitLast)/1024).toFixed(2)}//免流使用转化成mb保留两位小数
-	else{unlimitUsed=((unlimitThis-unlimitLast)/1048576).toFixed(2)}//免流转换成gb
+	unlimitUsed=((unlimitThis-unlimitLast)/1024).toFixed(2) //免流转成mb保留两位
+	// if(unlimitUsed<=1000)
+	// {unlimitUsed=((unlimitThis-unlimitLast)/1024).toFixed(2)}//免流使用转化成mb保留两位小数
+	// else{unlimitUsed=((unlimitThis-unlimitLast)/1048576).toFixed(2)}//免流转换成gb
 
   	if(limitUsed!=0){$persistentStore.write(limitusagetotal,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
   	if(unlimitUsed!=0){$persistentStore.write(unlimitusagetotal,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
 //*******
+
 	notice()//通知部分
 	//tiles()
 	$done()
@@ -119,7 +121,7 @@ for(var s=0;s+1<=i;s++)
 	}
 	brond = jsonData.items[brondid].productOFFName
 	limitbalancetotal=(limitbalancetotal/1048576).toFixed(2) //剩余转成mb保留两位
-  unlimitusagetotal=(unlimitusagetotal/1048576).toFixed(2)//总免使用转化成gb保留两位小数
+  	unlimitusagetotal=(unlimitusagetotal/1048576).toFixed(2)//总免使用转化成gb保留两位小数
 	if(ns=="true")//true时执行变化通知
 	{  	
 		if(limitUsed>0||unlimitUsed>0)
@@ -206,17 +208,17 @@ function cellular()//流量包取值均为kb未转换
 	
 function cellular_choose()
 {
-var x = $persistentStore.read("limititems");
-var y = $persistentStore.read('limititems_next');
-var o = $persistentStore.read('unlimititems');
-var p = $persistentStore.read('unlimititems_next');
-
-limitusagetotal=jsonData.items[x].items[y].usageAmount//特定通用使用量
-limitbalancetotal=jsonData.items[x].items[y].balanceAmount
-limitratabletotal=jsonData.items[x].items[y].ratableAmount
-
-unlimitusagetotal=jsonData.items[o].items[p].usageAmount//特定定向使用量
-unlimitbalancetotal=jsonData.items[o].items[p].balanceAmount
-unlimitratabletotal=jsonData.items[o].items[p].ratableAmount
+	var x = $persistentStore.read("limititems");
+	var y = $persistentStore.read('limititems_next');
+	var o = $persistentStore.read('unlimititems');
+	var p = $persistentStore.read('unlimititems_next');
+	
+	limitusagetotal=jsonData.items[x].items[y].usageAmount//特定通用使用量
+	limitbalancetotal=jsonData.items[x].items[y].balanceAmount
+	limitratabletotal=jsonData.items[x].items[y].ratableAmount
+	
+	unlimitusagetotal=jsonData.items[o].items[p].usageAmount//特定定向使用量
+	unlimitbalancetotal=jsonData.items[o].items[p].balanceAmount
+	unlimitratabletotal=jsonData.items[o].items[p].ratableAmount
 }
 	

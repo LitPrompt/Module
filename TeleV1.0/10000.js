@@ -85,8 +85,16 @@ $httpClient.post(
   	unlimitThis=unlimitusagetotal //将当前查询的值存到unlimitThis中
 	limitLast=$persistentStore.read("limitStore") //将上次查询到的值读出来
   	unlimitLast=$persistentStore.read("unlimitStore") //将上次查询到的值读出来
-	if(limitLast==undefined){limitLast=0}//初次查询的判断
-	if(unlimitLast==undefined){unlimitLast=0}
+	if(limitLast==undefined||limitThis-limitLast<0)
+	{
+		limitLast=0
+		$notification.post("当前为初次查询或上次查询有误，已将上次查询归0",'','')
+	}//初次查询的判断
+	if(unlimitLast==undefined||limitThis-limitLast<0)
+	{
+		unlimitLast=0
+		$notification.post("当前为初次查询或上次查询有误，已将上次查询归0",'','')
+	}
 	
   	limitUsed=((limitThis-limitLast)/1024).toFixed(3) //跳点转成mb保留三位
 	unlimitUsed=((unlimitThis-unlimitLast)/1024).toFixed(2) //免流转成mb保留两位
@@ -124,7 +132,7 @@ for(var s=0;s+1<=i;s++)
   	unlimitusagetotal=(unlimitusagetotal/1048576).toFixed(2)//总免使用转化成gb保留两位小数
 	if(ns=="true")//true时执行变化通知
 	{  	
-		if(limitUsed>0||unlimitUsed>0)
+		if(limitUsed!=0||unlimitUsed!=0)
 		{
 			$persistentStore.write(thishours,"hourstimeStore")
 			$persistentStore.write(thisminutes,"minutestimeStore") 

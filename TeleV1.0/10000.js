@@ -120,14 +120,19 @@ $httpClient.post(
 
 
 function notice()
-{
-
-for(var s=0;s+1<=i;s++)
+{	
+	var key_brond
+	if(typeof brond=="undefined")
 	{
-		var typeid = jsonData.items[s].offerType
-		if(typeid==11){var brondid=s}
+	for(var s=0;s+1<=i;s++)
+		{
+			var typeid = jsonData.items[s].offerType
+			if(typeid==11){var brondid=s}
+		}
+		brond = jsonData.items[brondid].productOFFName
+		$persistentStore.write(brond,key_brond)
 	}
-	brond = jsonData.items[brondid].productOFFName
+	else{brond=$persistentStore.read(key_brond)}
 	limitbalancetotal=(limitbalancetotal/1048576).toFixed(2) //剩余转成mb保留两位
   	unlimitusagetotal=(unlimitusagetotal/1048576).toFixed(2)//总免使用转化成gb保留两位小数
 	if(ns=="true")//true时执行变化通知

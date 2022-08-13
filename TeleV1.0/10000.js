@@ -25,11 +25,6 @@ var limitThis //通用与定向的上次使用量
 var unlimitThis
 var unlimitLast //通用与定向当前使用量
 
-var hourstimeStore
-var minutestimeStore
-var limitStore 
-var unlimitStore //定义通用与定向的存储池key
-
 var hoursused
 var minutesused
 var limitUsed 

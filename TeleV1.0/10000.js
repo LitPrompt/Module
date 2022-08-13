@@ -80,12 +80,12 @@ $httpClient.post(
   	unlimitThis=unlimitusagetotal //将当前查询的值存到unlimitThis中
 	limitLast=$persistentStore.read("limitStore") //将上次查询到的值读出来
   	unlimitLast=$persistentStore.read("unlimitStore") //将上次查询到的值读出来
-	if(limitLast==undefined||limitThis-limitLast<0)
+	if(limitLast==null||limitThis-limitLast<0)
 	{
 		limitLast=0
 		$notification.post("当前为初次查询或上次查询有误，已将上次查询归0",'','')
 	}//初次查询的判断
-	if(unlimitLast==undefined||limitThis-limitLast<0)
+	if(unlimitLast==null||limitThis-limitLast<0)
 	{
 		unlimitLast=0
 		$notification.post("当前为初次查询或上次查询有误，已将上次查询归0",'','')

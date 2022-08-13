@@ -121,7 +121,6 @@ $httpClient.post(
 
 function notice()
 {	
-	var key_brond
 	brond=$persistentStore.read("key_brond")
 	if(typeof brond=="undefined")
 	{

@@ -122,6 +122,7 @@ $httpClient.post(
 function notice()
 {	
 	var key_brond
+	brond=$persistentStore.read(key_brond)
 	if(typeof brond=="undefined")
 	{
 	for(var s=0;s+1<=i;s++)
@@ -132,7 +133,6 @@ function notice()
 		brond = jsonData.items[brondid].productOFFName
 		$persistentStore.write(brond,key_brond)
 	}
-	else{brond=$persistentStore.read(key_brond)}
 	limitbalancetotal=(limitbalancetotal/1048576).toFixed(2) //剩余转成mb保留两位
   	unlimitusagetotal=(unlimitusagetotal/1048576).toFixed(2)//总免使用转化成gb保留两位小数
 	if(ns=="true")//true时执行变化通知

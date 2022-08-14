@@ -48,7 +48,7 @@ $httpClient.post(
 	var logininfo=jsonData.result
 	if(logininfo==-10001)
 	{
-		$notification.post("Cookies错误或已过期❌","请尝试重新抓取Cookies(不抓没得用了！)","打开覆写并登录网站，获取到Cookie后记得关!!")
+		$notification.post("Cookies错误或已过期❌","请尝试重新抓取Cookies(不抓没得用了！)","覆写获取到Cookie可直接关闭网站，下次失效时直接登陆即可")
 		$done()
 	}
 

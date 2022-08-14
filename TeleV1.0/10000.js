@@ -98,9 +98,6 @@ $httpClient.post(
 	}
   	limitChange=limitThis-limitLast
 	unlimitChange=unlimitThis-unlimitLast
-	// if(unlimitUsed<=1000)
-	// {unlimitUsed=((unlimitThis-unlimitLast)/1024).toFixed(2)}//免流使用转化成mb保留两位小数
-	// else{unlimitUsed=((unlimitThis-unlimitLast)/1048576).toFixed(2)}//免流转换成gb
 	console.log("定向变化量:"+unlimitChange)
 	console.log("通用变化量:"+limitChange)
   	if(limitChange!=0){$persistentStore.write(limitusagetotal,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
@@ -133,8 +130,13 @@ function notice()
 			brond = jsonData.items[brondid].productOFFName
 			$persistentStore.write(brond,"key_brond")
 		}
+	
+	if(unlimitChange<=1000)
+	{unlimitUsed=(unlimitChange/1024).toFixed(2) }//免流转成mb保留两位
+	else
+	{unlimitUsed=(unlimitChange/1048576).toFixed(2)}//免流转换成gb
+
 	limitUsed=(limitChange/1024).toFixed(3) //跳点转成mb保留三位
-	unlimitUsed=(unlimitChange/1024).toFixed(2) //免流转成mb保留两位
 	limitbalancetotal=(limitbalancetotal/1048576).toFixed(2) //剩余转成mb保留两位
   	unlimitusagetotal=(unlimitusagetotal/1048576).toFixed(2)//总免使用转化成gb保留两位小数
 	if(ns=="true")//true时执行变化通知

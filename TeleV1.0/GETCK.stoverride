@@ -14,5 +14,5 @@ http:
 
 script-providers:
   Telecom_CK:
-    url: https://raw.githubusercontent.com/QGCliveDavis/Module/main/Ck1000.js
+    url: https://raw.githubusercontent.com/QGCliveDavis/Module/main/TeleV1.0/Ck1000.js
     interval: 86400

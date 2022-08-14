@@ -1,5 +1,5 @@
-name: Telecom_Cookie
-desc: 开启脚本以及mitm等开关，获取覆写后关闭
+name: 电信免流Cookie获取
+desc: 开启脚本以及mitm等开关，配合电信免流使用
 
 http:
   mitm:

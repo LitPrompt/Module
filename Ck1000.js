@@ -4,7 +4,7 @@ const cookieKey = 'Tele_CK'
 
 $httpClient.get('https://e.dlife.cn/wap/loginInfo.do', (error, response, data) => {
     jsonData = JSON.parse(data)
-    
+    console.log(data)
     if (jsonData.result==10000) 
     {
         $notification.post( '登录成功开始获取cookie')

@@ -5,7 +5,7 @@ http:
   mitm:
     - e.dlife.cn/wap/mine/showIndex.do#/accountSafe
   script:
-    - match: ^https?:\/\/e\.dlife\.cn\/wap\/mine\/showIndex\.do#\/accountSafe
+    - match: ^https?:\/\/e\.dlife\.cn\/wap\/mine\/showIndex\.do\#\/accountSafe
       name: Telecom_CK
       type: request
       require-body: true

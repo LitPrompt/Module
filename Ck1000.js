@@ -10,6 +10,9 @@ if (cookieVal) {
             console.log(msg)
             console.log(cookieVal)
         }
+    else{
+        $notification.post( 'Cookie获取失败')
+    }
     }
 
 $done({})

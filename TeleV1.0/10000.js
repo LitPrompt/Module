@@ -97,8 +97,8 @@ $httpClient.post(
 	// if(unlimitUsed<=1000)
 	// {unlimitUsed=((unlimitThis-unlimitLast)/1024).toFixed(2)}//免流使用转化成mb保留两位小数
 	// else{unlimitUsed=((unlimitThis-unlimitLast)/1048576).toFixed(2)}//免流转换成gb
-	console.log("定向变化量；",unlimitChange)
-	console.log("通用变化量；",limitChange)
+	console.log("定向变化量；"+unlimitChange)
+	console.log("通用变化量；"+limitChange)
   	if(limitChange!=0){$persistentStore.write(limitusagetotal,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
   	if(limitChange!=0){$persistentStore.write(unlimitusagetotal,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
 //*******
@@ -187,18 +187,18 @@ function cellular()//流量包取值均为kb未转换
 				unlimitratableAmount =jsonData.items[a-1].items[b-1].ratableAmount//单包定向总量
 				unlimitbalanceAmount =jsonData.items[a-1].items[b-1].balanceAmount//单包定向余量
 				unlimitusageAmount =jsonData.items[a-1].items[b-1].usageAmount//单包定向使用量
-				
+
 				unlimitratabletotal+=Number(unlimitratableAmount)//总量累加
 				unlimitbalancetotal+=Number(unlimitbalanceAmount)//余量累加
 				unlimitusagetotal+=Number(unlimitusageAmount)//使用累加
-				
+
 			}
 			if(k==3311000||k==3321000)//判断通用
 			{
 				limitratableAmount =jsonData.items[a-1].items[b-1].ratableAmount//通用总量
 				limitbalanceAmount =jsonData.items[a-1].items[b-1].balanceAmount//通用余量
 				limitusageAmount =jsonData.items[a-1].items[b-1].usageAmount//通用使用量
-				
+
 				limitratabletotal+=Number(limitratableAmount)//总量累加
 				limitbalancetotal+=Number(limitbalanceAmount)//余量累加
 				limitusagetotal+=Number(limitusageAmount)//使用累加

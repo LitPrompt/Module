@@ -1,6 +1,6 @@
 var ns = $persistentStore.read("notice_switch");
 var auto = $persistentStore.read("auto_switch");
-const Cookies = $persistentStore.read("Tele_CK");
+var Cookies = $persistentStore.read("Tele_CK");
 
 var jsonData //存储json数据
 var dateObj

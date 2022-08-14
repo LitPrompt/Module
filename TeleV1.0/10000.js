@@ -1,16 +1,12 @@
 var ns = $persistentStore.read("notice_switch");
 var auto = $persistentStore.read("auto_switch");
 var Cookies = $persistentStore.read("Tele_CK");
-const cookieVal = $request.headers['Cookie']
-const effective = cookieVal.indexOf("SSON")
 
 var jsonData //存储json数据
 var dateObj
-var logininfo
 var Minutes
 var Hours
 var brond //卡名
-
 
 var unlimitratabletotal=0//初始化
 var unlimitbalancetotal=0
@@ -49,13 +45,12 @@ $httpClient.post(
   
    //console.log(data)
   	jsonData = JSON.parse(data)
-	logininfo=jsonData.result
-	cookie_check()
-	//if(logininfo==-10001)
-	//{
-	//	$notification.post("Cookies错误或已过期❌","请尝试重新抓取Cookies(不抓没得用了！)","")
-	//	$done()
-	//}
+	var logininfo=jsonData.result
+	if(logininfo==-10001)
+	{
+		$notification.post("Cookies错误或已过期❌","请尝试重新抓取Cookies(不抓没得用了！)","打开覆写并登录网站，获取到Cookie后记得关!!")
+		$done()
+	}
 
 //时间判断部分****
 	dateObj = $script.startTime//获取时间
@@ -166,26 +161,6 @@ function notice()
 		console.log('总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')
 		
 		
-	}
-}
-
-function cookie_check()
-{
-	if(logininfo==-10001)
-	{
-		$notification.post("Cookies错误或已过期❌","请尝试重新抓取Cookies(不抓没得用了！)","直接去官网登录下就可以")
-		if (effective==0) 
-		{
-  			let cookie = $persistentStore.write(cookieVal, "Tele_CK")
-    		if (cookie) 
-			{
-            	$notification.post(brond, 'Cookie写入成功',cookieVal )
-            	console.log(brond)
-            	console.log(cookieVal)
-        	}
-    	}
-		setTimeout(cookie_check(), 1000)
-		$done({})
 	}
 }
 

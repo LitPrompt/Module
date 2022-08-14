@@ -84,7 +84,7 @@ $httpClient.post(
   	unlimitLast=$persistentStore.read("unlimitStore") //将上次查询到的值读出来
 	console.log("当前通用使用"+limitThis)
 	console.log("当前定向使用"+unlimitThis)
-	console.log("上次通用使用"+unlimitLast)
+	console.log("上次通用使用"+limitLast)
 	console.log("上次定向使用"+unlimitLast)
 	if(limitLast==null||limitThis-limitLast<0)
 	{

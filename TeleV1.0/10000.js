@@ -27,7 +27,9 @@ var unlimitLast //通用与定向当前使用量
 
 var hoursused
 var minutesused
-var limitUsed 
+var limitChange
+var unlimitChange
+var limitUsed
 var unlimitUsed //通用差值与定向差值以及时间差值
 
 $httpClient.post(
@@ -90,13 +92,13 @@ $httpClient.post(
 		unlimitLast=0
 		$notification.post("当前为初次查询或上次查询有误，已将上次查询归0",'','')
 	}
-  	limitUsed=limitThis-limitLast
-	unlimitUsed=unlimitThis-unlimitLast
+  	limitChange=limitThis-limitLast
+	unlimitChange=unlimitThis-unlimitLast
 	// if(unlimitUsed<=1000)
 	// {unlimitUsed=((unlimitThis-unlimitLast)/1024).toFixed(2)}//免流使用转化成mb保留两位小数
 	// else{unlimitUsed=((unlimitThis-unlimitLast)/1048576).toFixed(2)}//免流转换成gb
-	console.log("定向变化量；",unlimitUsed)
-	console.log("通用变化量；",limitUsed)
+	console.log("定向变化量；",unlimitChange)
+	console.log("通用变化量；",limitChange)
   	if(limitUsed!=0){$persistentStore.write(limitusagetotal,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
   	if(unlimitUsed!=0){$persistentStore.write(unlimitusagetotal,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
 //*******
@@ -127,13 +129,13 @@ function notice()
 		brond = jsonData.items[brondid].productOFFName
 		$persistentStore.write(brond,"key_brond")
 	}
-	limitUsed=(limitUsed/1024).toFixed(3) //跳点转成mb保留三位
-	unlimitUsed=(unlimitUsed/1024).toFixed(2) //免流转成mb保留两位
+	limitUsed=(limitChange/1024).toFixed(3) //跳点转成mb保留三位
+	unlimitUsed=(unlimitChange/1024).toFixed(2) //免流转成mb保留两位
 	limitbalancetotal=(limitbalancetotal/1048576).toFixed(2) //剩余转成mb保留两位
   	unlimitusagetotal=(unlimitusagetotal/1048576).toFixed(2)//总免使用转化成gb保留两位小数
 	if(ns=="true")//true时执行变化通知
 	{  	
-		if(limitUsed!=0||unlimitUsed!=0)
+		if(limitChange!=0||unlimitChange!=0)
 		{
 			$persistentStore.write(thishours,"hourstimeStore")
 			$persistentStore.write(thisminutes,"minutestimeStore") 

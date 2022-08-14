@@ -99,8 +99,8 @@ $httpClient.post(
 	// else{unlimitUsed=((unlimitThis-unlimitLast)/1048576).toFixed(2)}//免流转换成gb
 	console.log("定向变化量；",unlimitChange)
 	console.log("通用变化量；",limitChange)
-  	if(limitUsed!=0){$persistentStore.write(limitusagetotal,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
-  	if(unlimitUsed!=0){$persistentStore.write(unlimitusagetotal,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
+  	if(limitChange!=0){$persistentStore.write(limitusagetotal,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
+  	if(limitChange!=0){$persistentStore.write(unlimitusagetotal,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
 //*******
 
 	notice()//通知部分

@@ -5,7 +5,7 @@ http:
   mitm:
     - e.dlife.cn
   script:
-    - match: ^https?:\/\/e\.dlife\.cn\.index\.do
+    - match: ^https?:\/\/e\.dlife\/cn\/user\/index\.do
       name: Telecom_CK
       type: request
       require-body: true

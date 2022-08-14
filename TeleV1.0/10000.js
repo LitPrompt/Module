@@ -180,30 +180,30 @@ function cellular()//流量包取值均为kb未转换
 		j = jsonData.items[a-1].items.length//获取第二个items长度
 		//console.log(j)
 		for(var b=1;b<=j;b++)
-	{
-		k = jsonData.items[a-1].items[b-1].ratableResourceID//获取包名id判断定向与通用
-		if(k==3312000)//判断定向
 		{
-			unlimitratableAmount =jsonData.items[a-1].items[b-1].ratableAmount//单包定向总量
-			unlimitbalanceAmount =jsonData.items[a-1].items[b-1].balanceAmount//单包定向余量
-			unlimitusageAmount =jsonData.items[a-1].items[b-1].usageAmount//单包定向使用量
-			
-			unlimitratabletotal+=Number(unlimitratableAmount)//总量累加
-			unlimitbalancetotal+=Number(unlimitbalanceAmount)//余量累加
-			unlimitusagetotal+=Number(unlimitusageAmount)//使用累加
-			
+			k = jsonData.items[a-1].items[b-1].ratableResourceID//获取包名id判断定向与通用
+			if(k==3312000)//判断定向
+			{
+				unlimitratableAmount =jsonData.items[a-1].items[b-1].ratableAmount//单包定向总量
+				unlimitbalanceAmount =jsonData.items[a-1].items[b-1].balanceAmount//单包定向余量
+				unlimitusageAmount =jsonData.items[a-1].items[b-1].usageAmount//单包定向使用量
+				
+				unlimitratabletotal+=Number(unlimitratableAmount)//总量累加
+				unlimitbalancetotal+=Number(unlimitbalanceAmount)//余量累加
+				unlimitusagetotal+=Number(unlimitusageAmount)//使用累加
+				
+			}
+			if(k==3311000||k==3321000)//判断通用
+			{
+				limitratableAmount =jsonData.items[a-1].items[b-1].ratableAmount//通用总量
+				limitbalanceAmount =jsonData.items[a-1].items[b-1].balanceAmount//通用余量
+				limitusageAmount =jsonData.items[a-1].items[b-1].usageAmount//通用使用量
+				
+				limitratabletotal+=Number(limitratableAmount)//总量累加
+				limitbalancetotal+=Number(limitbalanceAmount)//余量累加
+				limitusagetotal+=Number(limitusageAmount)//使用累加
+			}
 		}
-		if(k==3311000||k==3321000)//判断通用
-		{
-			limitratableAmount =jsonData.items[a-1].items[b-1].ratableAmount//通用总量
-			limitbalanceAmount =jsonData.items[a-1].items[b-1].balanceAmount//通用余量
-			limitusageAmount =jsonData.items[a-1].items[b-1].usageAmount//通用使用量
-			
-			limitratabletotal+=Number(limitratableAmount)//总量累加
-			limitbalancetotal+=Number(limitbalanceAmount)//余量累加
-			limitusagetotal+=Number(limitusageAmount)//使用累加
-		}
-	}
 	}
 	//console.log(unlimitratabletotal)
 	//console.log(unlimitbalancetotal)

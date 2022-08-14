@@ -7,7 +7,7 @@
     "1. 打开获取cookie脚本覆写(下方有地址)",
     "2. 点击上方进入后输入账号密码登录",
     "3. 进入账号安全即可获取cookie",
-    "4. 当下方cookie中有值后关闭覆写"
+    "4. 当下方cookie中有值后关闭覆写",
     "< a href= "https://raw.githubusercontent.com/QGCliveDavis/Module/main/GETCK.stoverride">cookie脚本覆写</ a>"
   ],
   "author": "@Alt_Option",

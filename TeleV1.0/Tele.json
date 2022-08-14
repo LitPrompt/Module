@@ -9,7 +9,7 @@
       "id": "Tele_Check",
       "name": "电信流量查询v1.0",
       "descs_html": [
-        "<a href=\"https://e.189.cn\">登录账号获取Cookie</a>",
+        "<a href=\"https://e.dlife.cn\">登录账号获取Cookie</a>",
       	"<b>登录方法</b>",
     		"1. 打开获取cookie脚本覆写(下方有地址,可直接复制安装)",
     		"2. 点击上方进入后输入账号密码登录",

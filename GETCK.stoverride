@@ -3,9 +3,9 @@ desc: 开启脚本以及mitm等开关，获取覆写后关闭
 
 http:
   mitm:
-    - e.dlife.cn/wap/mine/showIndex.do#/accountSafe
+    - e.dlife.cn
   script:
-    - match: ^https?:\/\/e\.dlife\.cn\/wap\/mine\/showIndex\.do\#\/accountSafe
+    - match: ^https?:\/\/e\.dlife\.cn
       name: Telecom_CK
       type: request
       require-body: true

@@ -1,8 +1,8 @@
 const cookieName = '中国电信'
-const cookieKey = 'Tele_CK'
 const cookieVal = $request.headers['Cookie']
+const effective = cookieVal.indexOf("SSON")
 
-if (cookieVal) {
+if (effective==0) {
   let cookie = $persistentStore.write(cookieVal, "Tele_CK")
     if (cookie) {
         let msg = `${cookieName}`

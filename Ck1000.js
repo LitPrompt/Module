@@ -3,7 +3,7 @@ const cookieKey = 'Tele_CK'
 const cookieVal = $request.headers['Cookie']
 
 if (cookieVal) {
-  let cookie = $persistentStore.write(cookieVal, cookieKey)
+  let cookie = $persistentStore.write(cookieVal, "cookieKey")
     if (cookie) {
         let msg = `${cookieName}`
             $notification.post(msg, 'Cookie写入成功', )

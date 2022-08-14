@@ -1,6 +1,15 @@
 {
   "id": "alt",
   "name": "@花猫的订阅",
+  "descs_html": [
+    "< a href= "https://e.189.cn">Cookie获取</ a>",
+    "<b>登录方式</b>",
+    "1. 打开获取cookie脚本覆写(下方有地址)",
+    "2. 点击上方进入后输入账号密码登录",
+    "3. 进入账号安全即可获取cookie",
+    "4. 当下方cookie中有值后关闭覆写"
+    "< a href= "https://raw.githubusercontent.com/QGCliveDavis/Module/main/GETCK.stoverride">cookie脚本覆写</ a>",
+  ],
   "author": "@Alt_Option",
   "icon": "https://raw.githubusercontent.com/QGCliveDavis/Module/main/TeleV1.0/Cat.png",
   "repo": "https://github.com/QGCliveDavis/Module",
@@ -9,7 +18,17 @@
       "id": "Tele_Check",
       "name": "电信流量查询v1.0",
       "keys": ["Tele_CK","limititems","limititems_next","unlimititems","unlimititems_next","hourstimeStore","minutestimeStore","limitStore","unlimitStore"],
-      "settings": [   
+      "settings": [  
+        {
+          "id": "Tele_CK",
+          "name": "电信Cookie",
+          "val": "",
+          "type": "text",
+          "placeholder": "Cookie",
+          "autoGrow": true,
+          "rows": 1,
+          "desc": "输入电信cookie"
+        }, 
         {
           "id": "notice_switch",
           "name": "是否禁用定时通知",
@@ -24,16 +43,6 @@
           "type": "boolean",
           "desc": "数据包不能正确显示的,只能关闭开关,手动选择特定包监控"
         },      
-        {
-          "id": "Tele_CK",
-          "name": "电信Cookie",
-          "val": "",
-          "type": "text",
-          "placeholder": "Cookie",
-          "autoGrow": true,
-          "rows": 1,
-          "desc": "输入电信cookie"
-        },
         {
           "id": "limititems",
           "name": "通用包",

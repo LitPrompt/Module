@@ -1,11 +1,11 @@
 name: Telecom_Cookie
-desc: 电信cookie获取脚本
+desc: 开启脚本以及mitm等开关，获取覆写后关闭
 
 http:
   mitm:
     - e.dlife.cn
   script:
-    - match: ^https?:\/\/e\.dlife\.cn
+    - match: ^https?:\/\/e\.dlife\.cn\/wap\/mine\/showIndex\.do#\/accountSafe
       name: Telecom_CK
       type: request
       require-body: true

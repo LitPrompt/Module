@@ -85,14 +85,13 @@ $httpClient.post(
 		limitLast=0
 		$notification.post("当前为初次查询或上次查询有误，已将上次查询归0",'','')
 	}//初次查询的判断
-	if(unlimitLast==null||limitThis-limitLast<0)
+	if(unlimitLast==null||unlimitThis-unlimitLast<0)
 	{
 		unlimitLast=0
 		$notification.post("当前为初次查询或上次查询有误，已将上次查询归0",'','')
 	}
-	
-  	limitUsed=((limitThis-limitLast)/1024).toFixed(3) //跳点转成mb保留三位
-	unlimitUsed=((unlimitThis-unlimitLast)/1024).toFixed(2) //免流转成mb保留两位
+  	limitUsed=limitThis-limitLast
+	unlimitUsed=unlimitThis-unlimitLast
 	// if(unlimitUsed<=1000)
 	// {unlimitUsed=((unlimitThis-unlimitLast)/1024).toFixed(2)}//免流使用转化成mb保留两位小数
 	// else{unlimitUsed=((unlimitThis-unlimitLast)/1048576).toFixed(2)}//免流转换成gb
@@ -128,6 +127,8 @@ function notice()
 		brond = jsonData.items[brondid].productOFFName
 		$persistentStore.write(brond,"key_brond")
 	}
+	limitUsed=(limitUsed/1024).toFixed(3) //跳点转成mb保留三位
+	unlimitUsed=(unlimitUsed/1024).toFixed(2) //免流转成mb保留两位
 	limitbalancetotal=(limitbalancetotal/1048576).toFixed(2) //剩余转成mb保留两位
   	unlimitusagetotal=(unlimitusagetotal/1048576).toFixed(2)//总免使用转化成gb保留两位小数
 	if(ns=="true")//true时执行变化通知

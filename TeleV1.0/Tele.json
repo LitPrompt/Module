@@ -14,7 +14,7 @@
     		"1. 先安装获取Cookie覆写，下方有地址，可直接拷贝安装，已安装请忽略",
     		"2. 点击上方蓝色字体进入后输入账号密码登录",
     		"3. 当提示获取到Cookie后即可，在脚本日志中可以查看到获取到的cookie",
-    		"<a href=\"https://raw.githubusercontent.com/QGCliveDavis/Module/main/GETCK.stoverride\">Cookie脚本覆写</a>"
+    		"<a href=\"https://raw.githubusercontent.com/QGCliveDavis/Module/main/TeleV1.0/GETCK.stoverride\">Cookie脚本覆写</a>"
       ],
       "keys": ["Tele_CK","limititems","limititems_next","unlimititems","unlimititems_next","hourstimeStore","minutestimeStore","limitStore","unlimitStore"],
       "settings": [  

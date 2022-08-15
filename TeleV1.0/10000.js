@@ -135,8 +135,9 @@ function notice()
 	{unlimitUsed=(unlimitChange/1024).toFixed(2) }//免流转成mb保留两位
 	else
 	{unlimitUsed=(unlimitChange/1048576).toFixed(2)}//免流转换成gb
-
 	limitUsed=(limitChange/1024).toFixed(3) //跳点转成mb保留三位
+	if(limitChange==0){limitUsed=0}
+	if(unlimitChange==0){unlimitUsed=0}
 	limitbalancetotal=(limitbalancetotal/1048576).toFixed(2) //剩余转成mb保留两位
   	unlimitusagetotal=(unlimitusagetotal/1048576).toFixed(2)//总免使用转化成gb保留两位小数
 	if(ns=="true")//true时执行变化通知

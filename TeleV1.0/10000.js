@@ -48,7 +48,7 @@ $httpClient.post(
 	var logininfo=jsonData.result
 	if(logininfo==-10001)
 	{
-		$notification.post("Cookies错误或已过期❌","请尝试重新抓取Cookies(不抓没得用了！)","覆写获取到Cookie可直接关闭网站，下次失效时直接登陆即可")
+		$notification.post("Cookies错误或已过期❌","请尝试重新抓取Cookies(不抓没得用了！)","覆写获取到Cookie后关闭覆写")
 		$done()
 	}
 
@@ -131,11 +131,12 @@ function notice()
 			$persistentStore.write(brond,"key_brond")
 		}
 	
-	if(unlimitChange<=1000)
-	{unlimitUsed=(unlimitChange/1024).toFixed(2) }//免流转成mb保留两位
-	else
-	{unlimitUsed=(unlimitChange/1048576).toFixed(2)}//免流转换成gb
 	limitUsed=(limitChange/1024).toFixed(3) //跳点转成mb保留三位
+	if(unlimitChange<=1000)
+	{unlimitUsed=(unlimitChange/1024).toFixed(2)+' MB ' }//免流转成mb保留两位
+	else
+	{unlimitUsed=(unlimitChange/1048576).toFixed(2)+' GB '}//免流转换成gb
+	
 	if(limitChange==0){limitUsed=0}
 	if(unlimitChange==0){unlimitUsed=0}
 	limitbalancetotal=(limitbalancetotal/1048576).toFixed(2) //剩余转成mb保留两位
@@ -146,7 +147,7 @@ function notice()
 		{
 			$persistentStore.write(thishours,"hourstimeStore")
 			$persistentStore.write(thisminutes,"minutestimeStore") 
-			$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' MB '+' 跳'+limitUsed+' MB','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')
+			$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' 跳'+limitUsed+' MB','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')
 		  	console.log(brond+'  耗时:'+minutesused+'分钟')
 		  	console.log('免 '+unlimitUsed+' MB '+'  跳 '+limitUsed+' MB')
 			console.log('总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')
@@ -156,7 +157,7 @@ function notice()
 	{
 		$persistentStore.write(thisminutes,"minutestimeStore")  
 		$persistentStore.write(thishours,"hourstimeStore")
-		$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' MB '+' 跳'+limitUsed+' MB','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')	
+		$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' 跳'+limitUsed+' MB','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')	
 		console.log(brond+'  耗时:'+minutesused+'分钟')
 		console.log('免 '+unlimitUsed+' MB '+'  跳 '+limitUsed+' MB')
 		console.log('总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')

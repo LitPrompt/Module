@@ -148,7 +148,7 @@ function notice()
 			$persistentStore.write(thisminutes,"minutestimeStore") 
 			$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' MB '+' 跳'+limitUsed+' MB','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')
 		  	console.log(brond+'  耗时:'+minutesused+'分钟')
-		  	console.log('免'+unlimitUsed+' MB '+' 跳'+limitUsed+' MB')
+		  	console.log('免 '+unlimitUsed+' MB '+'  跳 '+limitUsed+' MB')
 			console.log('总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')
 		}
 	}
@@ -158,7 +158,7 @@ function notice()
 		$persistentStore.write(thishours,"hourstimeStore")
 		$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' MB '+' 跳'+limitUsed+' MB','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')	
 		console.log(brond+'  耗时:'+minutesused+'分钟')
-		console.log('免'+unlimitUsed+' MB '+' 跳'+limitUsed+' MB')
+		console.log('免 '+unlimitUsed+' MB '+'  跳 '+limitUsed+' MB')
 		console.log('总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')
 		
 		

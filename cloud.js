@@ -1,5 +1,5 @@
 if ($response.body) {
-    $notification.post("识别成功","识别成功",)
+    $notification.post("识别成功","识别成功",$response.body)
     $done({
         body: JSON.stringify({
             "product_infos": [{

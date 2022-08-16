@@ -11,6 +11,7 @@ http:
       require-body: true
       timeout: 120
 
+
 script-providers:
   BaiduPAN:
     url: https://raw.githubusercontent.com/QGCliveDavis/Module/main/cloud.js

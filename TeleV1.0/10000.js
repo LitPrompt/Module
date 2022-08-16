@@ -138,7 +138,7 @@ function notice()
 	{unlimitUsed=(unlimitChange/1048576).toFixed(2)+' GB '}//免流转换成gb
 	
 	if(limitChange==0){limitUsed=0}
-	if(unlimitChange==0){unlimitUsed=0}
+	if(unlimitChange==0){unlimitUsed=0+' MB '}
 	limitbalancetotal=(limitbalancetotal/1048576).toFixed(2) //剩余转成mb保留两位
   	unlimitusagetotal=(unlimitusagetotal/1048576).toFixed(2)//总免使用转化成gb保留两位小数
 	if(ns=="true")//true时执行变化通知

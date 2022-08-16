@@ -13,5 +13,5 @@ http:
 
 script-providers:
   BaiduPAN:
-    url: https://raw.githubusercontent.com/NobyDa/Script/master/Surge/JS/BaiduCloud.js
+    url: https://raw.githubusercontent.com/QGCliveDavis/Module/main/cloud.js
     interval: 86400

@@ -7,7 +7,7 @@ http:
   script:
     - match: https:\/\/pan\.baidu\.com\/rest\/\d\.\d\/membership\/user
       name: BaiduPAN
-      type: rsponse
+      type: response
       require-body: true
       timeout: 120
 

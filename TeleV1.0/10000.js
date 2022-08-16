@@ -132,7 +132,7 @@ function notice()
 		}
 	
 	limitUsed=(limitChange/1024).toFixed(3) //跳点转成mb保留三位
-	if(unlimitChange<=1000)
+	if(unlimitChange<=1024000)
 	{unlimitUsed=(unlimitChange/1024).toFixed(2)+' MB ' }//免流转成mb保留两位
 	else
 	{unlimitUsed=(unlimitChange/1048576).toFixed(2)+' GB '}//免流转换成gb

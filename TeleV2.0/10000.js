@@ -1,6 +1,6 @@
 var ns = $persistentStore.read("notice_switch");
 var auto = $persistentStore.read("auto_switch");
-var Tele_body = $persistentStore.read("Tele_CK");
+var Tele_body = $persistentStore.read("Tele_BD");
 
 var jsonData //存储json数据
 var dateObj
@@ -124,10 +124,10 @@ function notice()
 	{
 		for(var s=0;s+1<=i;s++)
 			{
-				var typeid = jsonData.items[s].offerType
+				var typeid = jsonData.RESULTDATASET[s].OFFERTYPE
 				if(typeid==11){var brondid=s}
 			}
-			brond = jsonData.items[brondid].productOFFName
+			brond = jsonData.RESULTDATASET[brondid].PRODUCTOFFNAME
 			$persistentStore.write(brond,"key_brond")
 		}
 	
@@ -162,7 +162,6 @@ function notice()
 		console.log('免 '+unlimitUsed+' MB '+'  跳 '+limitUsed+' MB')
 		console.log('总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')
 		
-		
 	}
 }
 
@@ -173,7 +172,6 @@ function cellular()//流量包取值均为kb未转换
 		//console.log(i)
 		for(var a=1;a<=i;a++)
 	{
-		
 		k = jsonData.RESULTDATASET[a-1].RATABLERESOURCEID//获取包名id判断定向与通用
 		if(k==3312000)//判断定向
 		{

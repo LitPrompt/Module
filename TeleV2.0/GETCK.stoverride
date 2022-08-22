@@ -1,0 +1,18 @@
+name: 电信免流请求体获取
+desc: 开启脚本以及mitm等开关，配合电信免流使用，获取完记得关闭覆写
+
+http:
+  mitm:
+    - czapp.bestpay.com.cn
+  script:
+    - match: ^https?:\/\/czapp\.bestpay\.com\.cn\/payassistant\-client\?method\=queryUserResource
+      name: Telecom_BD
+      type: request
+      require-body: true
+      timeout: 120
+
+
+script-providers:
+  Telecom_BD:
+    url: https://raw.githubusercontent.com/QGCliveDavis/Module/main/TeleV2.0/BD1000.js
+    interval: 86400

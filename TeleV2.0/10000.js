@@ -46,7 +46,7 @@ $httpClient.post(
     // console.log(data)
   	jsonData = JSON.parse(data)
 	var logininfo=jsonData.RESPONSECODE
-	console.log(logininfo)
+	// console.log(logininfo)
 	if(logininfo=="010040")
 	{
 		$notification.post("Body错误或已过期❌","请尝试重新抓取Body(不抓没得用了！)","覆写获取到Body后可以不用关闭覆写覆写")
@@ -72,7 +72,7 @@ $httpClient.post(
 	else if(hoursused<0&&lasthours==23){minutesused=(60-lastminutes)+thishours*60+thisminutes} 
 //******
 	i = jsonData.RESULTDATASET.length;//获取第一个items长度
-	console.log(i)
+	// console.log(i)
 	if(auto=="true")
 	{cellular()}//取值部分
 	else
@@ -194,14 +194,14 @@ function cellular()//流量包取值均为kb未转换
 		}
 	
 	}
-	console.log(unlimitratabletotal)
-	console.log(unlimitbalancetotal)
-	console.log(unlimitusagetotal)
+	// console.log(unlimitratabletotal)
+	// console.log(unlimitbalancetotal)
+	// console.log(unlimitusagetotal)
 	
-	console.log(limitratabletotal)
-	console.log(limitbalancetotal)
-	console.log(limitusagetotal)
-	console.log("")
+	// console.log(limitratabletotal)
+	// console.log(limitbalancetotal)
+	// console.log(limitusagetotal)
+	// console.log("")
 	
 }
 

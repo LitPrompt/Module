@@ -2,7 +2,7 @@
   "id": "alt",
   "name": "@花猫的订阅",
   "author": "@Alt_Option",
-  "icon": "https://raw.githubusercontent.com/QGCliveDavis/Module/main/TeleV1.0/Cat.png",
+  "icon": "https://raw.githubusercontent.com/QGCliveDavis/Module/main/Asset/Cat.png",
   "repo": "https://github.com/QGCliveDavis/Module",
   "apps": [
    {
@@ -14,7 +14,7 @@
     		"1. 先安装获取body覆写，下方有地址，可直接拷贝安装，已安装请忽略",
     		"2. 进入翼支付",
     		"3. 当提示获取到body后即可，在脚本日志中可以查看到获取到的body",
-    		"<a href=\"https://raw.githubusercontent.com/QGCliveDavis/Module/main/TeleV1.0/GETCK.stoverride\">Cookie脚本覆写</a>"
+    		"<a href=\"https://raw.githubusercontent.com/QGCliveDavis/Module/main/TeleV2.0/GETBD.stoverride\">Body脚本覆写</a>"
       ],
       "keys": ["Tele_BD","limititems","unlimititems","hourstimeStore","minutestimeStore","limitStore","unlimitStore"],
       "settings": [  
@@ -66,7 +66,7 @@
       "author": "@Alt_Option",
       "repo": "https://github.com/QGCliveDavis/Module",
       "script": "https://github.com/QGCliveDavis/Module/blob/main/TeleV2.0/10000.js",
-      "icons": ["https://raw.githubusercontent.com/QGCliveDavis/Module/main/TeleV1.0/Cat.png","https://raw.githubusercontent.com/QGCliveDavis/Module/main/TeleV1.0/Cat.png"]
+      "icons": ["https://raw.githubusercontent.com/QGCliveDavis/Module/main/Asset/Cat.png","https://raw.githubusercontent.com/QGCliveDavis/Module/main/Asset/Cat.png"]
     }
   ]
 }

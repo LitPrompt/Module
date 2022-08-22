@@ -33,13 +33,6 @@ var limitUsed
 var unlimitUsed //通用差值与定向差值以及时间差值
 
 
-const myRequest = {
-    url: url,
-    method: method,
-    headers: headers,
-    body: body
-};
-
 
 $httpClient.post(
   {

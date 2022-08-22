@@ -49,7 +49,7 @@ $httpClient.post(
 	// console.log(logininfo)
 	if(logininfo=="010040")
 	{
-		$notification.post("Body错误或已过期❌","请尝试重新抓取Body(不抓没得用了！)","覆写获取到Body后可以不用关闭覆写覆写")
+		$notification.post("Body错误或已过期❌（也可能是电信的问题）","请尝试重新抓取Body(不抓没得用了！)","覆写获取到Body后可以不用关闭覆写")
 		$done()
 	}
 

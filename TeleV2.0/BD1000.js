@@ -1,6 +1,6 @@
 const bodyName = '中国电信'
 const bodyVal = $request.body
-const effective = cookieVal.indexOf("SESSIONKEY")
+const effective = bodyVal.indexOf("SESSIONKEY")
 
 if (effective=="0") {
   let Tele_body = $persistentStore.write(bodyVal, "Tele_BD")

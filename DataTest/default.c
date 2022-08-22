@@ -6,7 +6,7 @@ typedef struct LNode{
    struct LNode* next;
 }LNode,*Linklist;
 
-Linklist headinsert(Linklist &L){
+Linklist headinsert(){
    int c;
    LNode *S;
    Linklist L;
@@ -33,7 +33,7 @@ void printList(Linklist L){
 }
 
 int main() {
-   Linklist L;
-   headinsert(L);
-   printList(L->next);
+   Linklist head;
+   head=headinsert();
+   printList(head->next);
 }

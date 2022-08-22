@@ -1,7 +1,6 @@
 const bodyName = '中国电信'
 const bodyVal = $request.body
 const effective = bodyVal.indexOf("BILLCYCLE")
-$notification.post(effective,bodyVal ,"")
 
 if (effective=="0") {
     $persistentStore.write(bodyVal, "Tele_BD")
@@ -13,5 +12,8 @@ if (effective=="0") {
             console.log(bodyVal)
         }
     }
+else{
+    $notification.post("请点击已用流量","" ,"")
+}
 
 $done({})

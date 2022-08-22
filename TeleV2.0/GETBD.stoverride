@@ -5,7 +5,7 @@ http:
   mitm:
     - czapp.bestpay.com.cn
   script:
-    - match: ^https?:\/\/czapp\.bestpay\.com\.cn\/payassistant\-client\?method\=queryUserResource
+    - match: ^https?:\/\/czapp\.bestpay\.com\.cn
       name: Telecom_BD
       type: request
       require-body: true

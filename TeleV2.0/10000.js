@@ -46,6 +46,7 @@ $httpClient.post(
     // console.log(data)
   	jsonData = JSON.parse(data)
 	var logininfo=jsonData.RESPONSECODE
+	console.log(logininfo)
 	if(logininfo==010040)
 	{
 		$notification.post("Body错误或已过期❌","请尝试重新抓取Body(不抓没得用了！)","覆写获取到Body后关闭覆写")

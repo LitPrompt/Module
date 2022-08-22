@@ -1,6 +1,6 @@
 var ns = $persistentStore.read("notice_switch");
 var auto = $persistentStore.read("auto_switch");
-var body = $persistentStore.read("Tele_CK");
+var Tele_body = $persistentStore.read("Tele_CK");
 
 var jsonData //存储json数据
 var dateObj
@@ -39,7 +39,7 @@ $httpClient.post(
 
 	url: 'https://czapp.bestpay.com.cn/payassistant-client?method=queryUserResource',
 	headers: "",
-     body: body, // 请求体
+     body: Tele_body, // 请求体
   },
   (error, response, data) => {
   

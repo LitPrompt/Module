@@ -39,10 +39,11 @@ $httpClient.post(
 
 	url: 'https://czapp.bestpay.com.cn/payassistant-client?method=queryUserResource',
 	headers: "",
-     body: Tele_body, // 请求体
+    body: Tele_body, // 请求体
   },
   (error, response, data) => {
   
+	console.log(Tele_body)
     console.log(data)
   	jsonData = JSON.parse(data)
 	var logininfo=jsonData.result

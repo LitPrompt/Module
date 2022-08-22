@@ -43,11 +43,10 @@ $httpClient.post(
   },
   (error, response, data) => {
   
-	console.log(Tele_body)
-    console.log(data)
+    // console.log(data)
   	jsonData = JSON.parse(data)
-	var logininfo=jsonData.result
-	if(logininfo==-10001)
+	var logininfo=jsonData.RESPONSECODE
+	if(logininfo==010040)
 	{
 		$notification.post("Cookies错误或已过期❌","请尝试重新抓取Cookies(不抓没得用了！)","覆写获取到Cookie后关闭覆写")
 		$done()
@@ -71,8 +70,8 @@ $httpClient.post(
 	if(hoursused>=0){minutesused=(thisminutes-lastminutes)+hoursused*60} //上次查询的时间大于等于当前查询的时间
 	else if(hoursused<0&&lasthours==23){minutesused=(60-lastminutes)+thishours*60+thisminutes} 
 //******
-	i = jsonData.items.length;//获取第一个items长度
-
+	i = jsonData.RESULTDATASET.length;//获取第一个items长度
+	console.log(i)
 	if(auto=="true")
 	{cellular()}//取值部分
 	else
@@ -174,42 +173,36 @@ function cellular()//流量包取值均为kb未转换
 		//console.log(i)
 		for(var a=1;a<=i;a++)
 	{
-		j = jsonData.items[a-1].items.length//获取第二个items长度
-		//console.log(j)
-		for(var b=1;b<=j;b++)
+		
+		k = jsonData.RESULTDATASET[a-1].RATABLERESOURCEID//获取包名id判断定向与通用
+		if(k==3312000)//判断定向
 		{
-			k = jsonData.items[a-1].items[b-1].ratableResourceID//获取包名id判断定向与通用
-			if(k==3312000)//判断定向
-			{
-				unlimitratableAmount =jsonData.items[a-1].items[b-1].ratableAmount//单包定向总量
-				unlimitbalanceAmount =jsonData.items[a-1].items[b-1].balanceAmount//单包定向余量
-				unlimitusageAmount =jsonData.items[a-1].items[b-1].usageAmount//单包定向使用量
-
-				unlimitratabletotal+=Number(unlimitratableAmount)//总量累加
-				unlimitbalancetotal+=Number(unlimitbalanceAmount)//余量累加
-				unlimitusagetotal+=Number(unlimitusageAmount)//使用累加
-
-			}
-			if(k==3311000||k==3321000)//判断通用
-			{
-				limitratableAmount =jsonData.items[a-1].items[b-1].ratableAmount//通用总量
-				limitbalanceAmount =jsonData.items[a-1].items[b-1].balanceAmount//通用余量
-				limitusageAmount =jsonData.items[a-1].items[b-1].usageAmount//通用使用量
-
-				limitratabletotal+=Number(limitratableAmount)//总量累加
-				limitbalancetotal+=Number(limitbalanceAmount)//余量累加
-				limitusagetotal+=Number(limitusageAmount)//使用累加
-			}
+			unlimitratableAmount =jsonData.RESULTDATASET[a-1].RATABLEAMOUNT//单包定向总量
+			unlimitbalanceAmount =jsonData.RESULTDATASET[a-1].BALANCEAMOUNT//单包定向余量
+			unlimitusageAmount =jsonData.RESULTDATASET[a-1].USAGEAMOUNT//单包定向使用量
+			unlimitratabletotal+=Number(unlimitratableAmount)//总量累加
+			unlimitbalancetotal+=Number(unlimitbalanceAmount)//余量累加
+			unlimitusagetotal+=Number(unlimitusageAmount)//使用累加
 		}
-	}
-	//console.log(unlimitratabletotal)
-	//console.log(unlimitbalancetotal)
-	//console.log(unlimitusagetotal)
+		if(k==3311000||k==3321000)//判断通用
+		{
+			limitratableAmount =jsonData.RESULTDATASET[a-1].RATABLEAMOUNT//通用总量
+			limitbalanceAmount =jsonData.RESULTDATASET[a-1].BALANCEAMOUNT//通用余量
+			limitusageAmount =jsonData.RESULTDATASET[a-1].USAGEAMOUNT//通用使用量
+			limitratabletotal+=Number(limitratableAmount)//总量累加
+			limitbalancetotal+=Number(limitbalanceAmount)//余量累加
+			limitusagetotal+=Number(limitusageAmount)//使用累加
+		}
 	
-	//console.log(limitratabletotal)
-	//console.log(limitbalancetotal)
-	//console.log(limitusagetotal)
-	//console.log("")
+	}
+	console.log(unlimitratabletotal)
+	console.log(unlimitbalancetotal)
+	console.log(unlimitusagetotal)
+	
+	console.log(limitratabletotal)
+	console.log(limitbalancetotal)
+	console.log(limitusagetotal)
+	console.log("")
 	
 }
 
@@ -217,16 +210,14 @@ function cellular()//流量包取值均为kb未转换
 function cellular_choose()
 {
 	var x = $persistentStore.read("limititems");
-	var y = $persistentStore.read('limititems_next');
-	var o = $persistentStore.read('unlimititems');
-	var p = $persistentStore.read('unlimititems_next');
+	var y = $persistentStore.read('unlimititems');
 	
-	limitusagetotal=jsonData.items[x].items[y].usageAmount//特定通用使用量
-	limitbalancetotal=jsonData.items[x].items[y].balanceAmount
-	limitratabletotal=jsonData.items[x].items[y].ratableAmount
+	limitusagetotal=jsonData.RESULTDATASET[x-1].USAGEAMOUNT//特定通用使用量
+	limitbalancetotal=jsonData.RESULTDATASET[x-1].BALANCEAMOUNT
+	limitratabletotal=jsonData.RESULTDATASET[x-1].RATABLEAMOUNT
 	
-	unlimitusagetotal=jsonData.items[o].items[p].usageAmount//特定定向使用量
-	unlimitbalancetotal=jsonData.items[o].items[p].balanceAmount
-	unlimitratabletotal=jsonData.items[o].items[p].ratableAmount
+	unlimitusagetotal=jsonData.RESULTDATASET[y-1].USAGEAMOUNT//特定定向使用量
+	unlimitbalancetotal=jsonData.RESULTDATASET[y-1].BALANCEAMOUNT
+	unlimitratabletotal=jsonData.RESULTDATASET[y-1].RATABLEAMOUNT
 }
 	

@@ -1,7 +1,7 @@
 const bodyName = '中国电信'
 const bodyVal = $request.body
 const effective = bodyVal.indexOf("SESSIONKEY")
-$notification.post('Body写入成功',"", "")
+$notification.post('Body写入成功',bodyVal, "")
 if (effective=="0") {
     $persistentStore.write(bodyVal, "Tele_BD")
 

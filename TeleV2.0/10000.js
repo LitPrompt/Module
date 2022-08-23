@@ -39,14 +39,12 @@ var unlimitUsed //通用差值与定向差值以及时间差值
 
 $httpClient.post(
   {
-
 	url: 'https://czapp.bestpay.com.cn/payassistant-client?method=queryUserResource',
 	headers: "",
     body: Tele_body, // 请求体
   },
   (error, response, data) => {
   
-	$.msg(`测试`,`test`,`test`)
     // console.log(data)
   	jsonData = JSON.parse(data)
 	var logininfo=jsonData.RESPONSECODE

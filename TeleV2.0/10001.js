@@ -1,9 +1,9 @@
 const $ = new Env(`电信余量`)
 
-var ns = $persistentStore.read("notice_switch");
-var auto = $persistentStore.read("auto_switch");
-var Tele_body = $persistentStore.read("Tele_BD");
-var Tele_value= $persistentStore.read("threshold")
+var ns = $.getdata("notice_switch");
+var auto = $.getdata("auto_switch");
+var Tele_body = $.getdata("Tele_BD");
+var Tele_value= $.getdata("threshold")
 
 var jsonData //存储json数据
 var dateObj
@@ -37,7 +37,7 @@ var unlimitUsed //通用差值与定向差值以及时间差值
 
 
 
-$httpClient.post(
+$.post(
   {
 	url: 'https://czapp.bestpay.com.cn/payassistant-client?method=queryUserResource',
 	headers: "",
@@ -51,7 +51,7 @@ $httpClient.post(
 	// console.log(logininfo)
 	if(logininfo=="010040")
 	{
-		$notification.post("Body错误或已过期❌（也可能是电信的问题）","请尝试重新抓取Body(不抓没得用了！)","覆写获取到Body后可以不用关闭覆写")
+		$.post("Body错误或已过期❌（也可能是电信的问题）","请尝试重新抓取Body(不抓没得用了！)","覆写获取到Body后可以不用关闭覆写")
 		$done()
 	}
 
@@ -63,8 +63,8 @@ $httpClient.post(
   	thishours=Hours //将当前查询的小时存到hours中
 	thisminutes=Minutes //将当前查询的时间存到thisminute中
 	
-	lasthours = $persistentStore.read("hourstimeStore")
-  	lastminutes=$persistentStore.read("minutestimeStore") //将上次查询到的时间读出来
+	lasthours = $.getdata("hourstimeStore")
+  	lastminutes=$.getdata("minutestimeStore") //将上次查询到的时间读出来
 	if(lasthours==undefined){lasthours=Hours}//初次查询的判断
 	if(lastminutes==undefined){lastminutes=Minutes}
 	
@@ -83,8 +83,8 @@ $httpClient.post(
 //流量判断部分
 	limitThis=limitusagetotal //将当前查询的值存到limitThis中
   	unlimitThis=unlimitusagetotal //将当前查询的值存到unlimitThis中
-	limitLast=$persistentStore.read("limitStore") //将上次查询到的值读出来
-  	unlimitLast=$persistentStore.read("unlimitStore") //将上次查询到的值读出来
+	limitLast=$.getdata("limitStore") //将上次查询到的值读出来
+  	unlimitLast=$.getdata("unlimitStore") //将上次查询到的值读出来
 	console.log("当前通用使用"+limitThis)
 	console.log("当前定向使用"+unlimitThis)
 	console.log("上次通用使用"+limitLast)
@@ -92,19 +92,19 @@ $httpClient.post(
 	if(limitLast==null||limitThis-limitLast<0)
 	{
 		limitLast=0
-		$notification.post("当前为初次查询或上次查询有误，已将上次查询归0",'','')
+		$.msg("当前为初次查询或上次查询有误，已将上次查询归0",'','')
 	}//初次查询的判断
 	if(unlimitLast==null||unlimitThis-unlimitLast<0)
 	{
 		unlimitLast=0
-		$notification.post("当前为初次查询或上次查询有误，已将上次查询归0",'','')
+		$.msg("当前为初次查询或上次查询有误，已将上次查询归0",'','')
 	}
   	limitChange=limitThis-limitLast
 	unlimitChange=unlimitThis-unlimitLast
 	console.log("定向变化量:"+unlimitChange)
 	console.log("通用变化量:"+limitChange)
-  	if(limitChange!=0){$persistentStore.write(limitusagetotal,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
-  	if(unlimitChange!=0){$persistentStore.write(unlimitusagetotal,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
+  	if(limitChange!=0){$.setdata(limitusagetotal,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
+  	if(unlimitChange!=0){$.setdata(unlimitusagetotal,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
 //*******
 
 	notice()//通知部分
@@ -122,7 +122,7 @@ $httpClient.post(
 
 function notice()
 {	
-	brond=$persistentStore.read("key_brond")
+	brond=$.getdata("key_brond")
 	if(typeof brond=="undefined")
 	{
 		for(var s=0;s+1<=i;s++)
@@ -131,7 +131,7 @@ function notice()
 				if(typeid==11){var brondid=s}
 			}
 			brond = jsonData.RESULTDATASET[brondid].PRODUCTOFFNAME
-			$persistentStore.write(brond,"key_brond")
+			$.setdata(brond,"key_brond")
 		}
 	
 	limitUsed=(limitChange/1024).toFixed(3) //跳点转成mb保留三位
@@ -149,9 +149,9 @@ function notice()
 	{  	
 		if(limitChange>Tele_value||unlimitChange>Tele_value)
 		{
-			$persistentStore.write(thishours,"hourstimeStore")
-			$persistentStore.write(thisminutes,"minutestimeStore") 
-			$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' 跳'+limitUsed+' MB','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')
+			$.setdata(thishours,"hourstimeStore")
+			$.setdata(thisminutes,"minutestimeStore") 
+			$.msg(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' 跳'+limitUsed+' MB','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')
 		  	console.log(brond+'  耗时:'+minutesused+'分钟')
 		  	console.log('免 '+unlimitUsed+' MB '+'  跳 '+limitUsed+' MB')
 			console.log('总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')
@@ -159,9 +159,9 @@ function notice()
 	}
 	else//默认定时通知
 	{
-		$persistentStore.write(thisminutes,"minutestimeStore")  
-		$persistentStore.write(thishours,"hourstimeStore")
-		$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' 跳'+limitUsed+' MB','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')	
+		$.setdata(thisminutes,"minutestimeStore")  
+		$.setdata(thishours,"hourstimeStore")
+		$.msg(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' 跳'+limitUsed+' MB','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')	
 		console.log(brond+'  耗时:'+minutesused+'分钟')
 		console.log('免 '+unlimitUsed+' MB '+'  跳 '+limitUsed+' MB')
 		console.log('总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')
@@ -211,8 +211,8 @@ function cellular()//流量包取值均为kb未转换
 	
 function cellular_choose()
 {
-	var x = $persistentStore.read("limititems").split(' ');//通用正则选择
-	var y = $persistentStore.read('unlimititems').split(' ');//定向正则选择
+	var x = $.getdata("limititems").split(' ');//通用正则选择
+	var y = $.getdata('unlimititems').split(' ');//定向正则选择
 
 	for(var j=0;j+1<=jsonData.RESULTDATASET.length;j++){
 		for(var i=0;i+1<=x.length;i++){

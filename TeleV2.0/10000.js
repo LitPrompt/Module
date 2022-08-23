@@ -212,10 +212,11 @@ function cellular_choose()
 {
 	var x = $persistentStore.read("limititems").split(' ');//通用正则选择
 	var y = $persistentStore.read('unlimititems').split(' ');//定向正则选择
-	
+	if(x=="undefined")
+	console.log("yes")
 	console.log(x)
 	console.log(y)
-	
+
 	for(var j=0;j+1<=jsonData.RESULTDATASET.length;j++){
 		for(var i=0;i+1<=x.length;i++){
 			const limitRegExp=new RegExp(x[i])//正则判断是否包含算选包正则

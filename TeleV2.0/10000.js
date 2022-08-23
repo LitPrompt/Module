@@ -212,15 +212,11 @@ function cellular_choose()
 {
 	var x = $persistentStore.read("limititems").split(' ');//通用正则选择
 	var y = $persistentStore.read('unlimititems').split(' ');//定向正则选择
-	if(x=="undefined")
-	console.log("yes")
-	console.log(x)
-	console.log(y)
 
 	for(var j=0;j+1<=jsonData.RESULTDATASET.length;j++){
 		for(var i=0;i+1<=x.length;i++){
 			const limitRegExp=new RegExp(x[i])//正则判断是否包含算选包正则
-			if(limitRegExp.test(jsonData.RESULTDATASET[j].PRODUCTOFFNAME)){
+			if(limitRegExp.test(jsonData.RESULTDATASET[j].PRODUCTOFFNAME)||limitRegExp.test(jsonData.RESULTDATASET[j].RATABLERESOURCENAME)){
 				limitusageAmount=jsonData.RESULTDATASET[j].USAGEAMOUNT//特定通用使用量
 				limitbalanceAmount=jsonData.RESULTDATASET[j].BALANCEAMOUNT
 				limitratableAmount=jsonData.RESULTDATASET[j].RATABLEAMOUNT	
@@ -229,13 +225,14 @@ function cellular_choose()
 				limitusagetotal+=Number(limitusageAmount)//使用累加
 			}
 		}
+
 	}
 
 	
 	for(var k=0;k+1<=jsonData.RESULTDATASET.length;k++){
 		for(var e=0;e+1<=y.length;e++){
 			const unlimitRegExp=new RegExp(y[e])//正则判断是否包含算选包正则
-			if(unlimitRegExp.test(jsonData.RESULTDATASET[k].PRODUCTOFFNAME)){
+			if(unlimitRegExp.test(jsonData.RESULTDATASET[k].PRODUCTOFFNAME)||unlimitRegExp.test(jsonData.RESULTDATASET[k].RATABLERESOURCENAME)){
 				unlimitusageAmount=jsonData.RESULTDATASET[k].USAGEAMOUNT//特定定向使用量
 				unlimitbalanceAmount=jsonData.RESULTDATASET[k].BALANCEAMOUNT
 				unlimitratableAmount=jsonData.RESULTDATASET[k].RATABLEAMOUNT
@@ -248,13 +245,13 @@ function cellular_choose()
 
 	}
 
-	console.log(unlimitratabletotal)
-	console.log(unlimitbalancetotal)
-	console.log(unlimitusagetotal)
+	// console.log(unlimitratabletotal)
+	// console.log(unlimitbalancetotal)
+	// console.log(unlimitusagetotal)
 	
-	console.log(limitratabletotal)
-	console.log(limitbalancetotal)
-	console.log(limitusagetotal)
-	console.log("")
+	// console.log(limitratabletotal)
+	// console.log(limitbalancetotal)
+	// console.log(limitusagetotal)
+	// console.log("")
 }
 	

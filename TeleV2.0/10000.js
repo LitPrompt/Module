@@ -1,6 +1,7 @@
 var ns = $persistentStore.read("notice_switch");
 var auto = $persistentStore.read("auto_switch");
 var Tele_body = $persistentStore.read("Tele_BD");
+var Tele_value= $persistentStore.read("threshold")
 
 var jsonData //存储json数据
 var dateObj
@@ -101,8 +102,8 @@ $httpClient.post(
 	unlimitChange=unlimitThis-unlimitLast
 	console.log("定向变化量:"+unlimitChange)
 	console.log("通用变化量:"+limitChange)
-  	if(limitChange!=0){$persistentStore.write(limitusagetotal,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
-  	if(unlimitChange!=0){$persistentStore.write(unlimitusagetotal,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
+  	if(limitChange>Tele_value){$persistentStore.write(limitusagetotal,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
+  	if(unlimitChange>Tele_value){$persistentStore.write(unlimitusagetotal,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
 //*******
 
 	notice()//通知部分
@@ -140,11 +141,12 @@ function notice()
 	
 	if(limitChange==0){limitUsed=0}
 	if(unlimitChange==0){unlimitUsed=0+' MB '}
+
 	limitbalancetotal=(limitbalancetotal/1048576).toFixed(2) //剩余转成mb保留两位
   	unlimitusagetotal=(unlimitusagetotal/1048576).toFixed(2)//总免使用转化成gb保留两位小数
 	if(ns=="true")//true时执行变化通知
 	{  	
-		if(limitChange!=0||unlimitChange!=0)
+		if(limitChange>Tele_value||unlimitChange>Tele_value)
 		{
 			$persistentStore.write(thishours,"hourstimeStore")
 			$persistentStore.write(thisminutes,"minutestimeStore") 
@@ -208,15 +210,45 @@ function cellular()//流量包取值均为kb未转换
 	
 function cellular_choose()
 {
-	var x = $persistentStore.read("limititems");
-	var y = $persistentStore.read('unlimititems');
+	var x = $persistentStore.read("limititems").split(' ');//通用正则选择
+	var y = $persistentStore.read('unlimititems').split(' ');//定向正则选择
 	
-	limitusagetotal=jsonData.RESULTDATASET[x-1].USAGEAMOUNT//特定通用使用量
-	limitbalancetotal=jsonData.RESULTDATASET[x-1].BALANCEAMOUNT
-	limitratabletotal=jsonData.RESULTDATASET[x-1].RATABLEAMOUNT
+	for(var i=0;i<=x.length;i++){
+		const limitRegExp=new RegExp(x[i])//正则判断是否包含算选包正则
+		for(var j=0;j+1<=jsonData.RESULTDATASET.length;j++){
+			if(limitRegExp.test(jsonData.RESULTDATASET[j].PRODUCTOFFNAME)){
+				limitusageAmount=jsonData.RESULTDATASET[j].USAGEAMOUNT//特定通用使用量
+				limitbalanceAmount=jsonData.RESULTDATASET[j].BALANCEAMOUNT
+				limitratableAmount=jsonData.RESULTDATASET[j].RATABLEAMOUNT	
+				limitratabletotal+=Number(limitratableAmount)//总量累加
+				limitbalancetotal+=Number(limitbalanceAmount)//余量累加
+				limitusagetotal+=Number(limitusageAmount)//使用累加
+			}
+			
+		}
+	}
+
+	for(var e=0;e<=y.length;e++){
+		const unlimitRegExp=new RegExp(y[e])//正则判断是否包含算选包正则
+		for(var k=0;k+1<=jsonData.RESULTDATASET.length;k++){
+			if(unlimitRegExp.test(jsonData.RESULTDATASET[k].PRODUCTOFFNAME)){
+				unlimitusageAmount=jsonData.RESULTDATASET[k].USAGEAMOUNT//特定定向使用量
+				unlimitbalanceAmount=jsonData.RESULTDATASET[k].BALANCEAMOUNT
+				unlimitratableAmount=jsonData.RESULTDATASET[k].RATABLEAMOUNT
+				unlimitratabletotal+=Number(unlimitratableAmount)//总量累加
+				unlimitbalancetotal+=Number(unlimitbalanceAmount)//余量累加
+				unlimitusagetotal+=Number(unlimitusageAmount)//使用累加
+			}
 	
-	unlimitusagetotal=jsonData.RESULTDATASET[y-1].USAGEAMOUNT//特定定向使用量
-	unlimitbalancetotal=jsonData.RESULTDATASET[y-1].BALANCEAMOUNT
-	unlimitratabletotal=jsonData.RESULTDATASET[y-1].RATABLEAMOUNT
+		}
+	}
+	console.log(unlimitratabletotal)
+	console.log(unlimitbalancetotal)
+	console.log(unlimitusagetotal)
+	
+	console.log(limitratabletotal)
+	console.log(limitbalancetotal)
+	console.log(limitusagetotal)
+	console.log("")
 }
 	

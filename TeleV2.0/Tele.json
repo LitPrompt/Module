@@ -40,26 +40,35 @@
           "val": true,
           "type": "boolean",
           "desc": "数据包不能正确显示的,只能关闭开关,手动选择特定包监控"
-        },      
+        },
+        {
+          "id": "threshold",
+          "name": "跳点提醒阈值",
+          "val": 0,
+          "autoGrow": true,
+          "rows": 1,
+          "type": "number",
+          "desc": "默认阈值为0，单位为kb，即有变化就通知"
+        },
         {
           "id": "limititems",
           "name": "通用包",
           "val": "",
-          "placeholder": "通用包",
+          "placeholder": "例如：“合约包 结转包”，则通用剩余显示这两个包的总和（不用打引号）",
           "autoGrow": true,
           "rows": 1,
           "type": "text",
-          "desc": "选择通用包"
+          "desc": "正则选择通用包以空格分开"
         },
         {
           "id": "unlimititems",
           "name": "定向包",
           "val": "",
-          "placeholder": "定向包",
+          "placeholder": "例如：“畅享量 某某定向”，则定向总免显示这两个包的总和（不用打引号）",
           "autoGrow": true,
           "rows": 1,
           "type": "text",
-          "desc": "选择定向包"
+          "desc": "正则选择定向包以空格分开"
         }
     ],
       "author": "@Alt_Option",

@@ -45,7 +45,7 @@
         },
         {
           "id": "threshold",
-          "name": "跳点提醒阈值",
+          "name": "跳点提醒阈值(定时通知打开时阈值不起作用)",
           "val": 0,
           "autoGrow": true,
           "rows": 1,
@@ -54,7 +54,7 @@
         },
         {
           "id": "limititems",
-          "name": "通用包名",
+          "name": "通用包名正则",
           "val": "",
           "placeholder": "输入通用包以空格分开",
           "autoGrow": true,
@@ -64,7 +64,7 @@
         },
         {
           "id": "unlimititems",
-          "name": "定向包名",
+          "name": "定向包名正则",
           "val": "",
           "placeholder": "输入定向包以空格分开",
           "autoGrow": true,

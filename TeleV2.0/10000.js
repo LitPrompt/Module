@@ -245,13 +245,13 @@ function cellular_choose()
 
 	}
 
-	// console.log(unlimitratabletotal)
-	// console.log(unlimitbalancetotal)
-	// console.log(unlimitusagetotal)
+	console.log(unlimitratabletotal)
+	console.log(unlimitbalancetotal)
+	console.log(unlimitusagetotal)
 	
-	// console.log(limitratabletotal)
-	// console.log(limitbalancetotal)
-	// console.log(limitusagetotal)
-	// console.log("")
+	console.log(limitratabletotal)
+	console.log(limitbalancetotal)
+	console.log(limitusagetotal)
+	console.log("")
 }
 	

@@ -213,7 +213,8 @@ function cellular_choose()
 	var x = $persistentStore.read("limititems").split(' ');//通用正则选择
 	var y = $persistentStore.read('unlimititems').split(' ');//定向正则选择
 	
-
+	console.log(x)
+	console.log(y)
 	
 	for(var j=0;j+1<=jsonData.RESULTDATASET.length;j++){
 		for(var i=0;i+1<=x.length;i++){

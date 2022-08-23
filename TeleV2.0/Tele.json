@@ -52,7 +52,7 @@
         },
         {
           "id": "limititems",
-          "name": "通用包",
+          "name": "通用包名正则",
           "val": "",
           "placeholder": "例如：“合约包 结转包”，则通用剩余显示这两个包的总和（不用打引号）",
           "autoGrow": true,
@@ -62,7 +62,7 @@
         },
         {
           "id": "unlimititems",
-          "name": "定向包",
+          "name": "定向包名正则",
           "val": "",
           "placeholder": "例如：“畅享量 某某定向”，则定向总免显示这两个包的总和（不用打引号）",
           "autoGrow": true,

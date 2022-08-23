@@ -142,7 +142,7 @@ function notice()
 	if(limitChange==0){limitUsed=0}
 	if(unlimitChange==0){unlimitUsed=0+' MB '}
 
-	limitbalancetotal=(limitbalancetotal/1048576).toFixed(2) //剩余转成mb保留两位
+	limitbalancetotal=(limitbalancetotal/1048576).toFixed(2) //剩余转成gb保留两位
   	unlimitusagetotal=(unlimitusagetotal/1048576).toFixed(2)//总免使用转化成gb保留两位小数
 	if(ns=="true")//true时执行变化通知
 	{  	
@@ -213,9 +213,11 @@ function cellular_choose()
 	var x = $persistentStore.read("limititems").split(' ');//通用正则选择
 	var y = $persistentStore.read('unlimititems').split(' ');//定向正则选择
 	
-	for(var i=0;i<=x.length;i++){
-		const limitRegExp=new RegExp(x[i])//正则判断是否包含算选包正则
-		for(var j=0;j+1<=jsonData.RESULTDATASET.length;j++){
+
+	
+	for(var j=0;j+1<=jsonData.RESULTDATASET.length;j++){
+		for(var i=0;i+1<=x.length;i++){
+			const limitRegExp=new RegExp(x[i])//正则判断是否包含算选包正则
 			if(limitRegExp.test(jsonData.RESULTDATASET[j].PRODUCTOFFNAME)){
 				limitusageAmount=jsonData.RESULTDATASET[j].USAGEAMOUNT//特定通用使用量
 				limitbalanceAmount=jsonData.RESULTDATASET[j].BALANCEAMOUNT
@@ -224,13 +226,13 @@ function cellular_choose()
 				limitbalancetotal+=Number(limitbalanceAmount)//余量累加
 				limitusagetotal+=Number(limitusageAmount)//使用累加
 			}
-			
 		}
 	}
 
-	for(var e=0;e<=y.length;e++){
-		const unlimitRegExp=new RegExp(y[e])//正则判断是否包含算选包正则
-		for(var k=0;k+1<=jsonData.RESULTDATASET.length;k++){
+	
+	for(var k=0;k+1<=jsonData.RESULTDATASET.length;k++){
+		for(var e=0;e+1<=y.length;e++){
+			const unlimitRegExp=new RegExp(y[e])//正则判断是否包含算选包正则
 			if(unlimitRegExp.test(jsonData.RESULTDATASET[k].PRODUCTOFFNAME)){
 				unlimitusageAmount=jsonData.RESULTDATASET[k].USAGEAMOUNT//特定定向使用量
 				unlimitbalanceAmount=jsonData.RESULTDATASET[k].BALANCEAMOUNT
@@ -239,9 +241,11 @@ function cellular_choose()
 				unlimitbalancetotal+=Number(unlimitbalanceAmount)//余量累加
 				unlimitusagetotal+=Number(unlimitusageAmount)//使用累加
 			}
-	
+
 		}
+
 	}
+
 	console.log(unlimitratabletotal)
 	console.log(unlimitbalancetotal)
 	console.log(unlimitusagetotal)

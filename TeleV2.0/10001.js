@@ -48,7 +48,7 @@ $.post(
     // console.log(data)
   	jsonData = JSON.parse(data)
 	var logininfo=jsonData.RESPONSECODE
-	// console.log(logininfo)
+	console.log(logininfo)
 	if(logininfo=="010040")
 	{
 		$.post("Body错误或已过期❌（也可能是电信的问题）","请尝试重新抓取Body(不抓没得用了！)","覆写获取到Body后可以不用关闭覆写")

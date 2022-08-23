@@ -103,12 +103,8 @@ $.post(
 	unlimitChange=unlimitThis-unlimitLast
 	console.log("定向变化量:"+unlimitChange)
 	console.log("通用变化量:"+limitChange)
-  	if(limitChange!=0){
-        $.setdata(limitusagetotal,"limitStore")
-    }  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
-  	if(unlimitChange!=0){
-        $.setdata(unlimitusagetotal,"unlimitStore")
-    }  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
+  	if(limitChange!=0){$.setdata(limitusagetotal,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
+  	if(unlimitChange!=0){$.setdata(unlimitusagetotal,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
 //*******
 
 	notice()//通知部分

@@ -46,7 +46,7 @@ $httpClient.post(
   },
   (error, response, data) => {
   
-	$.notice("测试","test","test")
+	$.notice(`测试`,`test`,`test`)
     // console.log(data)
   	jsonData = JSON.parse(data)
 	var logininfo=jsonData.RESPONSECODE

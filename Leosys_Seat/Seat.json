@@ -8,7 +8,7 @@
    {
       "id": "LeoSys",
       "name": "利昂图书馆选座",
-      "keys": ["LeoSys_Token"],
+      "keys": ["LeoSys_Token","tsg_seat"],
       "settings": [  
         {
           "id": "LeoSys_Token",

@@ -8,29 +8,22 @@
    {
       "id": "LeoSys",
       "name": "利昂图书馆选座",
-      "keys": ["Tele_BD","limititems","unlimititems","hourstimeStore","minutestimeStore","limitStore","unlimitStore"],
+      "keys": ["LeoSys_Token"],
       "settings": [  
-
         {
-          "id": "notice_switch",
-          "name": "是否禁用定时通知",
-          "val": false,
-          "type": "boolean",
-          "desc": "开启后将在流量变化时通知流量信息"
-        },    
-        {
-          "id": "threshold",
-          "name": "跳点提醒阈值(定时通知时阈值不起作用)",
-          "val": 0,
+          "id": "LeoSys_Token",
+          "name": "查询Token",
+          "val": "",
+          "type": "text",
+          "placeholder": "Token",
           "autoGrow": true,
           "rows": 1,
-          "type": "number",
-          "desc": "默认阈值为0，单位为kb，即有变化就通知"
+          "desc": "抓取Token"
         }
     ],
       "author": "@Alt_Option",
       "repo": "https://github.com/QGCliveDavis/Module",
-      "script": "https://github.com/QGCliveDavis/Module/blob/main/TeleV2.0/10000.js",
+      "script": "https://raw.githubusercontent.com/QGCliveDavis/Module/main/Leosys_Seat/Seat.js",
       "icons": ["https://raw.githubusercontent.com/QGCliveDavis/Module/main/Asset/Cat.png","https://raw.githubusercontent.com/QGCliveDavis/Module/main/Asset/Cat.png"]
     }
   ]

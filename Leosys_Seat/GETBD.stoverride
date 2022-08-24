@@ -1,0 +1,13 @@
+name: Leosys_Seat
+desc: 座位查询
+
+cron:
+  script:
+    - name: Telecom
+      cron: '* * * * *' 
+      timeout: 50 # optional
+
+script-providers:
+  Telecom:
+    url: https://raw.githubusercontent.com/QGCliveDavis/Module/main/Leosys_Seat/Seat.js
+    interval: 86400

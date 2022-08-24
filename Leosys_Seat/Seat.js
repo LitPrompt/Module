@@ -20,7 +20,7 @@ $httpClient.get(
         if(jsondata.status=="fail"){$notification.post("Token已过期，请重新抓取Token","原因："+jsondata.message,"")}
 
 
-        $notification.post("当前空余座位："+seat_left()+"个，快抢!!!","所选座位状态："+seat_get(seat),"")
+        $notification.post("当前空余座位："+seat_left()+"个","所选座位状态："+seat_get(seat),"")
         console.log("当前空余座位："+seat_left()+"个，快抢!!!")
         console.log("所选座位状态："+seat_get(seat))
         $done()
@@ -37,8 +37,9 @@ function seat_left(){
 
 function seat_get(a){
     for(var k in jsondata.data.layout){
-        key=Number(k)
-        if(jsondata.data.layout[k].id==a){return '所选座位有空余'}
-        else{return '所选座位有人'}
+        if(jsondata.data.layout[Number(k)].name==a){
+            if(jsondata.data.layout[Number(k)].status=="FREE"){return '所选座位没有人'}
+            else{return '所选座位有人'}
+        }
     }
 }

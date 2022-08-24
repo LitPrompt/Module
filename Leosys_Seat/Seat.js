@@ -12,6 +12,7 @@ $httpClient.get(
       body: body, 
     },
     (error, response, data) => {
-        console.log(data.status)
-        $notification.post(data.status,"","")
+        jsondata=data
+        console.log(jsondata.status)
+        $notification.post(jsondata.status,"","")
     })

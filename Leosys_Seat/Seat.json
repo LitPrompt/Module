@@ -19,6 +19,16 @@
           "autoGrow": true,
           "rows": 1,
           "desc": "抓取Token"
+        },
+        {
+          "id": "tsg_seat",
+          "name": "座位选择",
+          "val": "",
+          "type": "text",
+          "placeholder": "具体座位信息",
+          "autoGrow": true,
+          "rows": 1,
+          "desc": "以空格分开"
         }
     ],
       "author": "@Alt_Option",

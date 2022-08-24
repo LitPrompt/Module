@@ -14,15 +14,17 @@ $httpClient.get(
     },
     (error, response, data) => {
         var jsondata = JSON.parse(data);
-        console.log("eee")
         let y=0
-        for(let key in jsondata.data.layout){
-            key=Number(key)
-            console.log(key)
-            if(jsondata.data.layout[key].status=="FREE")
+        if(jsondata.status=="fail"){
+            $notification.post("Token已过期，请重新抓取Token","原因："+jsondata.message)
+        }
+        for(var k in jsondata.data.layout){
+            key=Number(k)
+            if(jsondata.data.layout[k].status=="FREE")
             {y++}
         }
         console.log("当前空余座位："+y+"个，快抢!!!")
-        $notification.post("当前空余座位："+y+"个，快抢!!!",'','')
-
+        $notification.post("当前空余座位："+y+"个，快抢!!!")
+        $done()
     })
+ 

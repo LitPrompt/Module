@@ -21,6 +21,6 @@ $httpClient.get(
             {y++}
         }
         console.log("当前空余座位："+y+"个，快抢!!!")
-        $notification.post("当前空余座位："+y+"个，快抢!!!")
+        $notification.post("当前空余座位："+y+"个，快抢!!!",'','')
 
     })

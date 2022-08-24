@@ -6,6 +6,7 @@ const headers = {
 const body = ``;
 let seat=$persistentStore.read("tsg_seat")
 console.log(typeof seat)
+console.log(seat)
 // .split(' ')
 
 $httpClient.get(

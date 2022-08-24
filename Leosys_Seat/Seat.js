@@ -14,6 +14,7 @@ $httpClient.get(
     },
     (error, response, data) => {
         var jsondata = JSON.parse(data);
+        console.log("eee")
         let y=0
         for(let key in jsondata.data.layout){
             key=Number(key)

@@ -5,6 +5,7 @@ const headers = {
 };
 const body = ``;
 let seat=$persistentStore.read("tsg_seat")
+// .split(' ')
 
 $httpClient.get(
     {
@@ -14,17 +15,26 @@ $httpClient.get(
     },
     (error, response, data) => {
         var jsondata = JSON.parse(data);
-        let y=0
-        if(jsondata.status=="fail"){
-            $notification.post("Token已过期，请重新抓取Token","原因："+jsondata.message)
-        }
-        for(var k in jsondata.data.layout){
-            key=Number(k)
-            if(jsondata.data.layout[k].status=="FREE")
-            {y++}
-        }
-        console.log("当前空余座位："+y+"个，快抢!!!")
-        $notification.post("当前空余座位："+y+"个，快抢!!!")
+        if(jsondata.status=="fail"){$notification.post("Token已过期，请重新抓取Token","原因："+jsondata.message,'')}
+
+        console.log("当前空余座位："+seat_left()+"个，快抢!!!")
+        $notification.post("当前空余座位："+seat_left()+"个，快抢!!!",'所选座位状态：'+seat_get(seat),'')
         $done()
     })
  
+function seat_left(){
+    let y=0
+    for(var k in jsondata.data.layout){
+        if(jsondata.data.layout[Number(k)].status=="FREE")
+        {y++}
+    }
+    return y
+}
+
+function seat_get(a){
+    for(var k in jsondata.data.layout){
+        key=Number(k)
+        if(jsondata.data.layout[k].id==a){return '所选座位有空余'}
+        else{return '所选座位有人'}
+    }
+}

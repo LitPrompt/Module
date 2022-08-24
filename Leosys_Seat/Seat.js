@@ -14,5 +14,6 @@ $httpClient.get(
     (error, response, data) => {
         jsonData = JSON.parse(data)
         console.log(jsonData)
+        console.log(data)
         // $notification.post()
     })

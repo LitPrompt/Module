@@ -5,6 +5,7 @@ const headers = {
 };
 const body = ``;
 let seat=$persistentStore.read("tsg_seat")
+console.log(typeof seat)
 // .split(' ')
 
 $httpClient.get(
@@ -17,8 +18,10 @@ $httpClient.get(
         var jsondata = JSON.parse(data);
         if(jsondata.status=="fail"){$notification.post("Token已过期，请重新抓取Token","原因："+jsondata.message,"")}
 
-        console.log("当前空余座位："+seat_left()+"个，快抢!!!")
+
         $notification.post("当前空余座位："+seat_left()+"个，快抢!!!","所选座位状态："+seat_get(seat),"")
+        console.log("当前空余座位："+seat_left()+"个，快抢!!!")
+        console.log("所选座位状态："+seat_get(seat))
         $done()
     })
  

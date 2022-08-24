@@ -9,23 +9,6 @@ console.log(typeof seat)
 console.log(seat)
 // .split(' ')
 
-$httpClient.get(
-    {
-      url: url,
-      headers: headers,
-      body: body, 
-    },
-    (error, response, data) => {
-        var jsondata = JSON.parse(data);
-        if(jsondata.status=="fail"){$notification.post("Token已过期，请重新抓取Token","原因："+jsondata.message,"")}
-
-
-        $notification.post("当前空余座位："+seat_left()+"个","所选座位状态："+seat_get(seat),"")
-        console.log("当前空余座位："+seat_left()+"个，快抢!!!")
-        console.log("所选座位状态："+seat_get(seat))
-        $done()
-    })
- 
 function seat_left(){
     let y=0
     for(var k in jsondata.data.layout){
@@ -43,3 +26,20 @@ function seat_get(a){
         }
     }
 }
+
+$httpClient.get(
+    {
+      url: url,
+      headers: headers,
+      body: body, 
+    },
+    (error, response, data) => {
+        var jsondata = JSON.parse(data);
+        if(jsondata.status=="fail"){$notification.post("Token已过期，请重新抓取Token",jsondata.message,"")}
+
+        $notification.post('当前空余座位：'+seat_left()+'个','座位状态：'+seat_get(seat),'')
+        console.log("当前空余座位："+seat_left()+"个，快抢!!!")
+        console.log("所选座位状态："+seat_get(seat))
+        $done()
+    })
+ 

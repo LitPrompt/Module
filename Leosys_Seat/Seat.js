@@ -20,6 +20,7 @@ $httpClient.get(
             if(jsondata.data.layout[key].status=="FREE")
             {y++}
         }
+        console.log("当前空余座位："+y+"个，快抢!!!")
         $notification.post("当前空余座位："+y+"个，快抢!!!")
 
     })

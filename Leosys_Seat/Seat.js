@@ -12,7 +12,7 @@ $httpClient.get(
       body: body, 
     },
     (error, response, data) => {
-        jsondata=data
+        var jsondata = JSON.parse(JSON.stringify(data));
         console.log(jsondata.status)
         $notification.post(jsondata.status,"","")
     })

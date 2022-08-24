@@ -4,7 +4,7 @@ const headers = {
 'token' : $persistentStore.read("LeoSys_Token"),
 };
 const body = ``;
-let seat=$persistentStore.read("tsg_seat")
+let seat=Number($persistentStore.read("tsg_seat"))
 console.log(typeof seat)
 console.log(seat)
 // .split(' ')

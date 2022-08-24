@@ -17,6 +17,7 @@ $httpClient.get(
         let y=0
         for(let key in jsondata.data.layout){
             key=Number(key)
+            console.log(key)
             if(jsondata.data.layout[key].status=="FREE")
             {y++}
         }

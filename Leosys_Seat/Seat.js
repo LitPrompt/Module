@@ -2,7 +2,7 @@ let tsgseat=Number($persistentStore.read("tsg_seat"))
 // .split(' ')
 
 dateObj = $script.startTime//获取时间
-data=dateObj.getDate()+1
+data=dateObj.getDate()
 month=dateObj.getMonth()+1
 year=dateObj.getFullYear()
 let time=year+"-"+month+"-"+data

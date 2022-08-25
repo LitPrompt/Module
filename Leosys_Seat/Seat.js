@@ -23,7 +23,7 @@ $httpClient.get(
     //console.log(data)
     jsondata = JSON.parse(data);
     if(jsondata.status=="fail"){
-        $notification.post('当前Token失效，开始获取Token：','','')
+        $notification.post('当前Token失效，开始获取Token','','')
         $httpClient.get(
             {
                 
@@ -36,7 +36,7 @@ $httpClient.get(
                 tokendata = JSON.parse(data);
                 $persistentStore.write(tokendata.data.token,"LeoSys_Token")})}
     else{
-        console.log("当前空余座位："+total_seat(jsondata)+"个  "+"座位状态："+get_seat(tsgseat,jsondata))
+        console.log("当前第三自习室空余座位："+total_seat(jsondata)+"个  "+"座位状态："+get_seat(tsgseat,jsondata))
 
         $notification.post('当前空余座位：'+total_seat(jsondata)+'个','座位状态：'+get_seat(tsgseat,jsondata),'')
     }

@@ -23,7 +23,7 @@ $httpClient.get(
     //console.log(data)
     jsondata = JSON.parse(data);
     if(jsondata.status=="fail"){
-        $notification.post('当前Token失效，开始获取Token','','')
+        $notification.post('当前Token失效',jsondata.message,'开始尝试重新获取Token')
         $httpClient.get(
             {
                 
@@ -34,7 +34,9 @@ $httpClient.get(
                 body: body, 
             },(error,response,data)=>{
                 tokendata = JSON.parse(data);
-                $persistentStore.write(tokendata.data.token,"LeoSys_Token")})}
+                $persistentStore.write(tokendata.data.token,"LeoSys_Token")})
+                $$notification.post('已成功获取Token',headers.token,'')
+                }
     else{
         console.log("当前第三自习室空余座位："+total_seat(jsondata)+"个  "+"座位状态："+get_seat(tsgseat,jsondata))
 
@@ -45,14 +47,14 @@ $httpClient.get(
 
 
 function total_seat(jsondata){
-    let y=0
+    let total=0
     for(var k in jsondata.data.layout)
     {
         const datasys=jsondata.data.layout[Number(k)]
         if(datasys.status=="FREE"&&datasys.type=="seat")
-        {y++}
+        {total++}
     }
-    return y
+    return total
 }
 
 function get_seat(seat,jsondata){

@@ -5,7 +5,10 @@ dateObj = $script.startTime//获取时间
 data=dateObj.getDate()
 month=dateObj.getMonth()+1
 year=dateObj.getFullYear()
+hours=dateObj.getHours()
+minutes=dateObj.getMinutes()
 let time=year+"-"+month+"-"+data
+let times=time+" "+hours+"点"+minutes+"分"
 
 const headers = {
 'User-Agent' : `Mozilla/5.0 (iPhone; CPU iPhone OS 15_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.26(0x18001a31) NetType/WIFI Language/zh_CN`,
@@ -40,7 +43,7 @@ $httpClient.get(
     else{
         console.log("当前第三自习室空余座位："+total_seat(jsondata)+"个  "+"座位状态："+get_seat(tsgseat,jsondata))
 
-        $notification.post('当前空余座位：'+total_seat(jsondata)+'个','座位状态：'+get_seat(tsgseat,jsondata),'')
+        $notification.post('当前第三自习室空余座位：'+total_seat(jsondata)+'个','座位状态：'+get_seat(tsgseat,jsondata),`查询时间为：${times}`)
     }
     $done()
 })

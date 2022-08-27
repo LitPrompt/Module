@@ -104,12 +104,24 @@ $httpClient.post(
   	if(limitChange!=0){$persistentStore.write(limitusagetotal,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
   	if(unlimitChange!=0){$persistentStore.write(unlimitusagetotal,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
 //*******
-
+	let tile_unlimittoday=$persistentStore.read('unlimittoday')
+	let tile_limittoday=$persistentStore.read('limittoday')
+  	if((Hours==0&&Minutes==0)||(tile_unlimittoday==undefined||tile_limittoday==undefined))
+	{
+		$persistentStore.write(unlimitusagetotal,'unlimittoday')
+		$persistentStore.write(limitbalancetotal,'limittoday')
+	}
+	let tile_unlimitTotal=((unlimitusagetotal-tile_unlimittoday)/1024).toFixed(0)
+	let tile_limitTotal=((tile_limittoday-limitbalancetotal)/1024).toFixed(0)
+	if(tile_unlimitTotal>999){tile_unlimitTotal=tile_unlimitTotal/1024+'GB'}
+	else{tile_unlimitTotal=tile_unlimitTotal+'MB'}
+	if(tile_limitTotal>999){tile_limitTotal=tile_limitTotal/1024+'GB'}
+	else{tile_limitTotal=tile_limitTotal+'MB'}
 	notice()//通知部分
 
 	body={
         title: `${brond}`,
-        content: `今日免流${unlimitUsed}\n跳点${limitUsed}MB`,
+        content: `今日免流：${tile_unlimitTotal}\n今日总跳：${tile_limitTotal}`,
         backgroundColor: "#0099FF",
         icon: "dial.max.fill",
     }

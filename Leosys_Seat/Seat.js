@@ -1,5 +1,4 @@
-let tsgseat=Number($persistentStore.read("tsg_seat"))
-// .split(' ')
+let tsgseat=$persistentStore.read("tsg_seat").split(' ')
 
 dateObj = $script.startTime//获取时间
 data=dateObj.getDate()
@@ -8,7 +7,7 @@ year=dateObj.getFullYear()
 hours=dateObj.getHours()
 minutes=dateObj.getMinutes()
 let time=year+"-"+month+"-"+data
-let times=time+" "+hours+"点"+minutes+"分"
+let times=hours+"点"+minutes+"分"
 
 const headers = {
 'User-Agent' : `Mozilla/5.0 (iPhone; CPU iPhone OS 15_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.26(0x18001a31) NetType/WIFI Language/zh_CN`,
@@ -41,9 +40,9 @@ $httpClient.get(
                 $$notification.post('已成功获取Token',headers.token,'')
                 }
     else{
-        console.log("当前第三自习室空余座位："+total_seat(jsondata)+"个  "+"座位状态："+get_seat(tsgseat,jsondata))
+        console.log('空余座位：'+total_seat(jsondata)+'个',`查询时间为：${times}`,'座位状态：'+get_seat(tsgseat,jsondata))
 
-        $notification.post('当前第三自习室空余座位：'+total_seat(jsondata)+'个','座位状态：'+get_seat(tsgseat,jsondata),`查询时间为：${times}`)
+        $notification.post('空余座位：'+total_seat(jsondata)+'个',`查询时间为：${times}`,'座位状态：'+get_seat(tsgseat,jsondata))
     }
     $done()
 })
@@ -61,13 +60,17 @@ function total_seat(jsondata){
 }
 
 function get_seat(seat,jsondata){
-    for(var k in jsondata.data.layout){
-    if(jsondata.data.layout[Number(k)].name==seat)
+    let seat_1=''
+    let seat_2=''
+    for(var k in jsondata.data.layout)
     {
-        if(jsondata.data.layout[Number(k)].status=="FREE")
-        {return '所选座位没有人'}
-        else
-        {return '所选座位有人'}
+        for(var i in seat)
+        {
+            if(jsondata.data.layout[Number(k)].name==Number(seat[i])&&jsondata.data.layout[Number(k)].status=="FREE"){seat_1+=seat[i]+' '}
+            if(jsondata.data.layout[Number(k)].name==Number(seat[i])&&jsondata.data.layout[Number(k)].type=="FULL"){seat_2+=seat[i]+' '}
+        }
     }
-    }
+    if(seat_2==''){seat_2='没有座位有人'}
+    else{seat_2=`${seat_2}号座位有人`}
+    return `${seat_1}号座位没人 ${seat_2}`
 }

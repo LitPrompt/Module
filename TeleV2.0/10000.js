@@ -106,7 +106,13 @@ $httpClient.post(
 //*******
 
 	notice()//通知部分
-	//tiles()
+
+	body={
+        title: "当前免流信息",
+        content: `TEST`,
+        backgroundColor: "#FF6600",
+        icon: "antenna.radiowaves.left.and.right.circle.fill",
+    }
 	$done()
   }
  

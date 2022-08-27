@@ -111,17 +111,18 @@ $httpClient.post(
 		$persistentStore.write(unlimitusagetotal,'unlimittoday')
 		$persistentStore.write(limitbalancetotal,'limittoday')
 	}
-	let tile_unlimitTotal=((unlimitusagetotal-tile_unlimittoday)/1024).toFixed(0)
-	let tile_limitTotal=((tile_limittoday-limitbalancetotal)/1024).toFixed(0)
-	if(tile_unlimitTotal>999){tile_unlimitTotal=tile_unlimitTotal/1024+'GB'}
-	else{tile_unlimitTotal=tile_unlimitTotal+'MB'}
-	if(tile_limitTotal>999){tile_limitTotal=tile_limitTotal/1024+'GB'}
-	else{tile_limitTotal=tile_limitTotal+'MB'}
+	let tile_unlimitTotal=unlimitusagetotal-tile_unlimittoday
+	let tile_limitTotal=tile_limittoday-limitbalancetotal
+
+	if(tile_unlimitTotal>999){tile_unlimitTotal=(tile_unlimitTotal/1048576).toFixed(0)+'GB'}
+	else{tile_unlimitTotal=(tile_unlimitTotal/1024).toFixed(0)+'MB'}
+	if(tile_limitTotal>999){tile_limitTotal=(tile_limitTotal/1048576).toFixed(0)+'GB'}
+	else{tile_limitTotal=(tile_limitTotal/1024).toFixed(0)+'MB'}
 	notice()//通知部分
 
 	body={
         title: `${brond}`,
-        content: `今日免流：${tile_unlimitTotal}\n今日总跳：${tile_limitTotal}`,
+        content: `今日免流：${tile_unlimitTotal} 今日跳点：${tile_limitTotal}`,
         backgroundColor: "#0099FF",
         icon: "dial.max.fill",
     }

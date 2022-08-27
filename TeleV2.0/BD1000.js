@@ -16,7 +16,7 @@ if (effective=="0"&&loginerror==1) {
         }
     }
 else{
-    if(loginerror==1){$notification.post('当前Body有效，无需获取','','')}
+    if(loginerror==0){$notification.post('当前Body有效，无需获取','','')}
     else($notification.post("请点击已用流量","" ,""))
 }
 

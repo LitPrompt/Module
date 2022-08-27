@@ -114,9 +114,9 @@ $httpClient.post(
 	let tile_unlimitTotal=unlimitusagetotal-tile_unlimittoday
 	let tile_limitTotal=limitusagetotal-tile_limittoday
 
-	if(tile_unlimitTotal>1022976){tile_unlimitTotal=(tile_unlimitTotal/1048576).toFixed(0)+'GB'}
+	if(tile_unlimitTotal>1022976){tile_unlimitTotal=(tile_unlimitTotal/1048576).toFixed(2)+'GB'}
 	else{tile_unlimitTotal=(tile_unlimitTotal/1024).toFixed(0)+'MB'}
-	if(tile_limitTotal>1022976){tile_limitTotal=(tile_limitTotal/1048576).toFixed(0)+'GB'}
+	if(tile_limitTotal>1022976){tile_limitTotal=(tile_limitTotal/1048576).toFixed(2)+'GB'}
 	else{tile_limitTotal=(tile_limitTotal/1024).toFixed(0)+'MB'}
 	notice()//通知部分
 

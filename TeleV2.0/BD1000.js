@@ -19,5 +19,5 @@ else{
     $notification.post("请点击已用流量","" ,"")
 }
 
-$done({})
 }
+$done({})

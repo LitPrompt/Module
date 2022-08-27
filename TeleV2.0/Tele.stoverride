@@ -6,7 +6,13 @@ cron:
     - name: Telecom
       cron: '*/5 * * * *' # at every 5th minute
       timeout: 10 # optional
-
+tiles:
+  - name: Telecom
+    title: 今日免流信息
+    content: ''
+    backgroundColor: "#0099FF"
+    icon: "dial.max.fill"
+    interval: 600
 script-providers:
   Telecom:
     url: https://raw.githubusercontent.com/QGCliveDavis/Module/main/TeleV2.0/10000.js

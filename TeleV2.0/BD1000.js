@@ -1,9 +1,10 @@
+let loginerror=$persistentStore.read('Bodyswitch')
+if(loginerror==1){
 const bodyName = '中国电信'
 const bodyVal = $request.body
 const effective = bodyVal.indexOf("BILLCYCLE")
-let loginerror=$persistentStore.read('Bodyswitch')
 
-if (effective=="0"&&loginerror==1) {
+if (effective=="0") {
     $persistentStore.write(bodyVal, "Tele_BD")
     let loginerror=0
     $persistentStore.wtite(loginerror,'Bodyswitch')
@@ -19,3 +20,4 @@ else{
 }
 
 $done({})
+}

@@ -37,7 +37,7 @@ $httpClient.get(
             },(error,response,data)=>{
                 tokendata = JSON.parse(data);
                 $persistentStore.write(tokendata.data.token,"LeoSys_Token")})
-                $$notification.post('已成功获取Token',headers.token,'')
+                $notification.post('已成功获取Token',headers.token,'')
                 }
     else{
         console.log('空余座位：'+total_seat(jsondata)+'个',`查询时间为：${times}`,'座位状态：'+get_seat(tsgseat,jsondata))

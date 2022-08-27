@@ -122,7 +122,7 @@ $httpClient.post(
 
 	body={
         title: `${brond}`,
-        content: `今日免流：${tile_unlimitTotal}\n今日跳点：${tile_limitTotal}\n查询时间：${Hours}:${Minutes}`,
+        content: `今日免流/跳点：${tile_unlimitTotal}/${tile_limitTotal}\n查询时间：${Hours}:${Minutes}`,
         backgroundColor: "#0099FF",
         icon: "dial.max.fill",
     }

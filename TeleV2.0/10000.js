@@ -50,6 +50,8 @@ $httpClient.post(
 	if(logininfo=="010040")
 	{
 		$notification.post("Body错误或已过期❌（也可能是电信的问题）","请尝试重新抓取Body(不抓没得用了！)","覆写获取到Body后可以不用关闭覆写")
+		let loginerror=1
+		$persistentStore.write(loginerror,'Bodyswitch')
 		$done()
 	}
 

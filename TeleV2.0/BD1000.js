@@ -7,7 +7,7 @@ const effective = bodyVal.indexOf("BILLCYCLE")
 if (effective=="0") {
     $persistentStore.write(bodyVal, "Tele_BD")
     let loginerror=0
-    $persistentStore.wtite(loginerror,'Bodyswitch')
+    $persistentStore.write(loginerror,'Bodyswitch')
     if (bodyVal) {
         let msg = `${bodyName}`
             $notification.post(msg, 'Body写入成功',bodyVal )

@@ -107,8 +107,15 @@ $httpClient.post(
 
 	notice()//通知部分
 
-	$done()
-  })
+	body={
+        title: `${brond}`,
+        content: `今日免流${unlimitUsed}\n跳点${limitUsed}MB`,
+        backgroundColor: "#0099FF",
+        icon: "dial.max.fill",
+    }
+	$done(body)
+  }
+)
 
 //  retableResourceID:
 // 定向：3312000

@@ -4,7 +4,7 @@ const bodyName = '中国电信'
 const bodyVal = $request.body
 const effective = bodyVal.indexOf("BILLCYCLE")
 
-if (effective=="0"&&loginerror==1) {
+if (effective==0&&loginerror==1) {
     $persistentStore.write(String(bodyVal), "Tele_BD")
     let loginerror=0
     $persistentStore.write(String(loginerror),'Bodyswitch')

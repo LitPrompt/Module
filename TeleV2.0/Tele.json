@@ -21,7 +21,7 @@
       "settings": [  
         {
           "id": "Tele_BD",
-          "name": "电信查询请求Body",
+          "name": "电信请求Body",
           "val": "",
           "type": "text",
           "placeholder": "请求体",

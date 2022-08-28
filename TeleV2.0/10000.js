@@ -121,10 +121,15 @@ $httpClient.post(
 	if(tile_limitTotal>1022976){tile_limitTotal=(tile_limitTotal/1048576).toFixed(2)+'GB'}
 	else{tile_limitTotal=(tile_limitTotal/1024).toFixed(0)+'MB'}
 	notice()//通知部分
+    
+	if(Hours<10){tile_hour='0'+Hours}
+	else{tile_hour=Hours}
+    if(Minutes<10){tile_minute='0'+Minutes}
+	else{tile_minute=Minutes}
 
 	body={
         title: `${brond}`,
-        content: `今日免流/跳点：${tile_unlimitTotal}/${tile_limitTotal}\n查询时间：${Hours}:${Minutes}`,
+        content: `今日免流/跳点：${tile_unlimitTotal}/${tile_limitTotal}\n查询时间：${tile_hour}:${tile_minute}`,
         backgroundColor: "#0099FF",
         icon: "dial.max.fill",
     }

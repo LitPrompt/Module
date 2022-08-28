@@ -1,5 +1,5 @@
-#!name=电信余量请求体获取
-#!desc=开启脚本以及mitm等开关，配合电信余量使用
+#!name=电信余量
+#!desc=开启脚本以及mitm等开关
 
 [Script]
 请求体获取 = type=http-request,script-path=请求体获取.js,pattern=^https?:\/\/czapp\.bestpay\.com\.cn,max-size=131072,requires-body=true,timeout=10,script-update-interval=86400,debug=true,enable=true

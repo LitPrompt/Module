@@ -51,7 +51,11 @@ $httpClient.post(
 	// console.log(logininfo)
 	if(logininfo=="010040")
 	{
-		$notification.post("Body错误或已过期❌（也可能是电信的问题）","请尝试重新抓取Body(不抓没得用了！)","覆写获取到Body后可以不用关闭覆写")
+		title="Body错误或已过期❌（也可能是电信的问题）"
+		body='请尝试重新抓取Body(不抓没得用了！)'
+		body1="覆写获取到Body后可以不用关闭覆写"
+		if(bark_key){bark_notice(title,body,body1)}
+		else{$notification.post(title,body,body1)}	
 		let loginerror=1
 		$persistentStore.write(loginerror,'Bodyswitch')
 		$done()
@@ -94,13 +98,20 @@ $httpClient.post(
 	if(limitLast==null||limitThis-limitLast<0)
 	{
 		limitLast=0
-		$notification.post("当前为初次查询或上次查询有误，已将上次查询归0",'','')
+		title="当前为初次查询或上次查询有误，已将上次查询归0"
+		body=''
+		body1=''
+		if(bark_key){bark_notice(title,body,body1)}
+		else{$notification.post(title,body,body1)}	
 	}//初次查询的判断
 	if(unlimitLast==null||unlimitThis-unlimitLast<0)
 	{
 		unlimitLast=0
-		$notification.post("当前为初次查询或上次查询有误，已将上次查询归0",'','')
-	}
+		title="当前为初次查询或上次查询有误，已将上次查询归0"
+		body=''
+		body1=''
+		if(bark_key){bark_notice(title,body,body1)}
+		else{$notification.post(title,body,body1)}		}
   	limitChange=limitThis-limitLast
 	unlimitChange=unlimitThis-unlimitLast
 	console.log("定向变化量:"+unlimitChange)
@@ -176,8 +187,11 @@ function notice()
 		{
 			$persistentStore.write(thishours,"hourstimeStore")
 			$persistentStore.write(thisminutes,"minutestimeStore") 
-            if(bark_key){bark_notice()}
-		    else{$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' 跳'+limitUsed+' MB','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')}			  	console.log(brond+'  耗时:'+minutesused+'分钟')
+			title=brond+'  耗时:'+minutesused+'分钟'
+			body='免'+unlimitUsed+' 跳'+limitUsed+' MB'
+			body1='总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB'
+			if(bark_key){bark_notice(title,body,body1)}
+			else{$notification.post(title,body,body1)}	
 		  	console.log('免 '+unlimitUsed+' MB '+'  跳 '+limitUsed+' MB')
 			console.log('总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')
 		}
@@ -186,8 +200,11 @@ function notice()
 	{
 		$persistentStore.write(thisminutes,"minutestimeStore")  
 		$persistentStore.write(thishours,"hourstimeStore")
-		if(bark_key){bark_notice()}
-		else{$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' 跳'+limitUsed+' MB','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')}	
+		title=brond+'  耗时:'+minutesused+'分钟'
+		body='免'+unlimitUsed+' 跳'+limitUsed+' MB'
+		body1='总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB'
+		if(bark_key){bark_notice(title,body,body1)}
+		else{$notification.post(title,body,body1)}	
 		console.log(brond+'  耗时:'+minutesused+'分钟')
 		console.log('免 '+unlimitUsed+' MB '+'  跳 '+limitUsed+' MB')
 		console.log('总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')
@@ -282,10 +299,10 @@ function cellular_choose()
 	console.log("")
 }
 
-function bark_notice(){
-let bark_title=brond+'  耗时:'+minutesused+'分钟'
-let bark_body='免'+unlimitUsed+' 跳'+limitUsed+' MB'
-let bark_body1='总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB'
+function bark_notice(title,body,body1){
+let bark_title=title
+let bark_body=body
+let bark_body1=body1
 
 let bark_icon
 if(icon_url){bark_icon=`?icon=${icon_url}`}

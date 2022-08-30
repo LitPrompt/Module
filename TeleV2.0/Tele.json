@@ -76,11 +76,11 @@
           "id": "bark_icon",
           "name": "Bark通知图标",
           "val": "",
-          "placeholder": "输入图标地址",
+          "placeholder": "输入图标地址,默认为空既不修改图标",
           "autoGrow": true,
           "rows": 1,
           "type": "text",
-          "desc": "默认为空既不修改图标"
+          "desc": ""
         },
         {
           "id": "bark_key",

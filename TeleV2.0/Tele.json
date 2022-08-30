@@ -96,11 +96,11 @@
           "id": "bark_add",
           "name": "Bark附加属性",
           "val": "",
-          "placeholder": "1. level=timeSensitive/active/passive,分别表示即时通知，默认值，仅在通知栏中显示 \n2. url=www.xxx.com 点击通知打开网页  3. isArchive=1/0 1表示保存此通知 0不保存  4. sound=铃声名 可在bark中查看名字",
+          "placeholder": "1. level=timeSensitive/active/passive,分别表示即时通知，默认值，仅在通知栏中显示   2. url=www.xxx.com 点击通知打开网页  3. isArchive=1/0 1表示保存此通知 0不保存  4. sound=铃声名 可在bark中查看名字",
           "autoGrow": true,
           "rows": 1,
           "type": "textarea",
-					"desc": "一定要用&隔开"
+					"desc": "一定要用&隔开!!例如：level=timeSensitive&isArchive=0表示即时通知且bark不保存"
       	}
     ],
       "author": "@Alt_Option",

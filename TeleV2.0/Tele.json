@@ -100,7 +100,7 @@
           "autoGrow": true,
           "rows": 1,
           "type": "text",
-					"descs_html": [
+					"descs": [
         		"<b>常用参数：</b>",
             "1. level=timeSensitive/active/passive,分别表示即时通知，默认值，仅在通知栏中显示",
             "2. url=www.xxx.com 点击通知打开网页",

@@ -1,4 +1,6 @@
 let loginerror=$persistentStore.read('Bodyswitch')
+let bark_key=$persistentStore.read('bark_key')
+let icon_url=$persistentStore.read('bark_icon')
 
 const bodyName = '中国电信'
 const bodyVal = $request.body
@@ -10,7 +12,12 @@ if (effective=="0"&&loginerror==1) {
     $persistentStore.write(loginerror,'Bodyswitch')
     if (bodyVal) {
         let msg = `${bodyName}`
-            $notification.post(msg, 'Body写入成功',bodyVal )
+        title=msg
+		body='Body写入成功'
+		body1=bodyVal
+		if(bark_key){bark_notice(title,body,body1)}
+		else{$notification.post(title,body,body1)}	
+
             console.log(msg)
             console.log(bodyVal)
         }
@@ -18,6 +25,20 @@ if (effective=="0"&&loginerror==1) {
 else{
     if(loginerror==0){console.log('当前Body有效，无需获取')}
     else($notification.post("请点击已用流量","" ,""))
+}
+
+function bark_notice(title,body,body1){
+	let bark_title=title
+	let bark_body=body
+	let bark_body1=body1
+	
+	let bark_icon
+	if(icon_url){bark_icon=`?icon=${icon_url}`}
+	else {bark_icon=''}
+	
+	let url =`${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}`
+	
+	$httpClient.get({url})
 }
 
 $done({})

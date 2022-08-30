@@ -300,15 +300,15 @@ function cellular_choose()
 }
 
 function bark_notice(title,body,body1){
-let bark_title=title
-let bark_body=body
-let bark_body1=body1
-
-let bark_icon
-if(icon_url){bark_icon=`?icon=${icon_url}`}
-else {bark_icon=''}
-
-let url =`${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}`
-
-$httpClient.get({url})
+	let bark_title=title
+	let bark_body=body
+	let bark_body1=body1
+	
+	let bark_icon
+	if(icon_url){bark_icon=`?icon=${icon_url}`}
+	else {bark_icon=''}
+	
+	let url =`${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}`
+	
+	$httpClient.get({url})
 }

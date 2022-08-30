@@ -312,7 +312,12 @@ function bark_notice(title,body,body1){
 	if(icon_url){bark_icon=`?icon=${icon_url}`}
 	else {bark_icon=''}
 
-	let url =`${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}`
+	let bark_other=$persistentStore.read('bark_add')
+  	let effective=bark_icon.indexOf("?icon")
+  	if((effective!=-1)&&bark_other){bark_other+=`&${bark_other}`}
+	else if((effective==-1)&&bark_other){bark_other=`?${bark_other}`}
+	else{bark_other=''}
+	let url =`${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}${bark_other}`
 
 	$httpClient.get({url})
 }

@@ -96,11 +96,11 @@
           "id": "bark_add",
           "name": "Bark附加属性",
           "val": "",
-          "placeholder": "",
+          "placeholder": "例如：level=timeSensitive表示即时通知",
           "autoGrow": true,
           "rows": 1,
           "type": "text",
-          "desc": ""
+          "desc": "多个参数间用&隔开，例如level=timeSensitive&url=www.baidu.con表示 即时通知且点击通知会跳转到百度"
         }
     ],
       "author": "@Alt_Option",

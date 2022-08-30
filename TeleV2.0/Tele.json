@@ -17,7 +17,7 @@
         "2. 对于筛选流量包，如果剩余数据与定向不正确，则说明表达式可能筛选了其他的包，请输入更精准的包名",
         "3. 如果你之前使用的是自动选包，更换手动选包后跳点与免流信息在初次查询可能有错误，不用在意"
       ],
-      "keys": ["Tele_BD","limititems","unlimititems","hourstimeStore","minutestimeStore","limitStore","unlimitStore"],
+      "keys": ["Tele_BD","limititems","unlimititems","hourstimeStore","minutestimeStore","limitStore","unlimitStore","bark_icon","bark_key","bark_add"],
       "settings": [  
         {
           "id": "Tele_BD",
@@ -91,6 +91,16 @@
           "rows": 1,
           "type": "text",
           "desc": "在Bark主页面右上角小云朵里，点击里面的复制地址与key填入"
+        },
+        {
+          "id": "bark_add",
+          "name": "Bark附加属性",
+          "val": "",
+          "placeholder": "",
+          "autoGrow": true,
+          "rows": 1,
+          "type": "text",
+          "desc": ""
         }
     ],
       "author": "@Alt_Option",

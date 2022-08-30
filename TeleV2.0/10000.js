@@ -65,7 +65,7 @@ $httpClient.post(
 	dateObj = $script.startTime//获取时间
 	Minutes = dateObj.getMinutes();//获取分钟
   	Hours = dateObj.getHours(); //获取小时
-    Dates = dateObj.getHours(); //获取日期天
+    Dates = dateObj.getDate(); //获取日期天
   	thishours=Hours //将当前查询的小时存到hours中
 	thisminutes=Minutes //将当前查询的时间存到thisminute中
 	

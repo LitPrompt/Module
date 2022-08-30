@@ -111,7 +111,8 @@ $httpClient.post(
 		body=''
 		body1=''
 		if(bark_key){bark_notice(title,body,body1)}
-		else{$notification.post(title,body,body1)}		}
+		else{$notification.post(title,body,body1)}		
+	}
   	limitChange=limitThis-limitLast
 	unlimitChange=unlimitThis-unlimitLast
 	console.log("定向变化量:"+unlimitChange)
@@ -303,12 +304,12 @@ function bark_notice(title,body,body1){
 	let bark_title=title
 	let bark_body=body
 	let bark_body1=body1
-	
+
 	let bark_icon
 	if(icon_url){bark_icon=`?icon=${icon_url}`}
 	else {bark_icon=''}
-	
+
 	let url =`${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}`
-	
+
 	$httpClient.get({url})
 }

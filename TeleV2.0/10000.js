@@ -2,6 +2,8 @@ var ns = $persistentStore.read("notice_switch");
 var auto = $persistentStore.read("auto_switch");
 var Tele_body = $persistentStore.read("Tele_BD");
 var Tele_value= $persistentStore.read("threshold")
+let bark_key=$persistentStore.read('bark_key')
+let icon_url=$persistentStore.read('bark_icon')
 
 var jsonData //存储json数据
 var dateObj
@@ -174,8 +176,8 @@ function notice()
 		{
 			$persistentStore.write(thishours,"hourstimeStore")
 			$persistentStore.write(thisminutes,"minutestimeStore") 
-			$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' 跳'+limitUsed+' MB','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')
-		  	console.log(brond+'  耗时:'+minutesused+'分钟')
+            if(bark_key){bark_notice()}
+		    else{$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' 跳'+limitUsed+' MB','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')}			  	console.log(brond+'  耗时:'+minutesused+'分钟')
 		  	console.log('免 '+unlimitUsed+' MB '+'  跳 '+limitUsed+' MB')
 			console.log('总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')
 		}
@@ -184,7 +186,8 @@ function notice()
 	{
 		$persistentStore.write(thisminutes,"minutestimeStore")  
 		$persistentStore.write(thishours,"hourstimeStore")
-		$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' 跳'+limitUsed+' MB','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')	
+		if(bark_key){bark_notice()}
+		else{$notification.post(brond+'  耗时:'+minutesused+'分钟','免'+unlimitUsed+' 跳'+limitUsed+' MB','总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')}	
 		console.log(brond+'  耗时:'+minutesused+'分钟')
 		console.log('免 '+unlimitUsed+' MB '+'  跳 '+limitUsed+' MB')
 		console.log('总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')
@@ -277,4 +280,18 @@ function cellular_choose()
 	console.log(limitbalancetotal)
 	console.log(limitusagetotal)
 	console.log("")
+}
+
+function bark_notice(){
+let bark_title=brond+'  耗时:'+minutesused+'分钟'
+let bark_body='免'+unlimitUsed+' 跳'+limitUsed+' MB'
+let bark_body1='总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB'
+
+let bark_icon
+if(icon_url){bark_icon=`?icon=${icon_url}`}
+else {bark_icon=''}
+
+let url =`${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}`
+
+$httpClient.get({url})
 }

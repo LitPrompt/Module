@@ -86,7 +86,7 @@
           "id": "bark_key",
           "name": "Bark服务器地址",
           "val": "",
-          "placeholder": "例如:https://api.day.app/key",
+          "placeholder": "例如:https://api.day.app/key(默认为空既不使用Bark通知)",
           "autoGrow": true,
           "rows": 1,
           "type": "text",

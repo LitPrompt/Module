@@ -97,18 +97,18 @@ $httpClient.post(
 	console.log("上次定向使用"+unlimitLast)
 	if(limitLast==null||limitThis-limitLast<0)
 	{
-		limitLast=0
-		title="当前为初次查询或上次查询有误，已将上次查询归0"
-		body=''
+		$persistentStore.write(0,"limitStore")
+		title="当前为初次查询或上次查询有误"
+		body='已将上次查询归0'
 		body1=''
 		if(bark_key){bark_notice(title,body,body1)}
 		else{$notification.post(title,body,body1)}	
 	}//初次查询的判断
 	if(unlimitLast==null||unlimitThis-unlimitLast<0)
 	{
-		unlimitLast=0
-		title="当前为初次查询或上次查询有误，已将上次查询归0"
-		body=''
+		$persistentStore.write(0,"unlimitStore")
+		title="当前为初次查询或上次查询有误"
+		body='已将上次上旬归0'
 		body1=''
 		if(bark_key){bark_notice(title,body,body1)}
 		else{$notification.post(title,body,body1)}		

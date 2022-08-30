@@ -100,7 +100,7 @@
           "autoGrow": true,
           "rows": 1,
           "type": "textarea",
-					"desc": "一定要用&隔开!!  例如：level=timeSensitive&isArchive=0表示即时通知且bark不保存"
+					"desc": "一定要用&隔开! 例如：level=timeSensitive&isArchive=0表示即时通知且bark不保存"
       	}
     ],
       "author": "@Alt_Option",

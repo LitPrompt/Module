@@ -100,8 +100,15 @@
           "autoGrow": true,
           "rows": 1,
           "type": "text",
-          "desc": "多个参数间用&隔开，例如level=timeSensitive&url=www.baidu.con表示 即时通知且点击通知会跳转到百度"
-        }
+					"descs_html": [
+        		"<b>常用参数：</b>",
+            "1. level=timeSensitive/active/passive,分别表示即时通知，默认值，仅在通知栏中显示",
+            "2. url=www.xxx.com 点击通知打开网页",
+            "3. isArchive=1/0 1表示保存此通知 0不保存",
+            "4. sound=铃声名 可在bark中查看名字",
+        		"<b>记得一定用&隔开！！！</b>",
+      			],        
+      	}
     ],
       "author": "@Alt_Option",
       "repo": "https://github.com/QGCliveDavis/Module",

@@ -74,7 +74,7 @@
         },
         {
           "id": "bark_icon",
-          "name": "Bark通知图标",
+          "name": "Bark通知图标(STASH专用)",
           "val": "",
           "placeholder": "输入图标地址,默认为空既不修改图标",
           "autoGrow": true,
@@ -84,7 +84,7 @@
         },
         {
           "id": "bark_key",
-          "name": "Bark服务器地址",
+          "name": "Bark服务器地址(STASH专用）",
           "val": "",
           "placeholder": "例如:https://api.day.app/key(默认为空既不使用Bark通知)",
           "autoGrow": true,

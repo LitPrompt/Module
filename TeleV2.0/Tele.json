@@ -71,6 +71,26 @@
           "rows": 1,
           "type": "text",
           "desc": "例如：“畅享量 某某定向”（最好是明显的标志）则定向总免显示这两个包的总和（不用打引号）"
+        },
+        {
+          "id": "bark_icon",
+          "name": "Bark通知图标",
+          "val": "",
+          "placeholder": "输入图标地址",
+          "autoGrow": true,
+          "rows": 1,
+          "type": "text",
+          "desc": "默认为空既不修改图标"
+        },
+        {
+          "id": "bark_key",
+          "name": "Bark服务器地址",
+          "val": "",
+          "placeholder": "例如:https://api.day.app/key",
+          "autoGrow": true,
+          "rows": 1,
+          "type": "text",
+          "desc": "在Bark主页面右上角小云朵里，点击里面的复制地址与key填入"
         }
     ],
       "author": "@Alt_Option",

@@ -24,7 +24,13 @@ if (effective=="0"&&loginerror==1) {
     }
 else{
     if(loginerror==0){console.log('当前Body有效，无需获取')}
-    else($notification.post("请点击已用流量","" ,""))
+    else{
+        title="请点击已用流量"
+		body=''
+		body1=''
+		if(bark_key){bark_notice(title,body,body1)}
+		else{$notification.post(title,body,body1)}	
+    }
 }
 
 function bark_notice(title,body,body1){

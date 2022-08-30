@@ -100,7 +100,7 @@
           "autoGrow": true,
           "rows": 1,
           "type": "text",
-					"descs": "1. level=timeSensitive/active/passive,分别表示即时通知，默认值，仅在通知栏中显示  2. url=www.xxx.com 点击通知打开网页  3. isArchive=1/0 1表示保存此通知 0不保存  4. sound=铃声名 可在bark中查看名字"
+					"desc": "1. level=timeSensitive/active/passive,分别表示即时通知，默认值，仅在通知栏中显示  2. url=www.xxx.com 点击通知打开网页  3. isArchive=1/0 1表示保存此通知 0不保存  4. sound=铃声名 可在bark中查看名字"
       	}
     ],
       "author": "@Alt_Option",

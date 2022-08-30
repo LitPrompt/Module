@@ -65,7 +65,7 @@ $httpClient.post(
 	dateObj = $script.startTime//获取时间
 	Minutes = dateObj.getMinutes();//获取分钟
   	Hours = dateObj.getHours(); //获取小时
-
+    Dates = dateObj.getHours(); //获取日期天
   	thishours=Hours //将当前查询的小时存到hours中
 	thisminutes=Minutes //将当前查询的时间存到thisminute中
 	
@@ -120,10 +120,13 @@ $httpClient.post(
   	if(limitChange!=0){$persistentStore.write(limitusagetotal,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
   	if(unlimitChange!=0){$persistentStore.write(unlimitusagetotal,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
 //*******
+    let tile_date=$persistentStore.read('day')
+	if(day==undefined){$persistentStore.write(Dates,'day')}//初次
 	let tile_unlimittoday=$persistentStore.read('unlimittoday')
 	let tile_limittoday=$persistentStore.read('limittoday')
-  	if((Hours==0&&Minutes==0)||(tile_unlimittoday==undefined||tile_limittoday==undefined))
+  	if((Hours==0&&Minutes==0)||(tile_unlimittoday==undefined||tile_limittoday==undefined)||tile_date!=Dates)
 	{
+		$persistentStore.write(Dates,'day')
 		$persistentStore.write(unlimitusagetotal,'unlimittoday')
 		$persistentStore.write(limitusagetotal,'limittoday')
 	}

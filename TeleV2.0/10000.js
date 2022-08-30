@@ -121,7 +121,7 @@ $httpClient.post(
   	if(unlimitChange!=0){$persistentStore.write(unlimitusagetotal,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
 //*******
     let tile_date=$persistentStore.read('day')
-	if(day==undefined){$persistentStore.write(Dates,'day')}//初次
+	if(tile_date==undefined){$persistentStore.write(Dates,'day')}//初次
 	let tile_unlimittoday=$persistentStore.read('unlimittoday')
 	let tile_limittoday=$persistentStore.read('limittoday')
   	if((Hours==0&&Minutes==0)||(tile_unlimittoday==undefined||tile_limittoday==undefined)||tile_date!=Dates)

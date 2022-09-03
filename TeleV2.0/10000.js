@@ -107,7 +107,7 @@ $httpClient.post(
 	console.log("当前定向使用"+unlimitThis)
 	console.log("上次通用使用"+limitLast)
 	console.log("上次定向使用"+unlimitLast)
-	if(limitLast==null||limitThis-limitLast<0)
+	if(limitLast==null||limitThis-limitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1)
 	{
 		$persistentStore.write(0,"limitStore")
 		title="当前为初次查询或上次查询有误"
@@ -116,7 +116,7 @@ $httpClient.post(
 		if(bark_key){bark_notice(title,body,body1)}
 		else{$notification.post(title,body,body1)}	
 	}//初次查询的判断
-	if(unlimitLast==null||unlimitThis-unlimitLast<0)
+	if(unlimitLast==null||unlimitThis-unlimitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1)
 	{
 		$persistentStore.write(0,"unlimitStore")
 		title="当前为初次查询或上次查询有误"

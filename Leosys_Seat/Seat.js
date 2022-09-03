@@ -110,7 +110,7 @@ function token_get(jsondata){
 	//console.log('当前Token失效'+jsondata.message,'开始尝试重新获取Token')
     $httpClient.get(
      {
-   url: `https://leosys.cn/axhu/rest/auth?username=${usedid_info[0]}&password=${usedid_info[1]}`,
+   url: `https://leosys.cn/axhu/rest/auth?username=${userid_info[0]}&password=${userid_info[1]}`,
    headers: {
       'token' : $persistentStore.read("LeoSys_Token"),
      'actCode' : `true`},

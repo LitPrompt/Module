@@ -1,6 +1,4 @@
 let userid_info=$persistentStore.read("userid_info").split(' ')
-let bark_key=$persistentStore.read('bark_key')
-let icon_url=$persistentStore.read('bark_icon')
 
 dateObj = $script.startTime//获取时间
 data=dateObj.getDate()
@@ -34,11 +32,7 @@ $httpClient.get(
 
   if((reservearr.begin).split(':')[0]==(hours+1)&&reservearr.stat=='RESERVE'){check_in(reservearr)}
   else{
-	title='座位信息 总共：'+seatarr.totalseat
-	body='正在使用中'+seatarr.inuse+' 剩余'+seatarr.free
-	body1=''
-	if(bark_key){bark_notice(title,body,body1)}
-	else{$notification.post(title,body,body1)}	
+   $notification.post('座位信息 总共：'+seatarr.totalseat,'正在使用中'+seatarr.inuse+' 剩余'+seatarr.free,'')
   }
 
     $done()
@@ -57,20 +51,8 @@ function check_in(reservearr){
   },(error,response,data)=>{
    //console.log(data)
   jsondata = JSON.parse(data);
-    if(jsondata.status=='fail'){
-		title='签到失败 原因：'
-		body=jsondata.message
-		body1='将重新获取Token'
-		if(bark_key){bark_notice(title,body,body1)}
-		else{$notification.post(title,body,body1)}
-	}
-  else{
-	title='签到成功 '
-	body=jsondata.message
-	body1=seat_loc
-	if(bark_key){bark_notice(title,body,body1)}
-	else{$notification.post(title,body,body1)}	
-}
+    if(jsondata.status=='fail'){$notification.post('签到失败 原因：',jsondata.message,'将重新获取Token')}
+  else{$notification.post('签到成功 ',jsondata.message,seat_loc)}
   })
  
 }
@@ -143,23 +125,4 @@ function token_get(jsondata){
  //console.log('已成功获取Token'+headers.token,)
      //$notification.post('已成功获取Token',headers.token,'')
      }
-}
-
-function bark_notice(title,body,body1){
-	let bark_title=title
-	let bark_body=body
-	let bark_body1=body1
-
-	let bark_icon
-	if(icon_url){bark_icon=`?icon=${icon_url}`}
-	else {bark_icon=''}
-
-	let bark_other=$persistentStore.read('bark_add')
-  	let effective=bark_icon.indexOf("?icon")
-  	if((effective!=-1)&&bark_other){bark_other=`&${bark_other}`}
-	else if((effective==-1)&&bark_other){bark_other=`?${bark_other}`}
-	else{bark_other=''}
-	let url =`${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}${bark_other}`
-
-	$httpClient.get({url})
 }

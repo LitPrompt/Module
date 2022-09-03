@@ -144,12 +144,17 @@ $httpClient.post(
 	}
 	let tile_unlimitTotal=unlimitusagetotal-tile_unlimittoday
 	let tile_limitTotal=limitusagetotal-tile_limittoday
+	let tile_unlimitUsageTotal=unlimitusagetotal
 	let tile_limitUsageTotal=limitusagetotal
+
 
 	if(tile_unlimitTotal>1048576){tile_unlimitTotal=(tile_unlimitTotal/1048576).toFixed(2)+'GB'}
 	else{tile_unlimitTotal=(tile_unlimitTotal/1024).toFixed(0)+'MB'}//今日免流
 	if(tile_limitTotal>1048576){tile_limitTotal=(tile_limitTotal/1048576).toFixed(2)+'GB'}
 	else{tile_limitTotal=(tile_limitTotal/1024).toFixed(0)+'MB'}//今日跳点
+	
+	if(tile_unlimitUsageTotal>1048576){tile_unlimitUsageTotal=(tile_unlimitUsageTotal/1048576).toFixed(2)+'GB'}
+	else{tile_unlimitUsageTotal=(tile_unlimitUsageTotal/1024).toFixed(0)+'MB'}//本月免流
 	if(tile_limitUsageTotal>1048576){tile_limitUsageTotal=(tile_limitUsageTotal/1048576).toFixed(2)+'GB'}
 	else{tile_limitUsageTotal=(tile_limitUsageTotal/1024).toFixed(0)+'MB'}//本月跳点
 
@@ -163,7 +168,7 @@ $httpClient.post(
 
 	body={
         title: `${brond}`,
-        content: `今日免流/跳点：${tile_unlimitTotal}/${tile_limitTotal}\n本月免流/跳点：${unlimitusagetotal}/${tile_limitUsageTotal}\n查询时间：${tile_hour}:${tile_minute}`,
+        content: `今日免流/跳点：${tile_unlimitTotal}/${tile_limitTotal}\n本月免流/跳点：${tile_unlimitUsageTotal}/${tile_limitUsageTotal}\n查询时间：${tile_hour}:${tile_minute}`,
         backgroundColor: "#0099FF",
         icon: "dial.max.fill",
     }

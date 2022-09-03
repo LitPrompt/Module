@@ -34,7 +34,11 @@ $httpClient.get(
 
   if((reservearr.begin).split(':')[0]==(hours+1)&&reservearr.stat=='RESERVE'){check_in(reservearr)}
   else{
-   $notification.post('座位信息 总共：'+seatarr.totalseat,'正在使用中'+seatarr.inuse+' 剩余'+seatarr.free,'')
+	title='座位信息 总共：'+seatarr.totalseat
+	body='正在使用中'+seatarr.inuse+' 剩余'+seatarr.free
+	body1=''
+	if(bark_key){bark_notice(title,body,body1)}
+	else{$notification.post(title,body,body1)}	
   }
 
     $done()
@@ -53,8 +57,20 @@ function check_in(reservearr){
   },(error,response,data)=>{
    //console.log(data)
   jsondata = JSON.parse(data);
-    if(jsondata.status=='fail'){$notification.post('签到失败 原因：',jsondata.message,'将重新获取Token')}
-  else{$notification.post('签到成功 ',jsondata.message,seat_loc)}
+    if(jsondata.status=='fail'){
+		title='签到失败 原因：'
+		body=jsondata.message
+		body1='将重新获取Token'
+		if(bark_key){bark_notice(title,body,body1)}
+		else{$notification.post(title,body,body1)}
+	}
+  else{
+	title='签到成功 '
+	body=jsondata.message
+	body1=seat_loc
+	if(bark_key){bark_notice(title,body,body1)}
+	else{$notification.post(title,body,body1)}	
+}
   })
  
 }

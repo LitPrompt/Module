@@ -1,5 +1,5 @@
 
-let tsgseat=$persistentStore.read("tsg_seat")//.split(' ')
+let userid_info=$persistentStore.read("userid_info").split(' ')
 
 dateObj = $script.startTime//获取时间
 data=dateObj.getDate()
@@ -31,10 +31,28 @@ $httpClient.get(
 		console.log('总共'+seatarr.totalseat+' 正在使用中'+seatarr.inuse+' 剩余'+seatarr.free)
 		let reservearr=reserve_info()//预约信息
 
-		if((reservearr.begin).split(':')[0]==(hours+1)){check_in(reservearr.id,reservearr.loc)}
+		if((reservearr.begin).split(':')[0]==(hours+1)){check_in(reservearr)}
 
     $done()
 })
+
+
+//签到函数
+function check_in(reservearr){
+	let seat_id=reservearr.id
+	let seat_loc=reservearr.loc
+
+	$httpClient.get(
+		{
+		url: `https://leosys.cn/axhu/rest/v2/checkIn/${seat_id}`,
+		headers: headers
+		},(error,response,data)=>{
+		jsondata = JSON.parse(data);
+	  	if(jsondata.status=='fail'){$notification.post('签到失败 原因：',jsondata.message,'')}
+		else{$notification.post('签到成功 ',jsondata.message,seat_loc)}
+  })
+ 
+}
 
 //预约信息
 function reserve_info(){
@@ -55,22 +73,6 @@ let reserveinfo=JSON.parse($persistentStore.read('reserve_info'))
 return reserveinfo
 }
 
-//签到函数
-function check_in(seat_id,seat_loc){
-	$httpClient.get(
-		{
-		url: `https://leosys.cn/axhu/rest/v2/checkIn/${seat_id}`,
-		headers: headers
-		},(error,response,data)=>{
-		jsondata = JSON.parse(data);
-	  if(jsondata.status=='fail')
-		{
-$notification.post('签到失败 原因：',jsondata.message,'')
-		}
-		else{$notification.post('签到成功 ',jsondata.message,seat_loc)}
-  })
- 
-}
 
 //座位个数
 function seat_info(time){
@@ -108,12 +110,12 @@ function token_get(jsondata){
 	//console.log('当前Token失效'+jsondata.message,'开始尝试重新获取Token')
     $httpClient.get(
      {
-   url: 'https://leosys.cn/axhu/rest/auth?username=1942065227&password=NAZHVX.H.1VH%5BYBF',
+   url: `https://leosys.cn/axhu/rest/auth?username=${usedid_info[0]}&password=${usedid_info[1]}`,
    headers: {
       'token' : $persistentStore.read("LeoSys_Token"),
      'actCode' : `true`},
    body: '', 
- },(error,response,data)=>{
+	},(error,response,data)=>{
    tokendata = JSON.parse(data);
    //console.log(data)
 	$persistentStore.write(tokendata.data.token,"LeoSys_Token")})

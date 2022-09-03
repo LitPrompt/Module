@@ -224,7 +224,7 @@ function cellular()//流量包取值均为kb未转换
 		for(var a=1;a<=i;a++)
 	{
 		k = jsonData.RESULTDATASET[a-1].RATABLERESOURCEID//获取包名id判断定向与通用
-		if(k==3312000)//判断定向
+		if(k==3312000||k==331202||k==351100||k==3511000)//判断定向
 		{
 			unlimitratableAmount =jsonData.RESULTDATASET[a-1].RATABLEAMOUNT//单包定向总量
 			unlimitbalanceAmount =jsonData.RESULTDATASET[a-1].BALANCEAMOUNT//单包定向余量
@@ -233,7 +233,7 @@ function cellular()//流量包取值均为kb未转换
 			unlimitbalancetotal+=Number(unlimitbalanceAmount)//余量累加
 			unlimitusagetotal+=Number(unlimitusageAmount)//使用累加
 		}
-		if(k==3311000||k==3321000)//判断通用
+		if(k==3311000||k==3321000||k==331100)//判断通用
 		{
 			limitratableAmount =jsonData.RESULTDATASET[a-1].RATABLEAMOUNT//通用总量
 			limitbalanceAmount =jsonData.RESULTDATASET[a-1].BALANCEAMOUNT//通用余量

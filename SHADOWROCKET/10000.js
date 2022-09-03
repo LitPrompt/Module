@@ -60,7 +60,20 @@ $httpClient.post(
 	dateObj = $script.startTime//获取时间
 	Minutes = dateObj.getMinutes();//获取分钟
   	Hours = dateObj.getHours(); //获取小时
-
+	Month = dateObj.getMonth()+1//获取日期月
+	Year = dateObj.getFullYear()//获取日期年
+	Month0=Month-1
+	Month1=Month
+	if(Month==1){Month0=12}
+	if(Month0<=9){Month0='0'+Month0}
+	if(Month1<=9){Month1='0'+Month1}
+	  
+	let oldtime =`${Year}`+`${Month0}`
+	let thistime=`${Year}`+`${Month1}`
+	if(Dates==1&&Tele_body.indexOf(oldtime)!=-1){//月初Body信息修改
+	  let Tele_body1= Tele_body.replace(oldtime,thistime)
+	  $persistentStore.write(String(Tele_body1),'Tele_BD')
+	}
   	thishours=Hours //将当前查询的小时存到hours中
 	thisminutes=Minutes //将当前查询的时间存到thisminute中
 	

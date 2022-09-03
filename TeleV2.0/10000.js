@@ -146,11 +146,11 @@ $httpClient.post(
 	let tile_limitTotal=limitusagetotal-tile_limittoday
 	let tile_limitUsageTotal=limitusagetotal
 
-	if(tile_unlimitTotal>1022976){tile_unlimitTotal=(tile_unlimitTotal/1048576).toFixed(2)+'GB'}
+	if(tile_unlimitTotal>1048576){tile_unlimitTotal=(tile_unlimitTotal/1048576).toFixed(2)+'GB'}
 	else{tile_unlimitTotal=(tile_unlimitTotal/1024).toFixed(0)+'MB'}//今日免流
-	if(tile_limitTotal>1022976){tile_limitTotal=(tile_limitTotal/1048576).toFixed(2)+'GB'}
+	if(tile_limitTotal>1048576){tile_limitTotal=(tile_limitTotal/1048576).toFixed(2)+'GB'}
 	else{tile_limitTotal=(tile_limitTotal/1024).toFixed(0)+'MB'}//今日跳点
-	if(tile_limitUsageTotal>1022976){tile_limitUsageTotal=(tile_limitUsageTotal/1048576).toFixed(2)+'GB'}
+	if(tile_limitUsageTotal>1048576){tile_limitUsageTotal=(tile_limitUsageTotal/1048576).toFixed(2)+'GB'}
 	else{tile_limitUsageTotal=(tile_limitUsageTotal/1024).toFixed(0)+'MB'}//本月跳点
 
 
@@ -163,7 +163,7 @@ $httpClient.post(
 
 	body={
         title: `${brond}`,
-        content: `今日免流/跳点：${tile_unlimitTotal}/${tile_limitTotal}\n本月免流/跳点：${unlimitThis}/${tile_limitUsageTotal}\n查询时间：${tile_hour}:${tile_minute}`,
+        content: `今日免流/跳点：${tile_unlimitTotal}/${tile_limitTotal}\n本月免流/跳点：${unlimitusagetotal}/${tile_limitUsageTotal}\n查询时间：${tile_hour}:${tile_minute}`,
         backgroundColor: "#0099FF",
         icon: "dial.max.fill",
     }
@@ -192,16 +192,20 @@ function notice()
 		}
 	
 	limitUsed=(limitChange/1024).toFixed(3) //跳点转成mb保留三位
-	if(unlimitChange<=1024000)
-	{unlimitUsed=(unlimitChange/1024).toFixed(2)+' MB ' }//免流转成mb保留两位
-	else
-	{unlimitUsed=(unlimitChange/1048576).toFixed(2)+' GB '}//免流转换成gb
+	
+	if(unlimitChange<=1048576){unlimitUsed=(unlimitChange/1024).toFixed(2)+' MB ' }//免流转成mb保留两位
+	else{unlimitUsed=(unlimitChange/1048576).toFixed(2)+' GB '}//免流转换成gb
 	
 	if(limitChange==0){limitUsed=0}
 	if(unlimitChange==0){unlimitUsed=0+' MB '}
 
-	limitbalancetotal=(limitbalancetotal/1048576).toFixed(2) //剩余转成gb保留两位
-  	unlimitusagetotal=(unlimitusagetotal/1048576).toFixed(2)//总免使用转化成gb保留两位小数
+	if(limitbalancetotal<=1048576){limitbalancetotal=(limitbalancetotal/1024).toFixed(2)+' MB' }//剩余转成gb保留两位
+	else{limitbalancetotal=(limitbalancetotal/1048576).toFixed(2)+' GB' }//剩余转成gb保留两位
+
+	if(unlimitusagetotal<=1048576){unlimitusagetotal=(unlimitusagetotal/1024).toFixed(2)+' MB'	}//总免使用转化成gb保留两位小数
+	else{unlimitusagetotal=(unlimitusagetotal/1048576).toFixed(2)+' GB'}//总免使用转化成gb保留两位小数
+	
+
 	if(ns=="true")//true时执行变化通知
 	{  	
 		if(limitChange>Tele_value||unlimitChange>Tele_value)
@@ -210,25 +214,26 @@ function notice()
 			$persistentStore.write(thisminutes,"minutestimeStore") 
 			title=brond+'  耗时:'+minutesused+'分钟'
 			body='免'+unlimitUsed+' 跳'+limitUsed+' MB'
-			body1='总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB'
+			body1='总免'+unlimitusagetotal+' 剩余'+limitbalancetotal
 			if(bark_key){bark_notice(title,body,body1)}
 			else{$notification.post(title,body,body1)}	
-		  	console.log('免 '+unlimitUsed+' MB '+'  跳 '+limitUsed+' MB')
-			console.log('总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')
+			console.log(brond+'  耗时:'+minutesused+'分钟')
+		  	console.log('免 '+unlimitUsed+'  跳 '+limitUsed+' MB')
+			console.log('总免'+unlimitusagetotal+' 剩余'+limitbalancetotal)
 		}
 	}
 	else//默认定时通知
 	{
-		$persistentStore.write(thisminutes,"minutestimeStore")  
 		$persistentStore.write(thishours,"hourstimeStore")
+		$persistentStore.write(thisminutes,"minutestimeStore") 
 		title=brond+'  耗时:'+minutesused+'分钟'
 		body='免'+unlimitUsed+' 跳'+limitUsed+' MB'
-		body1='总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB'
+		body1='总免'+unlimitusagetotal+' 剩余'+limitbalancetotal
 		if(bark_key){bark_notice(title,body,body1)}
 		else{$notification.post(title,body,body1)}	
 		console.log(brond+'  耗时:'+minutesused+'分钟')
-		console.log('免 '+unlimitUsed+' MB '+'  跳 '+limitUsed+' MB')
-		console.log('总免'+unlimitusagetotal+' GB '+' 剩余'+limitbalancetotal+' GB')
+		console.log('免 '+unlimitUsed+'  跳 '+limitUsed+' MB')
+	  	console.log('总免'+unlimitusagetotal+' 剩余'+limitbalancetotal)
 		
 	}
 }

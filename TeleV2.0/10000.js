@@ -76,7 +76,7 @@ $httpClient.post(
 		
     let oldtime =`${Year}`+`${Month0}`
 	let thistime=`${Year}`+`${Month1}`
-	if(Dates==1&&Tele_body.indexOf(oldtime)){//月初Body信息修改
+	if(Dates==1&&Tele_body.indexOf(oldtime)!=-1){//月初Body信息修改
 		let Tele_body1= Tele_body.replace(oldtime,thistime)
 		$persistentStore.write(Tele_body1,'Tele_BD')
 	}

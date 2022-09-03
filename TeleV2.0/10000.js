@@ -95,10 +95,8 @@ $httpClient.post(
 //******
 	i = jsonData.RESULTDATASET.length;//获取第一个items长度
 	// console.log(i)
-	if(auto=="true")
-	{cellular()}//取值部分
-	else
-	{cellular_choose()}
+	if(auto=="true"){cellular()}//取值部分
+	else{cellular_choose()}
 
 //流量判断部分
 	limitThis=limitusagetotal //将当前查询的值存到limitThis中
@@ -138,7 +136,7 @@ $httpClient.post(
 	if(tile_date==undefined){$persistentStore.write(Dates,'day')}//初次
 	let tile_unlimittoday=$persistentStore.read('unlimittoday')
 	let tile_limittoday=$persistentStore.read('limittoday')
-  	if((Hours==0&&Minutes==0)||(tile_unlimittoday==undefined||tile_limittoday==undefined)||tile_date!=Dates)
+  	if((Hours==0&&Minutes==0)||(tile_unlimittoday==undefined||tile_limittoday==undefined)||tile_date!=Dates)//面板更新时间
 	{
 		$persistentStore.write(Dates,'day')
 		$persistentStore.write(unlimitusagetotal,'unlimittoday')
@@ -258,15 +256,6 @@ function cellular()//流量包取值均为kb未转换
 		}
 	
 	}
-	// console.log(unlimitratabletotal)
-	// console.log(unlimitbalancetotal)
-	// console.log(unlimitusagetotal)
-	
-	// console.log(limitratabletotal)
-	// console.log(limitbalancetotal)
-	// console.log(limitusagetotal)
-	// console.log("")
-	
 }
 
 	
@@ -306,15 +295,6 @@ function cellular_choose()
 		}
 
 	}
-
-	console.log(unlimitratabletotal)
-	console.log(unlimitbalancetotal)
-	console.log(unlimitusagetotal)
-	
-	console.log(limitratabletotal)
-	console.log(limitbalancetotal)
-	console.log(limitusagetotal)
-	console.log("")
 }
 
 function bark_notice(title,body,body1){

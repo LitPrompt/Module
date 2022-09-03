@@ -1,4 +1,5 @@
-let tsgseat=$persistentStore.read("tsg_seat").split(' ')
+
+let tsgseat=$persistentStore.read("tsg_seat")//.split(' ')
 
 dateObj = $script.startTime//获取时间
 data=dateObj.getDate()
@@ -12,6 +13,7 @@ let times=hours+"点"+minutes+"分"
 const headers = {
 'User-Agent' : `Mozilla/5.0 (iPhone; CPU iPhone OS 15_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.26(0x18001a31) NetType/WIFI Language/zh_CN`,
 'token' : $persistentStore.read("LeoSys_Token"),
+'user_ip' : `192.168.199.100`,
 };
 const body = ``;
 
@@ -22,55 +24,100 @@ $httpClient.get(
       body: body, 
     },
   (error, response, data) => {
-    //console.log(data)
+		//console.log(data)
     jsondata = JSON.parse(data);
-    if(jsondata.status=="fail"){
-        $notification.post('当前Token失效',jsondata.message,'开始尝试重新获取Token')
-        $httpClient.get(
-            {
-                
-                url: 'https://leosys.cn/axhu/rest/auth?username=1942065227&password=NAZHVX.H.1VH%5BYBF',
-                headers: {
-                    'token' : $persistentStore.read("LeoSys_Token"),
-                    'actCode' : `true`},
-                body: body, 
-            },(error,response,data)=>{
-                tokendata = JSON.parse(data);
-                $persistentStore.write(tokendata.data.token,"LeoSys_Token")})
-                $notification.post('已成功获取Token',headers.token,'')
-                }
-    else{
-        console.log('空余座位：'+total_seat(jsondata)+'个',`查询时间为：${times}`,'座位状态：'+get_seat(tsgseat,jsondata))
+		token_get(jsondata)//token获取
+		let seatarr=seat_info(time)
+		console.log('总共'+seatarr.totalseat+' 正在使用中'+seatarr.inuse+' 剩余'+seatarr.free)
+		let reservearr=reserve_info()//预约信息
 
-        $notification.post('空余座位：'+total_seat(jsondata)+'个',`查询时间为：${times}`,'座位状态：'+get_seat(tsgseat,jsondata))
-    }
+		if((reservearr.begin).split(':')[0]==(hours+1)){check_in(reservearr.id,reservearr.loc)}
+
     $done()
 })
 
-
-function total_seat(jsondata){
-    let total=0
-    for(var k in jsondata.data.layout)
+//预约信息
+function reserve_info(){
+	$httpClient.get(
     {
-        const datasys=jsondata.data.layout[Number(k)]
-        if(datasys.status=="FREE"&&datasys.type=="seat")
-        {total++}
-    }
-    return total
+      url: `https://leosys.cn/axhu/rest/v2/history/1/50?page=1`,
+      headers: headers,
+      body: '', 
+    },
+  (error, response, data) => {
+    jsondata = JSON.parse(data);
+		arr=jsondata.data.reservations[0]
+		
+		stringarr=JSON.stringify(arr)
+		$persistentStore.write(stringarr,'reserve_info')
+})
+let reserveinfo=JSON.parse($persistentStore.read('reserve_info'))
+return reserveinfo
 }
 
-function get_seat(seat,jsondata){
-    let seat_1=''
-    let seat_2=''
-    for(var k in jsondata.data.layout)
+//签到函数
+function check_in(seat_id,seat_loc){
+	$httpClient.get(
+		{
+		url: `https://leosys.cn/axhu/rest/v2/checkIn/${seat_id}`,
+		headers: headers
+		},(error,response,data)=>{
+		jsondata = JSON.parse(data);
+	  if(jsondata.status=='fail')
+		{
+$notification.post('签到失败 原因：',jsondata.message,'')
+		}
+		else{$notification.post('签到成功 ',jsondata.message,seat_loc)}
+  })
+ 
+}
+
+//座位个数
+function seat_info(time){
+	$httpClient.get(
     {
-        for(var i in seat)
-        {
-            if(jsondata.data.layout[Number(k)].name==Number(seat[i])&&jsondata.data.layout[Number(k)].status=="FREE"){seat_1+=seat[i]+' '}
-            if(jsondata.data.layout[Number(k)].name==Number(seat[i])&&jsondata.data.layout[Number(k)].type=="FULL"){seat_2+=seat[i]+' '}
-        }
-    }
-    if(seat_2==''){seat_2='没有座位有人'}
-    else{seat_2=`${seat_2}号座位有人`}
-    return `${seat_1}号座位没人 ${seat_2}`
+      url: `https://leosys.cn/axhu/rest/v2/room/stats2/1/${time}`,
+      headers: headers,
+      body: '', 
+    },
+  (error, response, data) => {
+    jsondata = JSON.parse(data);
+
+		const datas=jsondata.data
+		for(var k in datas){//座位个数判断
+		if(datas[k].roomId==2){
+				totalseat=datas[k].totalSeats
+				inuse=datas[k].inUse
+				free=datas[k].free}}
+		arr={
+		'totalseat':totalseat,
+		'inuse':inuse,
+		'free':free}
+		stringarr=JSON.stringify(arr)
+		$persistentStore.write(stringarr,'seat_info')
+})
+let seatinfo=JSON.parse($persistentStore.read('seat_info'))
+return seatinfo
+}
+
+
+//token获取
+function token_get(jsondata){
+	if(jsondata.status=="fail"){
+   //$notification.post('当前Token失效',jsondata.message,'开始尝试重新获取Token')
+	//console.log('当前Token失效'+jsondata.message,'开始尝试重新获取Token')
+    $httpClient.get(
+     {
+   url: 'https://leosys.cn/axhu/rest/auth?username=1942065227&password=NAZHVX.H.1VH%5BYBF',
+   headers: {
+      'token' : $persistentStore.read("LeoSys_Token"),
+     'actCode' : `true`},
+   body: '', 
+ },(error,response,data)=>{
+   tokendata = JSON.parse(data);
+   //console.log(data)
+	$persistentStore.write(tokendata.data.token,"LeoSys_Token")})
+	//console.log('已成功获取Token'+headers.token,)
+     //$notification.post('已成功获取Token',headers.token,'')
+     }
 }

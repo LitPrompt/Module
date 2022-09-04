@@ -37,9 +37,9 @@ $httpClient.get(
 	if(jsondata.data==null){$notification.post('当前数据查询失败',jsondata.message,'')}
 else{
 	for(var i in jsondata.data.layout){
-			if(jsondata.data.layout[i].type=='seat'&&jsondata.data.layout[i].status=='FREE'){	allfree+=jsondata.data.layout[i].name+'空余 '}
+			if(jsondata.data.layout[i].type=='seat'&&jsondata.data.layout[i].status=='FREE'){	allfree+=jsondata.data.layout[i].name+' '}
 			
-if(jsondata.data.layout[i].type=='seat'&&jsondata.data.layout[i].status=='FULL'){	allfull+=jsondata.data.layout[i].name+'不可用 '}
+if(jsondata.data.layout[i].type=='seat'&&jsondata.data.layout[i].status=='FULL'){	allfull+=jsondata.data.layout[i].name+' '}
 			
 	}
 }
@@ -49,7 +49,7 @@ if(jsondata.data.layout[i].type=='seat'&&jsondata.data.layout[i].status=='FULL')
   if((reservearr.begin.split(':')[0]==(hours-1)||reservearr.begin.split(':')[0]==hours)&&reservearr.stat=='RESERVE'){check_in(reservearr)}
   else{
 		if(allfull||allfree){
-   $notification.post(seatarr.room+'座位信息 总共:'+seatarr.totalSeats,'正在使用中:'+seatarr.inUse+' 剩余:'+seatarr.free+' 已预约:'+seatarr.reserved,'< '+allfull+'>'+`\n`+'<'+allfree+'>')}
+   $notification.post(seatarr.room+'座位信息 总共:'+seatarr.totalSeats,'正在使用中:'+seatarr.inUse+' 剩余:'+seatarr.free+' 已预约:'+seatarr.reserved,'不可用 <'+allfull+'>'+`\n`+'空余 <'+allfree+'>')}
 else{console.log('--------------------------------------------------')}	
 	}
     $done()

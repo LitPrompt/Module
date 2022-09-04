@@ -25,7 +25,7 @@ if (effective=="0"&&loginerror==1) {
 else{
     if(loginerror==0){console.log('当前Body有效，无需获取')}
     else{
-        title=''
+        title='当前操作'
 		body='请点击已用流量'
 		body1=''
 		if(bark_key){bark_notice(title,body,body1)}

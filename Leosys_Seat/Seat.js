@@ -47,11 +47,11 @@ if(jsondata.data.layout[i].type=='seat'&&jsondata.data.layout[i].status=='FULL')
   let reservearr=reserve_info()//预约信息
 
   if((reservearr.begin.split(':')[0]==(hours-1)||reservearr.begin.split(':')[0]==hours)&&reservearr.stat=='RESERVE'){check_in(reservearr)}
-  else{
+  
 		if(allfull||allfree){
-   $notification.post(seatarr.room+'座位信息 总共:'+seatarr.totalSeats,'正在使用中:'+seatarr.inUse+' 剩余:'+seatarr.free+' 已预约:'+seatarr.reserved,'不可用 <'+allfull+'>'+`\n`+'空余 <'+allfree+'>')}
-else{console.log('--------------------------------------------------')}	
-	}
+    console.log(seatarr.room+'座位信息 总共:'+seatarr.totalSeats+'正在使用中:'+seatarr.inUse+' 剩余:'+seatarr.free+' 已预约:'+seatarr.reserved+`\n\n`+'不可用 <'+allfull+'>'+`\n\n`+'空余 <'+allfree+'>')
+    $notification.post(seatarr.room+'座位信息 总共:'+seatarr.totalSeats,'正在使用中:'+seatarr.inUse+' 剩余:'+seatarr.free+' 已预约:'+seatarr.reserved,'不可用 <'+allfull+'>'+`\n`+'空余 <'+allfree+'>')}
+		else{console.log('--------------------------------------------------')}	
     $done()
 })
 

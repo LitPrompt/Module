@@ -34,7 +34,7 @@ $httpClient.get(
 	let allfree=''
 	let allfull=''
 	
-	if(jsondata.data==null){$notification.post('当前数据查询失败','原因：'+jsondata.message,'')}
+	if(jsondata.data==null){$notification.post('当前数据查询失败',jsondata.message,'')}
 else{
 	for(var i in jsondata.data.layout){
 			if(jsondata.data.layout[i].type=='seat'&&jsondata.data.layout[i].status=='FREE'){	allfree+=jsondata.data.layout[i].name+'空余 '}

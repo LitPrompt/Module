@@ -15,7 +15,9 @@ const headers = {
 'user_ip' : `192.168.199.100`,
 };
 const body = ``;
-
+//'FULL' 不可用
+//'IN_USE' 正在使用
+//'FREE' 空闲
 $httpClient.get(
     {
       url: `https://leosys.cn/axhu/rest/v2/room/layoutByDate/2/${time}`,
@@ -23,16 +25,26 @@ $httpClient.get(
       body: body, 
     },
   (error, response, data) => {
-
+//console.log(data)
     jsondata = JSON.parse(data);
   token_get(jsondata)//token获取
+		
   let seatarr=seat_info(time)
-  console.log('总共'+seatarr.totalseat+' 正在使用中'+seatarr.inuse+' 剩余'+seatarr.free)
+  console.log('总共'+seatarr.totalSeats+' 正在使用中'+seatarr.inUse+' 剩余'+seatarr.free+' 已预约：'+seatarr.reserved)
+	
+	for(var i in jsondata.data.layout){
+			if(jsondata.data.layout[i].type=='seat'){
+//console.log('                      '+jsondata.data.layout[i].name+' '+jsondata.data.layout[i].status)
+}
+		}
+	
   let reservearr=reserve_info()//预约信息
+	console.log(reservearr.begin.split(':')[0])
 
-  if((reservearr.begin).split(':')[0]==(hours+1)&&reservearr.stat=='RESERVE'){check_in(reservearr)}
+  if((reservearr.begin.split(':')[0]==(hours-1)||reservearr.begin.split(':')[0]==hours)&&reservearr.stat=='RESERVE'){check_in(reservearr)}
   else{
-   $notification.post('座位信息 总共：'+seatarr.totalseat,'正在使用中'+seatarr.inuse+' 剩余'+seatarr.free,'')
+   $notification.post('座位信息 总共：'+seatarr.totalSeats,'正在使用中：'+seatarr.inUse+' 剩余：'+seatarr.free+' 已预约：'+seatarr.reserved,'')
+	console.log('签到信息 座位信息 总共：'+seatarr.totalSeats+' 正在使用中：'+seatarr.inUse+' 剩余：'+seatarr.free+' 已预约：'+seatarr.reserved)
   }
 
     $done()
@@ -43,16 +55,21 @@ $httpClient.get(
 function check_in(reservearr){
  let seat_id=reservearr.id
  let seat_loc=reservearr.loc
-//console.log(seat_id)
+ console.log('预约座位id：'+seat_id)
  $httpClient.get(
   {
   url: `https://leosys.cn/axhu/rest/v2/checkIn/${seat_id}`,
   headers: headers
   },(error,response,data)=>{
-   //console.log(data)
+   console.log(data)
   jsondata = JSON.parse(data);
-    if(jsondata.status=='fail'){$notification.post('签到失败 原因：',jsondata.message,'将重新获取Token')}
-  else{$notification.post('签到成功 ',jsondata.message,seat_loc)}
+  if(jsondata.status=='fail'){$notification.post('签到失败 原因：',jsondata.message)
+			$notification.post(jsondata.message)
+			console.log('签到失败 原因：'+jsondata.message)
+		}
+  else{$notification.post('签到成功 ',jsondata.message,seat_loc)
+		console.log('签到成功 '+jsondata.message+seat_loc)
+	}
   })
  
 }
@@ -88,17 +105,7 @@ function seat_info(time){
   (error, response, data) => {
     jsondata = JSON.parse(data);
 
-  const datas=jsondata.data
-  for(var k in datas){//座位个数判断
-  if(datas[k].roomId==2){
-    totalseat=datas[k].totalSeats
-    inuse=datas[k].inUse
-    free=datas[k].free}}
-  arr={
-  'totalseat':totalseat,
-  'inuse':inuse,
-  'free':free}
-  stringarr=JSON.stringify(arr)
+  stringarr=JSON.stringify(jsondata.data[1])
   $persistentStore.write(stringarr,'seat_info')
 })
 let seatinfo=JSON.parse($persistentStore.read('seat_info'))

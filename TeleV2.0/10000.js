@@ -183,6 +183,7 @@ else{
 		body1="覆写获取到Body后可以不用关闭覆写"
 		if(bark_key){bark_notice(title,body,body1)}
 		else{$notification.post(title,body,body1)}	
+		$done()
 }
 
 //  retableResourceID:

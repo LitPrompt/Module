@@ -4,6 +4,8 @@ var Tele_body = $persistentStore.read("Tele_BD");
 var Tele_value= $persistentStore.read("threshold")
 let bark_key=$persistentStore.read('bark_key')
 let icon_url=$persistentStore.read('bark_icon')
+let loginerror=$persistentStore.read('Bodyswitch')
+
 
 var jsonData //存储json数据
 var dateObj
@@ -36,7 +38,7 @@ var limitUsed
 var unlimitUsed //通用差值与定向差值以及时间差值
 
 
-
+if(loginerror==0){
 $httpClient.post(
   {
 	url: 'https://czapp.bestpay.com.cn/payassistant-client?method=queryUserResource',
@@ -174,7 +176,7 @@ $httpClient.post(
     }
 	$done(body)
   }
-)
+)}
 
 //  retableResourceID:
 // 定向：3312000

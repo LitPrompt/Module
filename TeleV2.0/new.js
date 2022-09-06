@@ -16,8 +16,11 @@ let brond=$persistentStore.read("key_brond")
     }
 
     let arrquery=``
-    await query().then(result=>{
-        arrquery=query_all(result)//原始量数组
+    let Tele_body = $persistentStore.read("Tele_BD");
+	let pack_switch = $persistentStore.read("auto_switch");
+
+    await query(Tele_body).then(result=>{
+        arrquery=query_all(result,packge_switch)//原始量数组
     }).catch(e=>{
         console.log(e)
     })
@@ -36,13 +39,13 @@ let brond=$persistentStore.read("key_brond")
 
 })()
 
-async function query(){//余量原始数据
+async function query(Tele_body){//余量原始数据
     return new Promise((resolve,reject)=>{
         $httpClient.post({
             url: 'https://czapp.bestpay.com.cn/payassistant-client?method=queryUserResource',
 			headers: "",
     		body: Tele_body, // 请求体
-        },(error,response,data)={
+        },(error,response,data)=>{
             if(error){
                 reject(`网络请求错误❌，请检查`)
             }
@@ -53,7 +56,7 @@ async function query(){//余量原始数据
     })
 }
 
-function query_all(jsonData){//原始量累计
+function query_all(jsonData,packge_switch){//原始量累计
     let unlimitratabletotal=''
     let unlimitbalancetotal=''
     let unlimitusagetotal=''
@@ -63,7 +66,7 @@ function query_all(jsonData){//原始量累计
     var x = $persistentStore.read("limititems").split(' ');//通用正则选择
 	var y = $persistentStore.read('unlimititems').split(' ');//定向正则选择
 
-    if(auto_switch=='true'){
+    if(notify_switch=='true'){
     for(var s in jsonData.RESULTDATASET){
         const k = jsonData.RESULTDATASET[s].RATABLERESOURCEID//获取包名id判断定向与通用
         if(k==3312000||k==331202||k==351100||k==3511000)//判断定向

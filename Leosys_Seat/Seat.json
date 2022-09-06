@@ -29,6 +29,16 @@
           "autoGrow": true,
           "rows": 1,
           "desc": "以空格分开"
+        },
+        {
+          "id": "seatid_info",
+          "name": "输入座位信息",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "autoGrow": true,
+          "rows": 1,
+          "desc": "以-分开"
         }
     ],
       "author": "@Alt_Option",

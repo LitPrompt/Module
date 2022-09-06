@@ -1,5 +1,6 @@
 let userid_info=$persistentStore.read("userid_info").split(' ')
 let seatid=$persistentStore.read("seatid_info").split('-')
+let flag=$persistentStore.read('checkflag')
 
 dateObj = $script.startTime//获取时间
 data=dateObj.getDate()
@@ -31,7 +32,7 @@ const body = ``;
 		let timeseat=await searchseat(time1*60,time2*60)
 		let seatinfo=await seat_info()
 		let reserveinfo=await reserve_info()
-		let checkin=await check_in(reserveinfo)
+		check_in(reserveinfo)
 		
 		
 		let d=''
@@ -109,10 +110,9 @@ function check_in(reservearr){
  let seat_begin=reservearr.begin.split(':')[0]
  let seat_stat=reservearr.stat
 //console.log(seat_stat)
-if(seat_stat=='RESERVE')
- {console.log('预约座位id：'+seat_id)}
-
-if((seat_begin==(hours+1)||seat_begin==hours)&&seat_stat=='RESERVE'){
+if(flag==1&&hours!=seat_begin&&hours+1!=seat_begin){$persistentStore.write(0,'checkflag')}
+if(seat_stat=='RESERVE'){console.log('预约座位id：'+seat_id)}
+if((seat_begin==(hours+1)||seat_begin==hours)&&seat_stat=='RESERVE'&&flag!=1){
 	 $httpClient.get(
   {
   url: `https://leosys.cn/axhu/rest/v2/checkIn/${seat_id}`,
@@ -120,7 +120,10 @@ if((seat_begin==(hours+1)||seat_begin==hours)&&seat_stat=='RESERVE'){
   },(error,response,data)=>{
   jsondata = JSON.parse(data);
   if(jsondata.status=='fail'){$notification.post('签到失败 原因：',jsondata.message,'')}
-  else{$notification.post('签到成功 ',jsondata.message,seat_loc)}
+  else{
+	  $persistentStore.write(1,'checkflag')
+	  $notification.post('签到成功 ',jsondata.message,seat_loc)
+	  }
   })
  }
 }
@@ -137,7 +140,6 @@ function reserve_info(){
   (error, response, data) => {
     jsondata = JSON.parse(data);
 		arr=jsondata.data.reservations[0]
-
 		if(error){reject(error)
 		}else{resolve(arr)}
 	})

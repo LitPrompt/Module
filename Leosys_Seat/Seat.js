@@ -1,4 +1,5 @@
 let userid_info=$persistentStore.read("userid_info").split(' ')
+let seatid=$persistentStore.read("seatid_info").split('-')
 
 dateObj = $script.startTime//获取时间
 data=dateObj.getDate()
@@ -20,8 +21,9 @@ const body = ``;
 //'FREE' 空闲
 
 (async()=>{
-	let time1=18
-	let time2=22
+	let time1=seatid[0]
+	let time2=seatid[1]
+	//console.log(time1)
 	try{
 		
 		let layoutseats=await layoutseat()
@@ -50,9 +52,10 @@ if(layoutseats.data.layout[i].type=='seat'&&layoutseats.data.layout[i].status=='
 			for(var i in timeseat.data.seats){
 	d+=timeseat.data.seats[i].name+' ';}
 	if(d!=''){
-			$notification.post(seatinfo.room+'座位信息 总共:'+seatinfo.totalSeats,'正在使用中:'+seatinfo.inUse+' 剩余:'+seatinfo.free+' 已预约:'+seatinfo.reserved,'时间段内空余<'+d+'>'+`\n`+'不可用 <'+allfull+'>')
+	$notification.post(seatinfo.room+'座位信息 总共:'+seatinfo.totalSeats,'正在使用中:'+seatinfo.inUse+' 剩余:'+seatinfo.free+' 已预约:'+seatinfo.reserved,'时间段内空余<'+d+'>'+`\n`+'不可用 <'+allfull+'>')
 	console.log(seatinfo.room+'座位信息 总共:'+seatinfo.totalSeats+'正在使用中:'+seatinfo.inUse+' 剩余:'+seatinfo.free+' 已预约:'+seatinfo.reserved+`\n\n`+'时间段内空余<'+d+'>'+`\n\n`+'不可用 <'+allfull+'>')
 			}
+	else{console.log(seatinfo.room+'座位信息 总共:'+seatinfo.totalSeats+' 正在使用中:'+seatinfo.inUse+' 剩余:'+seatinfo.free+' 已预约:'+seatinfo.reserved+`\n\n`+'时间段内空余<'+d+'>'+`\n\n`+'不可用 <'+allfull+'>')}
 		}
 	}catch(e){
 		console.log('错误信息'+e)

@@ -23,16 +23,18 @@ const body = ``;
 	let time1=18
 	let time2=22
 	try{
+		
 		let layoutseats=await layoutseat()
+		token_get(layoutseats)//token获取
 		let timeseat=await searchseat(time1*60,time2*60)
 		let seatinfo=await seat_info()
 		let reserveinfo=await reserve_info()
 		let checkin=await check_in(reserveinfo)
-		token_get(layoutseats)//token获取
+		
 		
 		let d=''
 		let allfull=''
-		//console.log(JSON.stringify())
+		
 
 		if(timeseat.status=='fail'){
 			console.log('座位信息报错')
@@ -103,7 +105,7 @@ function check_in(reservearr){
  let seat_loc=reservearr.loc
  let seat_begin=reservearr.begin.split(':')[0]
  let seat_stat=reservearr.stat
-
+//console.log(seat_stat)
 if(seat_stat=='RESERVE')
  {console.log('预约座位id：'+seat_id)}
 
@@ -162,8 +164,8 @@ function seat_info(){
 
 
 //token获取
-function token_get(jsondata){
- if(jsondata.status=="fail"){
+function token_get(layoutseats){
+ if(layoutseats.status=="fail"){
     $httpClient.get(
      {
    url: `https://leosys.cn/axhu/rest/auth?username=${userid_info[0]}&password=${userid_info[1]}`,

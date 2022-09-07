@@ -1,4 +1,4 @@
-
+const $ = new Env(`电信余量`)
 
 !(async () => {
     let panel = {
@@ -8,7 +8,7 @@
         icon: "dial.max.fill",
     }
 
-    let Tele_body = $persistentStore.read("Tele_BD");
+    let Tele_body = $.read("Tele_BD");
 
     let arrquery=`` //数据量数组型
     await query(Tele_body).then(result=>{
@@ -22,11 +22,11 @@
             body='请尝试重新抓取Body(不抓没得用了！)'
             body1="覆写获取到Body后可以不用关闭覆写"
             if(bark_key){bark_notice(title,body,body1)}
-            else{$notification.post(title,body,body1)}	
+            else{$.notice(title,body,body1)}	
             let loginerror=1
-            $persistentStore.write(loginerror,'Bodyswitch')
+            $.write(loginerror,'Bodyswitch')
         }else{
-            console.log(e)
+            $.log(e)
         }
 
     }).finally(() => {
@@ -49,7 +49,7 @@
 
 async function query(Tele_body){//余量原始数据
     return new Promise((resolve,reject)=>{
-        $httpClient.post({
+        $.post({
             url: 'https://czapp.bestpay.com.cn/payassistant-client?method=queryUserResource',
 			headers: "",
     		body: Tele_body, // 请求体
@@ -85,9 +85,9 @@ function query_all(jsonData){//原始量累计
     let limitbalancetotal=0
     let limitusagetotal=0
 
-    let x = $persistentStore.read("limititems").split(' ');//通用正则选择
-	let y = $persistentStore.read('unlimititems').split(' ');//定向正则选择
-	let packge_switch = $persistentStore.read("auto_switch");//自动选包开关
+    let x = $.read("limititems").split(' ');//通用正则选择
+	let y = $.read('unlimititems').split(' ');//定向正则选择
+	let packge_switch = $.read("auto_switch");//自动选包开关
 
     if(packge_switch=='true'){
     for(var s in jsonData.RESULTDATASET){
@@ -155,14 +155,14 @@ function bark_notice(title,body,body1){
 	if(icon_url){bark_icon=`?icon=${icon_url}`}
 	else {bark_icon=''}
 
-	let bark_other=$persistentStore.read('bark_add')
+	let bark_other=$.read('bark_add')
   	let effective=bark_icon.indexOf("?icon")
   	if((effective!=-1)&&bark_other){bark_other=`&${bark_other}`}
 	else if((effective==-1)&&bark_other){bark_other=`?${bark_other}`}
 	else{bark_other=''}
 	let url =`${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}${bark_other}`
 
-	$httpClient.get({url})
+	$.get({url})
 }
 
 function kbytesToSize(kbytes) {//字节转换
@@ -182,4 +182,36 @@ function formatTime() {
 	let Year = dateObj.getFullYear()//获取日期年
     let objtime={year: Year, month: Month, day:Dates, hours:Hours, minutes:Minutes}
     return objtime
+}
+
+function Env(name) {
+  LN = typeof $loon != `undefined`
+  SG_STASH = typeof $httpClient != `undefined` && !LN
+  QX = typeof $task != `undefined`
+  read = (key) => {
+    if (LN || SG_STASH) return $persistentStore.read(key)
+    if (QX) return $prefs.valueForKey(key)
+  }
+  write = (key, val) => {
+    if (LN || SG_STASH) return $persistentStore.write(key, val); 
+    if (QX) return $prefs.setValueForKey(String(key), val)
+  }
+  notice = (title, subtitle, message, url) => {
+    if (LN) $notification.post(title, subtitle, message, url)
+    if (SG_STASH) $notification.post(title, subtitle, message, { url: url })
+    if (QX) $notify(title, subtitle, message, { 'open-url': url })
+  }
+  get = (url, cb) => {
+    if (LN || SG_STASH) {$httpClient.get(url, cb)}
+    if (QX) {url.method = `GET`; $task.fetch(url).then((resp) => cb(null, {}, resp.body))}
+  }
+  post = (url, cb) => {
+    if (LN || SG_STASH) {$httpClient.post(url, cb)}
+    if (QX) {url.method = `POST`; $task.fetch(url).then((resp) => cb(null, {}, resp.body))}
+  }
+  toObj = (str) => JSON.parse(str)
+  toStr = (obj) => JSON.stringify(obj)
+  log = (message) => console.log(message)
+  done = (value = {}) => {$done(value)}
+  return { name, read, write, notice, get, post, toObj, toStr, log, done }
 }

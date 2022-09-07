@@ -61,6 +61,7 @@ async function query(Tele_body){//余量原始数据
 			headers: "",
     		body: Tele_body, // 请求体
         }, function (error,response,data){
+            jsondata=JSON.parse(data)
             if(error){
                 reject('网络请求错误❌，请检查')
                 return
@@ -69,13 +70,13 @@ async function query(Tele_body){//余量原始数据
                 reject('网络相应错误❌，请检查')
                 return
             }
-            if(data.RESPONSECODE=="010040"){
-                console.log(data.RESPONSECONTENT)
-                reject(data.RESPONSECODE)//010040
+            if(jsondata.RESPONSECODE=="010040"){
+                console.log(jsondata.RESPONSECONTENT)
+                reject(jsondata.RESPONSECODE)//010040
                 return
             }
             if(data.RESPONSECODE=="000000"){
-                resolve(JSON.parse(data))
+                resolve(jsondata)
                 return
             }
             

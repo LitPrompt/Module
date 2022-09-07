@@ -1,13 +1,6 @@
-let notify_switch = $persistentStore.read("notice_switch");
-// let pack_switch = $persistentStore.read("auto_switch");
-// let Tele_body = $persistentStore.read("Tele_BD");
-let Tele_value= $persistentStore.read("threshold")//跳点阈值
-let bark_key=$persistentStore.read('bark_key')
-let icon_url=$persistentStore.read('bark_icon')
-let loginerror=$persistentStore.read('Bodyswitch')
-let brond=$persistentStore.read("key_brond")
 
-(async () => {
+
+!(async () => {
     let panel = {
         title: '电信余量',
         content: ``,

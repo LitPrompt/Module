@@ -75,7 +75,7 @@ async function query(Tele_body){//余量原始数据
                 reject(jsondata.RESPONSECODE)//010040
                 return
             }
-            if(data.RESPONSECODE=="000000"){
+            if(jsondata.RESPONSECODE=="000000"){
                 resolve(jsondata)
                 return
             }

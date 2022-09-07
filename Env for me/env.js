@@ -10,7 +10,7 @@ function Env(name) {
   }
   write = (key, val) => {
     if (LN || SG/STASH) return $persistentStore.write(key, val); 
-    if (QX) return $prefs.setValueForKey(key, val)
+    if (QX) return $prefs.setValueForKey(String(key), val)
   }
   notice = (title, subtitle, message, url) => {
     if (LN) $notification.post(title, subtitle, message, url)

@@ -33,7 +33,7 @@ const $ = new Env(`电信余量`)
     let Tele_body = $.read("Tele_BD");
     let brond=$.read('key_brond')
 
-	let Tile_All={Tile_Today:'',Tile_Minth:'',Tile_Time:''}
+	let Tile_All={Tile_Today:'',Tile_Month:'',Tile_Time:''}
     
     Query(Tele_body).then(result=>{
         let ArrayQuery=Query_All(result)
@@ -93,10 +93,10 @@ const $ = new Env(`电信余量`)
 			$.write(ArrayQuery.unlimitusage,'unlimittoday')
 			$.write(ArrayQuery.limitusage,'limittoday')
 		}
-		let tile_unlimitTotal=ArrayQuery.unlimitusage-tile_unlimittoday//面板今日定向用量
-		let tile_limitTotal=ArrayQuery.limitusage-tile_limittoday//面板今天通用用量
-		let tile_unlimitUsageTotal=ArrayQuery.unlimitusage//面板本月定向使用量
-		let tile_limitUsageTotal=ArrayQuery.limitusage//面板本月通用使用量
+		tile_unlimitTotal=ArrayQuery.unlimitusage-tile_unlimittoday//面板今日定向用量
+		tile_limitTotal=ArrayQuery.limitusage-tile_limittoday//面板今天通用用量
+		tile_unlimitUsageTotal=ArrayQuery.unlimitusage//面板本月定向使用量
+		tile_limitUsageTotal=ArrayQuery.limitusage//面板本月通用使用量
 
         if(thishours<10){tile_hour='0'+thishours}
 		else{tile_hour=thishours}
@@ -119,8 +119,8 @@ const $ = new Env(`电信余量`)
         }
 
     }).finally(() => {
-		Tile_All['Tile_Today']=ToSize(tile_unlimittoday,0,1)+'/'+ToSize(tile_limittoday,0,1)
-		Tile_All['Tile_Month']=ToSize(tile_unlimitUsageTotal,0,1)+'/'+ToSize(tile_limitUsageTotal,0,1)
+		Tile_All['Tile_Today']=ToSize(tile_unlimitTotal,0,0,1)+'/'+ToSize(tile_limitTotal,0,0,1)
+		Tile_All['Tile_Month']=ToSize(tile_unlimitUsageTotal,0,0,1)+'/'+ToSize(tile_limitUsageTotal,0,0,1)
 		Tile_All['Tile_Time']=tile_hour+':'+tile_minute
         $done(panel)
       })
@@ -303,16 +303,16 @@ function Notice_All()
 
 
 
-function ToSize(kbytes,s,l) {//字节转换s保留位数l是否空格t是否单位
+function ToSize(kbytes,s,l,t) {//字节转换s保留位数l是否空格t是否单位
     if (kbytes == 0) return "0KB";
     let k = 1024;
     sizes = ["KB", "MB", "GB", "TB"];
     let i = Math.floor(Math.log(kbytes) / Math.log(k));//获取指数
 	if(l==1&&t==1){
 		return (kbytes / Math.pow(k, i)).toFixed(s) + " " + sizes[i];
-	}else if(l==1&&t!=1){
+	}else if(l==1&&t==0){
 		return (kbytes / Math.pow(k, i)).toFixed(s) + " " ;
-	}else if(l!=1&t==1){
+	}else if(l==0&t==1){
 		return (kbytes / Math.pow(k, i)).toFixed(s) + sizes[i];
 	}else{
 		return (kbytes / Math.pow(k, i)).toFixed(s);

@@ -261,7 +261,7 @@ function Notice(title,body,body1){
 	else{bark_other=''}
 	let url =`${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}${bark_other}`
 
-	$.post(url)
+	$.post({url})
     }else{$.notice(title,body,body1)}
 	
 }

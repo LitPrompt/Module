@@ -163,6 +163,7 @@ async function Query(Tele_body){//余量原始数据
                 return
             }
             if(jsondata.RESPONSECODE=="010040"){
+				$.write(data,'packge_detail')
                 reject(jsondata.RESPONSECODE)//010040
                 return
             }

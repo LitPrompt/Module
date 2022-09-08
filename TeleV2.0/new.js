@@ -19,20 +19,25 @@ const $ = new Env(`电信余量`)
 		let Tele_body1= Tele_body.replace(oldtime,thistime)
 		$.write(Tele_body1,'Tele_BD')
 	}
+	thishours=formatTime().hours
+    thisminutes=formatTime().minutes
+    Days=formatTime().day
+    lasthours=$.read('hourstimeStore')
+    lastminutes=$.read('minutestimeStore')
+    hoursused=thishours-lasthours
+
+	if(hoursused>=0){minutesused=(thisminutes-lastminutes)+hoursused*60} //上次查询的时间大于等于当前查询的时间
+    else if(hoursused<0&&lasthours==23){minutesused=(60-lastminutes)+thishours*60+thisminutes} 
+    //**********
 
     let Tele_body = $.read("Tele_BD");
     let brond=$.read('key_brond')
+
+	let Tile_All={Tile_Today:'',Tile_Minth:'',Tile_Time:''}
     
-    let ArrayQuery=`` //数据量数组型
     Query(Tele_body).then(result=>{
-        ArrayQuery=Query_All(result)
-        thishours=formatTime().hours
-        thisminutes=formatTime().minutes
-        Days=formatTime().day
-      	lasthours=$.read('hourstimeStore')
-      	lastminutes=$.read('minutestimeStore')
-      	hoursused=thishours-lasthours
-        //
+        let ArrayQuery=Query_All(result)
+
         if(brond=='undefined'){
         	for(var s=0;s+1<=result.RESULTDATASET.length;s++)
 			{
@@ -41,10 +46,7 @@ const $ = new Env(`电信余量`)
 			}
 			brond = result.RESULTDATASET[brondid].PRODUCTOFFNAME
 			$.write(brond,"key_brond")
-    	}
-      	if(hoursused>=0){minutesused=(thisminutes-lastminutes)+hoursused*60} //上次查询的时间大于等于当前查询的时间
-      	else if(hoursused<0&&lasthours==23){minutesused=(60-lastminutes)+thishours*60+thisminutes} 
-        //**********
+    	}  	
         limitThis=ArrayQuery.limitusage//通用使用量
         unlimitThis=ArrayQuery.unlimitusage//定向使用量
         limitLast=$.read("limitStore") //将上次查询到的值读出来
@@ -78,7 +80,6 @@ const $ = new Env(`电信余量`)
 		$.log("通用变化量:"+limitChange)
   		if(limitChange!=0){$.write(ArrayQuery.limitusage,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
   		if(unlimitChange!=0){$.write(ArrayQuery.unlimitusage,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
-		
         
         //***********
 
@@ -118,14 +119,12 @@ const $ = new Env(`电信余量`)
         }
 
     }).finally(() => {
+		Tile_All['Tile_Today']=ToSize(tile_unlimittoday,0,1)+'/'+ToSize(tile_limittoday,0,1)
+		Tile_All['Tile_Month']=ToSize(tile_unlimitUsageTotal,0,1)+'/'+ToSize(tile_limitUsageTotal,0,1)
+		Tile_All['Tile_Time']=tile_hour+':'+tile_minute
         $done(panel)
       })
       
-
-
-    panel['title'] = brond
-
-
 
 })()
 
@@ -304,19 +303,20 @@ function Notice_All()
 
 
 
-function ToSize(kbytes,s) {//字节转换带单位
+function ToSize(kbytes,s,l) {//字节转换s保留位数l是否空格t是否单位
     if (kbytes == 0) return "0KB";
     let k = 1024;
     sizes = ["KB", "MB", "GB", "TB"];
     let i = Math.floor(Math.log(kbytes) / Math.log(k));//获取指数
-    return (kbytes / Math.pow(k, i)).toFixed(s) + " " + sizes[i];
-}
-
-function ToSizes(kbytes,s) {//字节转换不带单位 保留s位
-    if (kbytes == 0) return "0";
-    let k = 1024;
-    let i = Math.floor(Math.log(kbytes) / Math.log(k));//获取指数
-    return (kbytes / Math.pow(k, i)).toFixed(s);
+	if(l==1&&t==1){
+		return (kbytes / Math.pow(k, i)).toFixed(s) + " " + sizes[i];
+	}else if(l==1&&t!=1){
+		return (kbytes / Math.pow(k, i)).toFixed(s) + " " ;
+	}else if(l!=1&t==1){
+		return (kbytes / Math.pow(k, i)).toFixed(s) + sizes[i];
+	}else{
+		return (kbytes / Math.pow(k, i)).toFixed(s);
+	}
 }
 
 

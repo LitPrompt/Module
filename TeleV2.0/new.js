@@ -103,7 +103,9 @@ const $ = new Env(`电信余量`)
     	if(thisminutes<10){tile_minute='0'+thisminutes}
 		else{tile_minute=thisminutes}
 
-
+		Tile_All['Tile_Today']=ToSize(tile_unlimitTotal,0,0,1)+'/'+ToSize(tile_limitTotal,0,0,1)
+		Tile_All['Tile_Month']=ToSize(tile_unlimitUsageTotal,0,0,1)+'/'+ToSize(tile_limitUsageTotal,0,0,1)
+		Tile_All['Tile_Time']=tile_hour+':'+tile_minute
 
     }).catch(e=>{
 
@@ -119,9 +121,8 @@ const $ = new Env(`电信余量`)
         }
 
     }).finally(() => {
-		Tile_All['Tile_Today']=ToSize(tile_unlimitTotal,0,0,1)+'/'+ToSize(tile_limitTotal,0,0,1)
-		Tile_All['Tile_Month']=ToSize(tile_unlimitUsageTotal,0,0,1)+'/'+ToSize(tile_limitUsageTotal,0,0,1)
-		Tile_All['Tile_Time']=tile_hour+':'+tile_minute
+		panel['title']=brond
+		panel['content']='今日免流/跳点：'+Tile_All['Till_Today']+`\n`+'本月免流/跳点：'+Tile_All['Till_Month']+`\n`+'查询时间：'+Tile_All['Tile_Time']
         $done(panel)
       })
       

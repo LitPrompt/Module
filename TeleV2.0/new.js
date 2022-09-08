@@ -114,14 +114,14 @@ const $ = new Env(`电信余量`)
 			$.write(thisminutes,"minutestimeStore") 
 			title=brond+'  耗时:'+minutesused+'分钟'
 			body='免'+ToSize(unlimitChange,2,1,1)+' 跳'+ToSize(limitChange,2,1,1)
-			body1='总免'+ToSize(ArrayQuery.unlimitall,2,1,1)+' 剩余'+ToSize(ArrayQuery.limitleft,2,1,1)
+			body1='总免'+ToSize(ArrayQuery.unlimitusage,2,1,1)+' 剩余'+ToSize(ArrayQuery.limitleft,2,1,1)
 			Notice(title,body,body1)
 		}else{
 			$.write(thishours,"hourstimeStore")
 			$.write(thisminutes,"minutestimeStore") 
 			title=brond+'  耗时:'+minutesused+'分钟'
 			body='免'+ToSize(unlimitChange,2,1,1)+' 跳'+ToSize(limitChange,2,1,1)
-			body1='总免'+ToSize(ArrayQuery.unlimitall,2,1,1)+' 剩余'+ToSize(ArrayQuery.limitleft,2,1,1)
+			body1='总免'+ToSize(ArrayQuery.unlimitusage,2,1,1)+' 剩余'+ToSize(ArrayQuery.limitleft,2,1,1)
 			Notice(title,body,body1)
 
 		}

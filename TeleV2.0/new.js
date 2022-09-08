@@ -40,7 +40,7 @@ const $ = new Env(`电信余量`)
     Query(Tele_body).then(result=>{
         let ArrayQuery=Query_All(result)
 
-        if(brond=='undefined'){
+        if(brond==undefined){
         	for(var s=0;s+1<=result.RESULTDATASET.length;s++)
 			{
 				let typeid = result.RESULTDATASET[s].OFFERTYPE
@@ -86,7 +86,7 @@ const $ = new Env(`电信余量`)
         //***********
 
         let tile_date=$.read('day')
-		if(tile_date=='undefined'){$.write(Days,'day')}//初次
+		if(tile_date==undefined){$.write(Days,'day')}//初次
 		let tile_unlimittoday=$.read('unlimittoday')
 		let tile_limittoday=$.read('limittoday')
   		if((thishours==0&&thisminutes==0)||(tile_unlimittoday==undefined||tile_limittoday==undefined)||tile_date!=Days)//面板更新时间
@@ -274,7 +274,7 @@ function Notice(title,body,body1){
 
 
 function ToSize(kbytes,s,l,t) {//字节转换s保留位数l是否空格t是否单位
-    if (kbytes == 0) return "0KB";
+    if (kbytes == 0) return "0 KB";
     let k = 1024;
     sizes = ["KB", "MB", "GB", "TB"];
     let i = Math.floor(Math.log(kbytes) / Math.log(k));//获取指数

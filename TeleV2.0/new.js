@@ -122,7 +122,7 @@ const $ = new Env(`电信余量`)
 
     }).finally(() => {
 		panel['title']=brond
-		panel['content']='今日免流/跳点：'+Tile_All['Till_Today']+`\n`+'本月免流/跳点：'+Tile_All['Till_Month']+`\n`+'查询时间：'+Tile_All['Tile_Time']
+		panel['content']='今日免流/跳点：'+Tile_All['Tile_Today']+`\n`+'本月免流/跳点：'+Tile_All['Tile_Month']+`\n`+'查询时间：'+Tile_All['Tile_Time']
         $done(panel)
       })
       

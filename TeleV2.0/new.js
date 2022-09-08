@@ -11,13 +11,9 @@ const $ = new Env(`电信余量`)
     let Tele_body = $.read("Tele_BD");
 
     let arrquery=`` //数据量数组型
-    await query(Tele_body).then(result=>{
+    query(Tele_body).then(result=>{arrquery=query_all(result)}).catch(e=>{
 
-        arrquery=query_all(result)//原始量数组
-
-    }).catch(e=>{
-    
-        if(e="010040"){
+        if(e=="010040"){
             title="Body错误或已过期❌（也可能是电信的问题）"
             body='请尝试重新抓取Body(不抓没得用了！)'
             body1="覆写获取到Body后可以不用关闭覆写"
@@ -32,6 +28,12 @@ const $ = new Env(`电信余量`)
     }).finally(() => {
         $done(panel)
       })
+      thishours=formatTime().hours
+      thisminutes=formatTime().minutes
+      lasthours=$.read('hourstimeStore')
+      lastminutes=$.read('minutestimeStore')
+
+
 
     if(brond==undefined){
         for(var i in data.RESULTDATASET){
@@ -165,8 +167,8 @@ function bark_notice(title,body,body1){
 	$.get({url})
 }
 
-function kbytesToSize(kbytes) {//字节转换
-    if (kbytes === 0) return "0B";
+function ToSize(kbytes) {//字节转换
+    if (kbytes == 0) return "0KB";
     let k = 1024;
     sizes = ["KB", "MB", "GB", "TB"];
     let i = Math.floor(Math.log(kbytes) / Math.log(k));//获取指数
@@ -184,29 +186,30 @@ function formatTime() {
     return objtime
 }
 
+
 function Env(name) {
   LN = typeof $loon != `undefined`
-  SG_STASH = typeof $httpClient != `undefined` && !LN
+  SG_STH_SDR = typeof $httpClient != `undefined` && !LN
   QX = typeof $task != `undefined`
   read = (key) => {
-    if (LN || SG_STASH) return $persistentStore.read(key)
+    if (LN || SG_STH_SDR) return $persistentStore.read(key)
     if (QX) return $prefs.valueForKey(key)
   }
   write = (key, val) => {
-    if (LN || SG_STASH) return $persistentStore.write(key, val); 
+    if (LN || SG_STH_SDR) return $persistentStore.write(String(key), val); 
     if (QX) return $prefs.setValueForKey(String(key), val)
   }
   notice = (title, subtitle, message, url) => {
     if (LN) $notification.post(title, subtitle, message, url)
-    if (SG_STASH) $notification.post(title, subtitle, message, { url: url })
+    if (SG_STH_SDR) $notification.post(title, subtitle, message, { url: url })
     if (QX) $notify(title, subtitle, message, { 'open-url': url })
   }
   get = (url, cb) => {
-    if (LN || SG_STASH) {$httpClient.get(url, cb)}
+    if (LN || SG_STH_SDR) {$httpClient.get(url, cb)}
     if (QX) {url.method = `GET`; $task.fetch(url).then((resp) => cb(null, {}, resp.body))}
   }
   post = (url, cb) => {
-    if (LN || SG_STASH) {$httpClient.post(url, cb)}
+    if (LN || SG_STH_SDR) {$httpClient.post(url, cb)}
     if (QX) {url.method = `POST`; $task.fetch(url).then((resp) => cb(null, {}, resp.body))}
   }
   toObj = (str) => JSON.parse(str)

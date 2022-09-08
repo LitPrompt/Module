@@ -161,12 +161,10 @@ async function Query(Tele_body){//余量原始数据
                 return
             }
             if(jsondata.RESPONSECODE=="010040"){
-                $.log(jsondata.RESPONSECONTENT)
                 reject(jsondata.RESPONSECODE)//010040
                 return
             }
             if(jsondata.RESPONSECODE=="000000"){
-				$.log(jsondata.RESPONSECONTENT)
                 resolve(jsondata)
                 return
             }

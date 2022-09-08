@@ -32,6 +32,8 @@ const $ = new Env(`电信余量`)
 
     let Tele_body = $.read("Tele_BD");
     let brond=$.read('key_brond')
+	let Timer_Notice=$.read('notice_switch')
+	let Tele_value=$.read('threshold')
 
 	let Tile_All={Tile_Today:'',Tile_Month:'',Tile_Time:''}
     
@@ -106,6 +108,20 @@ const $ = new Env(`电信余量`)
 		Tile_All['Tile_Today']=ToSize(tile_unlimitTotal,0,0,1)+'/'+ToSize(tile_limitTotal,0,0,1)
 		Tile_All['Tile_Month']=ToSize(tile_unlimitUsageTotal,0,0,1)+'/'+ToSize(tile_limitUsageTotal,0,0,1)
 		Tile_All['Tile_Time']=tile_hour+':'+tile_minute
+
+		if(Timer_Notice=="true"||(limitChange>Tele_value||unlimitChange>Tele_value)){
+			$.write(thishours,"hourstimeStore")
+			$.write(thisminutes,"minutestimeStore") 
+			title=brond+'  耗时:'+minutesused+'分钟'
+			body='免'+ToSize(unlimitChange,2,1,1)+' 跳'+ToSize(limitChange,2,1,1)
+			body1='总免'+ToSize(ArrayQuery.unlimitall,2,1,1)+' 剩余'+ToSize(limitleft,2,1,1)
+		}else{
+			$.write(thishours,"hourstimeStore")
+			$.write(thisminutes,"minutestimeStore") 
+			title=brond+'  耗时:'+minutesused+'分钟'
+			body='免'+ToSize(unlimitChange,2,1,1)+' 跳'+ToSize(limitChange,2,1,1)
+			body1='总免'+ToSize(ArrayQuery.unlimitall,2,1,1)+' 剩余'+ToSize(limitleft,2,1,1)
+		}
 
     }).catch(e=>{
 
@@ -246,47 +262,9 @@ function Notice(title,body,body1){
 	else{bark_other=''}
 	let url =`${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}${bark_other}`
 
-	$.get({url})
+	$.post(url)
     }else{$.notice(title,body,body1)}
 	
-}
-
-function Notice_All(limitChange,unlimitChange,thishours,thisminutes,minutesused,unlimitUsed,limitUsed,unlimitusagetotal,limitusagetotal)
-{	
-	let brond=$.read("key_brond")
-	let Tele_value=$.read('threshold')
-	let ns=$.read('notice_switch')
-
-	if(ns=="true")//true时执行变化通知
-	{  	
-		if(limitChange>Tele_value||unlimitChange>Tele_value)
-		{
-			$.write(thishours,"hourstimeStore")
-			$.write(thisminutes,"minutestimeStore") 
-			title=brond+'  耗时:'+minutesused+'分钟'
-			body='免'+unlimitUsed+' 跳'+limitUsed+
-			body1='总免'+unlimitusagetotal+' 剩余'+limitbalancetotal
-			if(bark_key){bark_notice(title,body,body1)}
-			else{$notification.post(title,body,body1)}	
-			console.log(brond+'  耗时:'+minutesused+'分钟')
-		  	console.log('免 '+unlimitUsed+'  跳 '+limitUsed)
-			console.log('总免'+unlimitusagetotal+' 剩余'+limitbalancetotal)
-		}
-	}
-	else//默认定时通知
-	{
-		$.write(thishours,"hourstimeStore")
-		$.write(thisminutes,"minutestimeStore") 
-		title=brond+'  耗时:'+minutesused+'分钟'
-		body='免'+unlimitUsed+' 跳'+limitUsed+
-		body1='总免'+unlimitusagetotal+' 剩余'+limitbalancetotal
-		if(bark_key){bark_notice(title,body,body1)}
-		else{$notification.post(title,body,body1)}	
-		console.log(brond+'  耗时:'+minutesused+'分钟')
-		console.log('免 '+unlimitUsed+'  跳 '+limitUsed+)
-	  	console.log('总免'+unlimitusagetotal+' 剩余'+limitbalancetotal)
-		
-	}
 }
 
 

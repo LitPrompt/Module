@@ -286,7 +286,7 @@ function ToSize(kbytes,s,l,t) {//字节转换s保留位数l是否空格t是否�
 
 
 function formatTime() {
-    let dateObj = $script.startTime//获取时间
+    let dateObj = new Date()//获取时间
 	let Minutes = dateObj.getMinutes();//获取分钟
   	let Hours = dateObj.getHours(); //获取小时
     let Dates = dateObj.getDate(); //获取日期天

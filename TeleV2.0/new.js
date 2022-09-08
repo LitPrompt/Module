@@ -312,7 +312,7 @@ function ToSize(kbytes,s) {//字节转换带单位
     return (kbytes / Math.pow(k, i)).toFixed(s) + " " + sizes[i];
 }
 
-function ToSize_No(kbytes,s) {//字节转换带单位 保留s位
+function ToSizes(kbytes,s) {//字节转换不带单位 保留s位
     if (kbytes == 0) return "0";
     let k = 1024;
     let i = Math.floor(Math.log(kbytes) / Math.log(k));//获取指数

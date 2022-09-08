@@ -109,12 +109,14 @@ const $ = new Env(`电信余量`)
 		Tile_All['Tile_Month']=ToSize(tile_unlimitUsageTotal,0,0,1)+'/'+ToSize(tile_limitUsageTotal,0,0,1)
 		Tile_All['Tile_Time']=tile_hour+':'+tile_minute
 
+		let notice_body=$.read('notice_body').split('/')
+
 		if(Timer_Notice=="true"||(limitChange>Tele_value||unlimitChange>Tele_value)){
 			$.write(thishours,"hourstimeStore")
 			$.write(thisminutes,"minutestimeStore") 
 			title=brond+'  耗时:'+minutesused+'分钟'
-			body='免'+ToSize(unlimitChange,2,1,1)+' 跳'+ToSize(limitChange,2,1,1)
-			body1='总免'+ToSize(ArrayQuery.unlimitusage,2,1,1)+' 剩余'+ToSize(ArrayQuery.limitleft,2,1,1)
+			body=notice_body[0]+ToSize(unlimitChange,2,1,1)+' '+notice_body[1]+ToSize(limitChange,2,1,1)
+			body1=notice_body[2]+ToSize(ArrayQuery.unlimitusage,2,1,1)+' '+notice_body[3]+ToSize(ArrayQuery.limitleft,2,1,1)
 			Notice(title,body,body1)
 		}else{
 			$.write(thishours,"hourstimeStore")

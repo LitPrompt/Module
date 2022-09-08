@@ -7,7 +7,7 @@
   "apps": [
    {
       "id": "Tele_Check",
-      "name": "电信流量查询v2.0",
+      "name": "电信余量查询",
       "descs_html": [
         "<b>Body获取方法：</b>",
         "1. 进入翼支付，打开手机充值",
@@ -17,7 +17,7 @@
         "2. 对于筛选流量包，如果剩余数据与定向不正确，则说明表达式可能筛选了其他的包，请输入更精准的包名",
         "3. 如果你之前使用的是自动选包，更换手动选包后跳点与免流信息在初次查询可能有错误，不用在意"
       ],
-      "keys": ["Tele_BD","limititems","unlimititems","hourstimeStore","minutestimeStore","limitStore","unlimitStore","bark_icon","bark_key","bark_add"],
+      "keys": ["key_brond","Tele_BD","limititems","unlimititems","hourstimeStore","minutestimeStore","limitStore","unlimitStore","bark_icon","bark_key","bark_add","packge_detail"],
       "settings": [  
         {
           "id": "key_brond",
@@ -81,6 +81,16 @@
           "rows": 1,
           "type": "text",
           "desc": "例如：“畅享量 某某定向”（最好是明显的标志）则定向总免显示这两个包的总和（不用打引号）"
+        },
+        {
+          "id": "notice_body",
+          "name": "通知格式",
+          "val": "免 跳 总免 剩余",
+          "placeholder": "以空格分开",
+          "autoGrow": true,
+          "rows": 1,
+          "type": "text",
+          "desc": "通知部分依次从左往右 从上往下"
         },
         {
           "id": "bark_icon",

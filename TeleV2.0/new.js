@@ -165,6 +165,7 @@ async function Query(Tele_body){//余量原始数据
                 return
             }
             if(jsondata.RESPONSECODE=="000000"){
+				$.write(data,'packge_detail')
                 resolve(jsondata)
                 return
             }

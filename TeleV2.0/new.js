@@ -76,7 +76,7 @@ const $ = new Env(`电信余量`)
 		unlimitChange=unlimitThis-unlimitLast
 		$.log("定向变化量:"+unlimitChange)
 		$.log("通用变化量:"+limitChange)
-  		if(limitChange!=0){$.write(ArrQuery.limitusage,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
+  		if(limitChange!=0){$.write(ArrayQuery.limitusage,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
   		if(unlimitChange!=0){$.write(ArrayQuery.unlimitusage,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
 		
         

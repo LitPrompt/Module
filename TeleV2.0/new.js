@@ -91,7 +91,6 @@ const $ = new Env(`电信余量`)
 		let tile_limittoday=$.read('limittoday')
   		if((thishours==0&&thisminutes==0)||(tile_unlimittoday==undefined||tile_limittoday==undefined)||tile_date!=Days)//面板更新时间
 		{
-			$.write($.toStr(formatTime()),'all_time')
 			$.write(Days,'day')
 			$.write(ArrayQuery.unlimitusage,'unlimittoday')
 			$.write(ArrayQuery.limitusage,'limittoday')
@@ -107,7 +106,7 @@ const $ = new Env(`电信余量`)
 		else{tile_minute=thisminutes}
 
 		Tile_All['Tile_Today']=ToSize(tile_unlimitTotal,0,0,1)+'/'+ToSize(tile_limitTotal,0,0,1)
-		Tile_All['Tile_Month']=ToSize(tile_unlimitUsageTotal,0,0,1)+'/'+ToSize(tile_limitUsageTotal,0,0,1)+`\n`+'上次查询: '+$.toObj($.read('all_time')).hours+':'+$.toObj($.read('all_time')).minutes
+		Tile_All['Tile_Month']=ToSize(tile_unlimitUsageTotal,0,0,1)+'/'+ToSize(tile_limitUsageTotal,0,0,1)
 		Tile_All['Tile_Time']=tile_hour+':'+tile_minute
 
 		if(Timer_Notice=="true"||(limitChange>Tele_value||unlimitChange>Tele_value)){
@@ -142,7 +141,7 @@ const $ = new Env(`电信余量`)
 
     }).finally(() => {
 		panel['title']=brond
-		panel['content']='今日免流/跳点：'+Tile_All['Tile_Today']+`\n`+'本月免流/跳点：'+Tile_All['Tile_Month']+'查询时间：'+Tile_All['Tile_Time']
+		panel['content']='今日免流/跳点：'+Tile_All['Tile_Today']+`\n`+'本月免流/跳点：'+Tile_All['Tile_Month']+`\n`+'查询时间：'+Tile_All['Tile_Time']
         $done(panel)
       })
       

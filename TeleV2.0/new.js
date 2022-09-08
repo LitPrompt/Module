@@ -9,30 +9,108 @@ const $ = new Env(`电信余量`)
     }
     Month0=formatTime().month-1
 	Month1=formatTime().month
-	if(Month==1){Month0=12}
+	if(Month1==1){Month0=12}
 	if(Month0<=9){Month0='0'+Month0}
 	if(Month1<=9){Month1='0'+Month1}
 		
-    let oldtime =`${Year}`+`${Month0}`
-	let thistime=`${Year}`+`${Month1}`
+    let oldtime =`${formatTime().year}`+`${Month0}`
+	let thistime=`${formatTime().year}`+`${Month1}`
 	if(formatTime().day==1&&Tele_body.indexOf(oldtime)!=-1){//月初Body信息修改
 		let Tele_body1= Tele_body.replace(oldtime,thistime)
 		$.write(Tele_body1,'Tele_BD')
 	}
 
     let Tele_body = $.read("Tele_BD");
-
+    let brond=$.read('key_brond')
+    
     let ArrayQuery=`` //数据量数组型
     Query(Tele_body).then(result=>{
         ArrayQuery=Query_All(result)
+        thishours=formatTime().hours
+        thisminutes=formatTime().minutes
+        Days=formatTime().day
+      	lasthours=$.read('hourstimeStore')
+      	lastminutes=$.read('minutestimeStore')
+      	hoursused=thishours-lasthours
+        //
+        if(brond=='undefined'){
+        	for(var s=0;s+1<=result.RESULTDATASET.length;s++)
+			{
+				let typeid = result.RESULTDATASET[s].OFFERTYPE
+				if(typeid==11){var brondid=s}
+			}
+			brond = result.RESULTDATASET[brondid].PRODUCTOFFNAME
+			$.write(brond,"key_brond")
+    	}
+      	if(hoursused>=0){minutesused=(thisminutes-lastminutes)+hoursused*60} //上次查询的时间大于等于当前查询的时间
+      	else if(hoursused<0&&lasthours==23){minutesused=(60-lastminutes)+thishours*60+thisminutes} 
+        //**********
+        limitThis=ArrayQuery.limitusage//通用使用量
+        unlimitThis=ArrayQuery.unlimitusage//定向使用量
+        limitLast=$.read("limitStore") //将上次查询到的值读出来
+        unlimitLast=$.read("unlimitStore") //将上次查询到的值读出来
+        $.log("当前通用使用"+limitThis)
+		$.log("当前定向使用"+unlimitThis)
+		$.log("上次通用使用"+limitLast)
+		$.log("上次定向使用"+unlimitLast)
+        try{
+            if(limitLast==null||limitThis-limitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1){throw 'limiterr'}
+            if(unlimitLast==null||unlimitThis-unlimitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1){throw 'unlimiterr'}
+        }catch(e){
+            if(e=='limiterr'){
+                $.write(0,'limitStore')
+                title="当前为初次查询或上次查询有误"
+				body='已将上次通用查询归0'
+				body1=''
+                Notice(title,body,body1)
+            }
+            if(e=='unlimiarr'){
+                $.write(0,'unlimitStore')
+                title="当前为初次查询或上次查询有误"
+    			body='已将上次定向查询归0'
+            	body1=''
+                Notice(title,body,body1)
+            }
+        }
+        limitChange=limitThis-limitLast
+		unlimitChange=unlimitThis-unlimitLast
+		$.log("定向变化量:"+unlimitChange)
+		$.log("通用变化量:"+limitChange)
+  		if(limitChange!=0){$.write(ArrQuery.limitusage,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
+  		if(unlimitChange!=0){$.write(ArrayQuery.unlimitusage,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
+		
+        
+        //***********
+
+        let tile_date=$.read('day')
+		if(tile_date=='undefined'){$.write(Days,'day')}//初次
+		let tile_unlimittoday=$.read('unlimittoday')
+		let tile_limittoday=$.read('limittoday')
+  		if((thishours==0&&thisminutes==0)||(tile_unlimittoday==undefined||tile_limittoday==undefined)||tile_date!=Days)//面板更新时间
+		{
+			$.write(Days,'day')
+			$.write(ArrayQuery.unlimitusage,'unlimittoday')
+			$.write(ArrayQuery.limitusage,'limittoday')
+		}
+		let tile_unlimitTotal=ArrayQuery.unlimitusage-tile_unlimittoday//面板今日定向用量
+		let tile_limitTotal=ArrayQuery.limitusage-tile_limittoday//面板今天通用用量
+		let tile_unlimitUsageTotal=ArrayQuery.unlimitusage//面板本月定向使用量
+		let tile_limitUsageTotal=ArrayQuery.limitusage//面板本月通用使用量
+
+        if(thishours<10){tile_hour='0'+thishours}
+		else{tile_hour=thishours}
+    	if(thisminutes<10){tile_minute='0'+thisminutes}
+		else{tile_minute=thisminutes}
+
+
+
     }).catch(e=>{
 
         if(e=="010040"){
             title="Body错误或已过期❌（也可能是电信的问题）"
             body='请尝试重新抓取Body(不抓没得用了！)'
             body1="覆写获取到Body后可以不用关闭覆写"
-            if(bark_key){bark_notice(title,body,body1)}
-            else{$.notice(title,body,body1)}	
+			Notice(title,body,body1)
             let loginerror=1
             $.write(loginerror,'Bodyswitch')
         }else{
@@ -42,20 +120,8 @@ const $ = new Env(`电信余量`)
     }).finally(() => {
         $done(panel)
       })
-      thishours=formatTime().hours
-      thisminutes=formatTime().minutes
-      lasthours=$.read('hourstimeStore')
-      lastminutes=$.read('minutestimeStore')
+      
 
-
-
-    if(brond==undefined){
-        for(var i in data.RESULTDATASET){
-            if(data.RESULTDATASET[i].OFFERTYPE==11){
-            $persistentStore.write(data.RESULTDATASET[i].PRODUCTOFFNAME,'key_brond')
-            }
-    	}
-    }
 
     panel['title'] = brond
 
@@ -162,12 +228,14 @@ function Query_All(jsonData){//原始量累计
     return queryinfo
 }
 
-function bark_notice(title,body,body1){
+function Notice(title,body,body1){
 	let bark_title=title
 	let bark_body=body
 	let bark_body1=body1
-
-	let bark_icon
+    let bark_key=$.read('bark_key')
+    if(bark_key)
+    {
+        let bark_icon
 	if(icon_url){bark_icon=`?icon=${icon_url}`}
 	else {bark_icon=''}
 
@@ -179,15 +247,78 @@ function bark_notice(title,body,body1){
 	let url =`${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}${bark_other}`
 
 	$.get({url})
+    }else{$.notice(title,body,body1)}
+	
 }
 
-function ToSize(kbytes) {//字节转换
+function Notice_All()
+{	
+	brond=$.read("key_brond")
+
+	limitUsed=(limitChange/1024).toFixed(3) //跳点转成mb保留三位
+	
+	if(unlimitChange<=1048576){unlimitUsed=(unlimitChange/1024).toFixed(2)+' MB ' }//免流转成mb保留两位
+	else{unlimitUsed=(unlimitChange/1048576).toFixed(2)+' GB '}//免流转换成gb
+	
+	if(limitChange==0){limitUsed=0}
+	if(unlimitChange==0){unlimitUsed=0+' MB '}
+
+	if(limitbalancetotal<=1048576){limitbalancetotal=(limitbalancetotal/1024).toFixed(2)+' MB' }//剩余转成gb保留两位
+	else{limitbalancetotal=(limitbalancetotal/1048576).toFixed(2)+' GB' }//剩余转成gb保留两位
+
+	if(unlimitusagetotal<=1048576){unlimitusagetotal=(unlimitusagetotal/1024).toFixed(2)+' MB'	}//总免使用转化成gb保留两位小数
+	else{unlimitusagetotal=(unlimitusagetotal/1048576).toFixed(2)+' GB'}//总免使用转化成gb保留两位小数
+	
+
+	if(ns=="true")//true时执行变化通知
+	{  	
+		if(limitChange>Tele_value||unlimitChange>Tele_value)
+		{
+			$persistentStore.write(thishours,"hourstimeStore")
+			$persistentStore.write(thisminutes,"minutestimeStore") 
+			title=brond+'  耗时:'+minutesused+'分钟'
+			body='免'+unlimitUsed+' 跳'+limitUsed+' MB'
+			body1='总免'+unlimitusagetotal+' 剩余'+limitbalancetotal
+			if(bark_key){bark_notice(title,body,body1)}
+			else{$notification.post(title,body,body1)}	
+			console.log(brond+'  耗时:'+minutesused+'分钟')
+		  	console.log('免 '+unlimitUsed+'  跳 '+limitUsed+' MB')
+			console.log('总免'+unlimitusagetotal+' 剩余'+limitbalancetotal)
+		}
+	}
+	else//默认定时通知
+	{
+		$persistentStore.write(thishours,"hourstimeStore")
+		$persistentStore.write(thisminutes,"minutestimeStore") 
+		title=brond+'  耗时:'+minutesused+'分钟'
+		body='免'+unlimitUsed+' 跳'+limitUsed+' MB'
+		body1='总免'+unlimitusagetotal+' 剩余'+limitbalancetotal
+		if(bark_key){bark_notice(title,body,body1)}
+		else{$notification.post(title,body,body1)}	
+		console.log(brond+'  耗时:'+minutesused+'分钟')
+		console.log('免 '+unlimitUsed+'  跳 '+limitUsed+' MB')
+	  	console.log('总免'+unlimitusagetotal+' 剩余'+limitbalancetotal)
+		
+	}
+}
+
+
+
+function ToSize(kbytes,s) {//字节转换带单位
     if (kbytes == 0) return "0KB";
     let k = 1024;
     sizes = ["KB", "MB", "GB", "TB"];
     let i = Math.floor(Math.log(kbytes) / Math.log(k));//获取指数
-    return (kbytes / Math.pow(k, i)).toFixed(2) + " " + sizes[i];
+    return (kbytes / Math.pow(k, i)).toFixed(s) + " " + sizes[i];
 }
+
+function ToSize_No(kbytes,s) {//字节转换带单位 保留s位
+    if (kbytes == 0) return "0";
+    let k = 1024;
+    let i = Math.floor(Math.log(kbytes) / Math.log(k));//获取指数
+    return (kbytes / Math.pow(k, i)).toFixed(s);
+}
+
 
 function formatTime() {
     let dateObj = $script.startTime//获取时间

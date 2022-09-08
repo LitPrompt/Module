@@ -160,6 +160,11 @@ async function Query(Tele_body){//余量原始数据
                 reject('网络请求错误❌，请检查')
                 return
             }
+			if(response.status !== '200'||response.statusCode !='200'){
+				reject('网络响应错误❌，请检查')
+				return
+					
+			}
             if(jsondata.RESPONSECODE=="010040"){
                 console.log(jsondata.RESPONSECONTENT)
                 reject(jsondata.RESPONSECODE)//010040

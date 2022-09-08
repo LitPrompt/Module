@@ -85,7 +85,7 @@
         {
           "id": "notice_body",
           "name": "通知格式",
-          "val": "免 跳 总免 剩余",
+          "val": "免/跳/总免/剩余",
           "placeholder": "以空格分开",
           "autoGrow": true,
           "rows": 1,

@@ -251,52 +251,39 @@ function Notice(title,body,body1){
 	
 }
 
-function Notice_All()
+function Notice_All(limitChange,unlimitChange,thishours,thisminutes,minutesused,unlimitUsed,limitUsed,unlimitusagetotal,limitusagetotal)
 {	
-	brond=$.read("key_brond")
-
-	limitUsed=(limitChange/1024).toFixed(3) //跳点转成mb保留三位
-	
-	if(unlimitChange<=1048576){unlimitUsed=(unlimitChange/1024).toFixed(2)+' MB ' }//免流转成mb保留两位
-	else{unlimitUsed=(unlimitChange/1048576).toFixed(2)+' GB '}//免流转换成gb
-	
-	if(limitChange==0){limitUsed=0}
-	if(unlimitChange==0){unlimitUsed=0+' MB '}
-
-	if(limitbalancetotal<=1048576){limitbalancetotal=(limitbalancetotal/1024).toFixed(2)+' MB' }//剩余转成gb保留两位
-	else{limitbalancetotal=(limitbalancetotal/1048576).toFixed(2)+' GB' }//剩余转成gb保留两位
-
-	if(unlimitusagetotal<=1048576){unlimitusagetotal=(unlimitusagetotal/1024).toFixed(2)+' MB'	}//总免使用转化成gb保留两位小数
-	else{unlimitusagetotal=(unlimitusagetotal/1048576).toFixed(2)+' GB'}//总免使用转化成gb保留两位小数
-	
+	let brond=$.read("key_brond")
+	let Tele_value=$.read('threshold')
+	let ns=$.read('notice_switch')
 
 	if(ns=="true")//true时执行变化通知
 	{  	
 		if(limitChange>Tele_value||unlimitChange>Tele_value)
 		{
-			$persistentStore.write(thishours,"hourstimeStore")
-			$persistentStore.write(thisminutes,"minutestimeStore") 
+			$.write(thishours,"hourstimeStore")
+			$.write(thisminutes,"minutestimeStore") 
 			title=brond+'  耗时:'+minutesused+'分钟'
-			body='免'+unlimitUsed+' 跳'+limitUsed+' MB'
+			body='免'+unlimitUsed+' 跳'+limitUsed+
 			body1='总免'+unlimitusagetotal+' 剩余'+limitbalancetotal
 			if(bark_key){bark_notice(title,body,body1)}
 			else{$notification.post(title,body,body1)}	
 			console.log(brond+'  耗时:'+minutesused+'分钟')
-		  	console.log('免 '+unlimitUsed+'  跳 '+limitUsed+' MB')
+		  	console.log('免 '+unlimitUsed+'  跳 '+limitUsed)
 			console.log('总免'+unlimitusagetotal+' 剩余'+limitbalancetotal)
 		}
 	}
 	else//默认定时通知
 	{
-		$persistentStore.write(thishours,"hourstimeStore")
-		$persistentStore.write(thisminutes,"minutestimeStore") 
+		$.write(thishours,"hourstimeStore")
+		$.write(thisminutes,"minutestimeStore") 
 		title=brond+'  耗时:'+minutesused+'分钟'
-		body='免'+unlimitUsed+' 跳'+limitUsed+' MB'
+		body='免'+unlimitUsed+' 跳'+limitUsed+
 		body1='总免'+unlimitusagetotal+' 剩余'+limitbalancetotal
 		if(bark_key){bark_notice(title,body,body1)}
 		else{$notification.post(title,body,body1)}	
 		console.log(brond+'  耗时:'+minutesused+'分钟')
-		console.log('免 '+unlimitUsed+'  跳 '+limitUsed+' MB')
+		console.log('免 '+unlimitUsed+'  跳 '+limitUsed+)
 	  	console.log('总免'+unlimitusagetotal+' 剩余'+limitbalancetotal)
 		
 	}

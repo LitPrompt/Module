@@ -7,11 +7,25 @@ const $ = new Env(`电信余量`)
         backgroundColor: "#0099FF",
         icon: "dial.max.fill",
     }
+    Month0=formatTime().month-1
+	Month1=formatTime().month
+	if(Month==1){Month0=12}
+	if(Month0<=9){Month0='0'+Month0}
+	if(Month1<=9){Month1='0'+Month1}
+		
+    let oldtime =`${Year}`+`${Month0}`
+	let thistime=`${Year}`+`${Month1}`
+	if(formatTime().day==1&&Tele_body.indexOf(oldtime)!=-1){//月初Body信息修改
+		let Tele_body1= Tele_body.replace(oldtime,thistime)
+		$.write(Tele_body1,'Tele_BD')
+	}
 
     let Tele_body = $.read("Tele_BD");
 
-    let arrquery=`` //数据量数组型
-    query(Tele_body).then(result=>{arrquery=query_all(result)}).catch(e=>{
+    let ArrayQuery=`` //数据量数组型
+    Query(Tele_body).then(result=>{
+        ArrayQuery=Query_All(result)
+    }).catch(e=>{
 
         if(e=="010040"){
             title="Body错误或已过期❌（也可能是电信的问题）"
@@ -49,7 +63,7 @@ const $ = new Env(`电信余量`)
 
 })()
 
-async function query(Tele_body){//余量原始数据
+async function Query(Tele_body){//余量原始数据
     return new Promise((resolve,reject)=>{
         $.post({
             url: 'https://czapp.bestpay.com.cn/payassistant-client?method=queryUserResource',
@@ -62,7 +76,7 @@ async function query(Tele_body){//余量原始数据
                 return
             }
             if(response.status !== 200){
-                reject('网络相应错误❌，请检查')
+                reject('网络响应错误❌，请检查')
                 return
             }
             if(jsondata.RESPONSECODE=="010040"){
@@ -79,7 +93,7 @@ async function query(Tele_body){//余量原始数据
     })
 }
 
-function query_all(jsonData){//原始量累计
+function Query_All(jsonData){//原始量累计
     let unlimitratabletotal=0
     let unlimitbalancetotal=0
     let unlimitusagetotal=0

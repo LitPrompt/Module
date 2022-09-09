@@ -40,7 +40,7 @@ const $ = new Env(`电信余量`)
     Query(Tele_body).then(result=>{
         let ArrayQuery=Query_All(result)
 
-        if(brond==undefined){
+        if(brond==''){
         	for(var s=0;s+1<=result.RESULTDATASET.length;s++)
 			{
 				let typeid = result.RESULTDATASET[s].OFFERTYPE

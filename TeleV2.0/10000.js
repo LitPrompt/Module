@@ -111,7 +111,7 @@ const $ = new Env(`电信余量`)
 
 		let notice_body=$.read('notice_body').split('/')
 
-		if(Timer_Notice=="true"||(limitChange>Tele_value||unlimitChange>Tele_value)){
+		if(Timer_Notice=="true"&&(limitChange>Tele_value||unlimitChange>Tele_value)){
 			$.write(thishours,"hourstimeStore")
 			$.write(thisminutes,"minutestimeStore") 
 			title=brond+'  耗时:'+minutesused+'分钟'

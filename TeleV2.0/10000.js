@@ -272,11 +272,14 @@ function Notice(title,body,body1){
 
 
 
-function ToSize(kbytes,s,l,t) {//字节转换s保留位数l是否空格t是否单位
-    if (kbytes == 0) return "0 KB";
+function ToSize(kbyte,s,l,t) {//字节转换s保留位数l是否空格t是否单位
+    let kbytes,i
+	if (kbyte < 1024) {kbytes=kbyte/1024}
+	else{kbytes=kbyte}
     let k = 1024;
-    sizes = ["KB", "MB", "GB", "TB"];
-    let i = Math.floor(Math.log(kbytes) / Math.log(k));//获取指数
+    sizes = ["MB", "MB", "GB", "TB"];
+	if(kbyte!=0){i = Math.floor(Math.log(kbyte) / Math.log(k));}//获取指数
+	else{i=0}
 	if(l==1&&t==1){
 		return (kbytes / Math.pow(k, i)).toFixed(s) + " " + sizes[i];
 	}else if(l==1&&t==0){

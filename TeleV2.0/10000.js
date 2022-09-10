@@ -280,6 +280,7 @@ function ToSize(kbyte,s,l,t) {//字节转换s保留位数l是否空格t是否单
     sizes = ["MB", "MB", "GB", "TB"];
 	if(kbyte!=0){i = Math.floor(Math.log(kbyte) / Math.log(k));}//获取指数
 	else{i=0}
+	if(kbyte==0)s=0
 	if(l==1&&t==1){
 		return (kbytes / Math.pow(k, i)).toFixed(s) + " " + sizes[i];
 	}else if(l==1&&t==0){

@@ -3,7 +3,6 @@
 
 >目前支持 **STASH** **QX** **小火箭** 等平台的流量跳点通知
 
-
 ## STASH使用方法
 
 进入STASH覆写库安装请求体获取脚本以及余量脚本
@@ -21,6 +20,21 @@
 
 ![App Screenshots](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Screenshots/Shadow.jpg)
 
+# 配置定时任务
+## STASH
+STASH覆写库中默认为5分钟查询一次，如有需要可按照如下图修改
+
+![AppScreenshots](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Screenshots/CRON.jpg)
+
+## 小火箭
+同STASH修改模块中Cron后面即可
+
+## QX
+可按照如下格式在配置中添加定时任务
+```
+[task_local]
+*/5 * * * * https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/10000.js
+```
 
 ## Bark部分参数设置
 

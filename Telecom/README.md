@@ -3,6 +3,9 @@
 >目前支持 **STASH** **QX** **小火箭** 等平台的流量跳点通知
 
 ## 使用方法
+> [一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fraw.githubusercontent.com%2FQGCliveDavis%2FModule%2Fmain%2FTeleV2.0%2FTele.json)
+       
+
 
 ## Bark部分参数设置
 

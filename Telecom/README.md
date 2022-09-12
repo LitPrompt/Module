@@ -29,7 +29,7 @@
 长按重写-右上角-粘贴如下连接
 
 获取Body:
-> https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/GetBd.js
+> https://github.com/QGCliveDavis/Module/blob/main/Telecom/Tele_QX.conf
 
 电信余量:
 >https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Cellular.js

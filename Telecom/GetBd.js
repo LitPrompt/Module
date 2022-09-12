@@ -18,7 +18,7 @@ let loginerror=$.read('Bodyswitch');
     await GetBody().then(r=>{
         let title=bodyName
 		let body='Body写入成功'
-		let body1=bodyVal
+		let body1=r
         $.Notice(title,body,body1)
 
     }).catch(e=>{
@@ -43,7 +43,7 @@ function Notice(title,body,body1){
 	let bark_body1=body1
     let bark_key=$.read('bark_key')
 	let icon_url=$.read('bark_icon')
-    if(bark_key&&!QX)
+    if(bark_key)
     {
         let bark_icon
 	if(icon_url){bark_icon=`?icon=${icon_url}`}

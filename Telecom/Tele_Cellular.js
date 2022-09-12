@@ -1,3 +1,9 @@
+/*
+[task_local]
+#电信余量
+0-59/5 * * * * https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Cellular.js, tag=电信余量, enabled=true
+*/
+
 const $ = new Env(`电信余量`)
 
 !(async () => {

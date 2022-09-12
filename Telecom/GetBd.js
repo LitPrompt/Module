@@ -1,34 +1,42 @@
-const $ = new Env(`Env for me`)
 
+/*
+[MITM]
+czapp.bestpay.com.cn
+[rewrite_local]
+^https?:\/\/czapp\.bestpay\.com\.cn url script-request-body https://raw.githubusercontent.com/xzxxn777/quanx/main/Telecom/GetBd.js
+* */
+
+const $ = new Env('中国电信获取body');
+const effective = $request.body.indexOf("BILLCYCLE")
 let loginerror=$.read('Bodyswitch')
 
-const bodyName = '中国电信'
-const bodyVal = $request.body
-const effective = bodyVal.indexOf("BILLCYCLE")
+!(async () => {
+        await GetBody();
+        $.done({});
+})()
 
-if (effective=="0"&&loginerror==1) {
-    $.write(bodyVal, "Tele_BD")
-    let loginerror=0
-    $.write(loginerror,'Bodyswitch')
-    if (bodyVal) {
-        let msg = `${bodyName}`
-        title=msg
-		    body='Body写入成功'
-		    body1=bodyVal
-		    Notice(title,body,body1)	
 
-        console.log(msg)
-        console.log(bodyVal)
-        }
+async function GetBody() {
+    if (effective==0 &&loginerror==1) {
+      if ($request.body) {
+        $.write($request.body, "Tele_BD")
+        $.write(0,'Bodyswitch')
+        title='中国电信'
+        body='Body写入成功'
+        body1=$request.body
+        Notice(title,body,body1)
+      }
     }
-else{
-    if(loginerror==0){console.log('当前Body有效，无需获取')}
     else{
-        title='当前操作'
-		body='请点击已用流量'
-		body1=''
-		Notice(title,body,body1)	
-    }
+        if(loginerror==0){console.log('当前Body有效，无需获取')}
+        else{
+            title='当前操作'
+    		    body='请点击已用流量'
+    		    body1=''
+            Notice(title,body,body1)
+            }
+        }   
+
 }
 
 function Notice(title,body,body1){
@@ -55,7 +63,6 @@ function Notice(title,body,body1){
 	
 }    
 
-$done({})
 
 function Env(name) {
   LN = typeof $loon != `undefined`

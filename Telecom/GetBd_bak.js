@@ -32,34 +32,34 @@ let loginerror=$.read('Bodyswitch');
             $.log('当前Body有效')
         }
     }).finally(()=>{
-        $.done()
+        $.done({})
     })
     
 })()
 
-// function Notice(title,body,body1){
-// 	let bark_title=title
-// 	let bark_body=body
-// 	let bark_body1=body1
-//     let bark_key=$.read('bark_key')
-// 	let icon_url=$.read('bark_icon')
-//     if(bark_key)
-//     {
-//         let bark_icon
-// 	if(icon_url){bark_icon=`?icon=${icon_url}`}
-// 	else {bark_icon=''}
+function Notice(title,body,body1){
+	let bark_title=title
+	let bark_body=body
+	let bark_body1=body1
+    let bark_key=$.read('bark_key')
+	let icon_url=$.read('bark_icon')
+    if(bark_key)
+    {
+        let bark_icon
+	if(icon_url){bark_icon=`?icon=${icon_url}`}
+	else {bark_icon=''}
 
-// 	let bark_other=$.read('bark_add')
-//   	let effective=bark_icon.indexOf("?icon")
-//   	if((effective!=-1)&&bark_other){bark_other=`&${bark_other}`}
-// 	else if((effective==-1)&&bark_other){bark_other=`?${bark_other}`}
-// 	else{bark_other=''}
-// 	let url =`${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}${bark_other}`
+	let bark_other=$.read('bark_add')
+  	let effective=bark_icon.indexOf("?icon")
+  	if((effective!=-1)&&bark_other){bark_other=`&${bark_other}`}
+	else if((effective==-1)&&bark_other){bark_other=`?${bark_other}`}
+	else{bark_other=''}
+	let url =`${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}${bark_other}`
 
-// 	$.post({url})
-//     }else{$.notice(title,body,body1)}
+	$.post({url})
+    }else{$.notice(title,body,body1)}
 	
-// }    
+}    
 
 async function GetBody(){
     return new Promise ((resolve,reject)=>{

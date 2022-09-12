@@ -1,31 +1,35 @@
-const $ = new Env(`Env for me`);
+const $ = new Env(`Env for me`)
 
-const bodyName = '中国电信';
-const effective = bodyVal.indexOf("BILLCYCLE");
-let loginerror=$.read('Bodyswitch');
+let loginerror=$.read('Bodyswitch')
 
+const bodyName = '中国电信'
+const bodyVal = $request.body
+const effective = bodyVal.indexOf("BILLCYCLE")
 
 if (effective=="0"&&loginerror==1) {
-    $persistentStore.write($request.body, "Tele_BD")
-    $persistentStore.write(0,'Bodyswitch')
-    if ($request.body) {
+    $.write(bodyVal, "Tele_BD")
+    let loginerror=0
+    $.write(loginerror,'Bodyswitch')
+    if (bodyVal) {
         let msg = `${bodyName}`
-        let title=msg
-		    let body='Body写入成功'
-		    let body1=$request.body
-        Notice(title,body,body1)
+        title=msg
+		    body='Body写入成功'
+		    body1=bodyVal
+		    Notice(title,body,body1)	
+
         console.log(msg)
-        console.log($request.body)
+        console.log(bodyVal)
         }
     }
 else{
     if(loginerror==0){console.log('当前Body有效，无需获取')}
     else{
         title='当前操作'
-		    body='请点击已用流量'
-		    body1=''
-		    Notice(title,body,body1)}
-  }
+		body='请点击已用流量'
+		body1=''
+		Notice(title,body,body1)	
+    }
+}
 
 function Notice(title,body,body1){
 	let bark_title=title

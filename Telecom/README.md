@@ -35,6 +35,7 @@
 
 需要[BoxJS](https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.surge.sgmodule)进行后续配置[一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fraw.githubusercontent.com%2FQGCliveDavis%2FModule%2Fmain%2FTeleV2.0%2FTele.json)
 
+**若无法获取Body请检查Mitm开关与域名是否添加**
 ```
 [MITM]
 czapp.bestpay.com.cn

@@ -25,6 +25,21 @@
 
 ![App Screenshots](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Screenshots/Shadow.jpg)
 
+### QX(圈叉)使用方法
+
+
+```
+[MITM]
+czapp.bestpay.com.cn
+
+[rewrite_local]
+^https?:\/\/czapp\.bestpay\.com\.cn url script-request-body https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/GetBd.js
+
+[task_local]
+0-59/5 * * * * https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Cellular.js, tag=电信余量, enabled=true
+
+```
+
 # BoxJs后续配置
 BoxJs中请求体(Body)获取方法：
 1. 方式一:进入翼支付，打开手机充值
@@ -49,11 +64,8 @@ STASH覆写库中默认为5分钟查询一次
 修改模块中Cron后面即可
 
 ### QX
-可按照如下格式在配置中添加定时任务
-```
-[task_local]
-*/5 * * * * https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/10000.js
-```
+在配置中修改Cron定时任务即可
+
 
 
 # Bark部分参数设置

@@ -1,9 +1,9 @@
-const $ = new Env(`获取Body`)
-const bodyName = '中国电信'
-const bodyVal = $request.body
-const effective = bodyVal.indexOf("BILLCYCLE")
+const $ = new Env(`获取Body`);
+const bodyName = '中国电信';
+const bodyVal = $request.body;
+const effective = bodyVal.indexOf("BILLCYCLE");
 
-let loginerror=$.read('Bodyswitch')
+let loginerror=$.read('Bodyswitch');
 
 !(async ()=>{
     await GetBody().then(r=>{

@@ -1,8 +1,8 @@
-const $ = new Env(`Env for me`)
+const $ = new Env(`Env for me`);
 
-const bodyName = '中国电信'
-const effective = bodyVal.indexOf("BILLCYCLE")
-let loginerror=$.read('Bodyswitch')
+const bodyName = '中国电信';
+const effective = bodyVal.indexOf("BILLCYCLE");
+let loginerror=$.read('Bodyswitch');
 
 
 if (effective=="0"&&loginerror==1) {

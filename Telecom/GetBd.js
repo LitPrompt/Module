@@ -3,7 +3,7 @@
 [MITM]
 czapp.bestpay.com.cn
 [rewrite_local]
-^https?:\/\/czapp\.bestpay\.com\.cn url script-request-body https://raw.githubusercontent.com/xzxxn777/quanx/main/Telecom/GetBd.js
+^https?:\/\/czapp\.bestpay\.com\.cn url script-request-body https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/GetBd.js
 * */
 
 const $ = new Env('中国电信获取body');

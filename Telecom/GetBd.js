@@ -26,7 +26,7 @@ let loginerror=$.read('Bodyswitch')
         $.done()
     })
     
-})
+})()
 
 function Notice(title,body,body1){
 	let bark_title=title

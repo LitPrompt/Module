@@ -12,8 +12,14 @@ let loginerror=$.read('Bodyswitch')
 
 !(async () => {
         await GetBody();
-        $.done({});
-})()
+
+})().catch((e) => {
+  $.log(e)
+})
+.finally(() => {
+  $.done({});
+});
+
 
 
 async function GetBody() {

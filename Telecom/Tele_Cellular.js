@@ -72,14 +72,15 @@ const $ = new Env(`电信余量`)
                 title="当前为初次查询或上次查询有误"
 				body='已将上次通用查询归0'
 				body1=''
+				Notice(title,body,body1)
             }
             if(e=='unlimiarr'){
                 $.write(0,'unlimitStore')
                 title="当前为初次查询或上次查询有误"
     			body='已将上次定向查询归0'
             	body1=''
+				Notice(title,body,body1)
             }
-			Notice(title,body,body1)
         }
         limitChange=limitThis-limitLast
 		unlimitChange=unlimitThis-unlimitLast
@@ -115,6 +116,7 @@ const $ = new Env(`电信余量`)
 		Tile_All['Tile_Time']=tile_hour+':'+tile_minute
 
 		let notice_body=$.read('notice_body').split('/')
+		let threshold_switch=$.read('threshold_switch')
 
 		if(Timer_Notice=="true"&&(limitChange>Tele_value||unlimitChange>Tele_value)){
 			$.write(thishours,"hourstimeStore")
@@ -122,7 +124,8 @@ const $ = new Env(`电信余量`)
 			title=brond+'  耗时:'+minutesused+'分钟'
 			body=notice_body[0]+ToSize(unlimitChange,2,1,1)+' '+notice_body[1]+ToSize(limitChange,2,1,1)
 			body1=notice_body[2]+ToSize(ArrayQuery.unlimitusage,2,1,1)+' '+notice_body[3]+ToSize(ArrayQuery.limitleft,2,1,1)
-			Notice(title,body,body1)
+			if(threshold_switch=='true'&&limitChange>Tele_value){Notice(title,body,body1)}
+			else{Notice(title,body,body1)}
 		}else if(Timer_Notice=="false"){
 			$.write(thishours,"hourstimeStore")
 			$.write(thisminutes,"minutestimeStore") 

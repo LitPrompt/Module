@@ -43,7 +43,7 @@ function Notice(title,body,body1){
 	let bark_body1=body1
     let bark_key=$.read('bark_key')
 	let icon_url=$.read('bark_icon')
-    if(bark_key)
+    if(bark_key&&!QX)
     {
         let bark_icon
 	if(icon_url){bark_icon=`?icon=${icon_url}`}

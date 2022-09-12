@@ -86,8 +86,11 @@ const $ = new Env(`电信余量`)
 		unlimitChange=unlimitThis-unlimitLast
 		$.log("定向变化量:"+unlimitChange)
 		$.log("通用变化量:"+limitChange)
-  		if(limitChange!=0){$.write(ArrayQuery.limitusage,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
-  		if(unlimitChange!=0){$.write(ArrayQuery.unlimitusage,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
+  		if(limitChange!=0){
+			$.write(ArrayQuery.limitusage,"limitStore")
+			$.write(ArrayQuery.unlimitusage,"unlimitStore")
+		}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
+  		// if(unlimitChange!=0){$.write(ArrayQuery.unlimitusage,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
         
         //***********
 
@@ -116,16 +119,17 @@ const $ = new Env(`电信余量`)
 		Tile_All['Tile_Time']=tile_hour+':'+tile_minute
 
 		let notice_body=$.read('notice_body').split('/')
-		let threshold_switch=$.read('threshold_switch')
+		// let threshold_switch=$.read('threshold_switch')
 
-		if(Timer_Notice=="true"&&(limitChange>Tele_value||unlimitChange>Tele_value)){
+		if(Timer_Notice=="true"&&limitChange>Tele_value){
 			$.write(thishours,"hourstimeStore")
 			$.write(thisminutes,"minutestimeStore") 
 			title=brond+'  耗时:'+minutesused+'分钟'
 			body=notice_body[0]+ToSize(unlimitChange,2,1,1)+' '+notice_body[1]+ToSize(limitChange,2,1,1)
 			body1=notice_body[2]+ToSize(ArrayQuery.unlimitusage,2,1,1)+' '+notice_body[3]+ToSize(ArrayQuery.limitleft,2,1,1)
-			if(threshold_switch=='true'&&limitChange>Tele_value){Notice(title,body,body1)}
-			else{Notice(title,body,body1)}
+			Notice(title,body,body1)
+			// if(threshold_switch=='true'&&limitChange>Tele_value){Notice(title,body,body1)}
+			// else{Notice(title,body,body1)}
 		}else if(Timer_Notice=="false"){
 			$.write(thishours,"hourstimeStore")
 			$.write(thisminutes,"minutestimeStore") 

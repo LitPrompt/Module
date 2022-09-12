@@ -1,3 +1,12 @@
+
+/* *
+[MITM]
+czapp.bestpay.com.cn
+[rewrite_local]
+^https?:\/\/czapp\.bestpay\.com\.cn url script-request-body https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/GetBd.js 
+* */
+
+
 const $ = new Env(`获取Body`);
 const bodyName = '中国电信';
 const bodyVal = $request.body;

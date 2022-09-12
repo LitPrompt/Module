@@ -46,7 +46,7 @@ STASH覆写库中默认为5分钟查询一次
 ![AppScreenshots](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Screenshots/CRON.jpg)
 
 ### 小火箭
-同STASH修改模块中Cron后面即可
+修改模块中Cron后面即可
 
 ### QX
 可按照如下格式在配置中添加定时任务

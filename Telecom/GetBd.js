@@ -24,7 +24,7 @@ async function GetBody() {
         title='中国电信'
         body='Body写入成功'
         body1=$request.body
-        Notice(title,body,body1)
+        $.notice(title,body,body1)
       }
     }
     else{
@@ -33,35 +33,11 @@ async function GetBody() {
             title='当前操作'
     		    body='请点击已用流量'
     		    body1=''
-            Notice(title,body,body1)
+            $.notice(title,body,body1)
             }
         }   
 
 }
-
-function Notice(title,body,body1){
-	let bark_title=title
-	let bark_body=body
-	let bark_body1=body1
-    let bark_key=$.read('bark_key')
-	let icon_url=$.read('bark_icon')
-    if(bark_key)
-    {
-        let bark_icon
-	if(icon_url){bark_icon=`?icon=${icon_url}`}
-	else {bark_icon=''}
-
-	let bark_other=$.read('bark_add')
-  	let effective=bark_icon.indexOf("?icon")
-  	if((effective!=-1)&&bark_other){bark_other=`&${bark_other}`}
-	else if((effective==-1)&&bark_other){bark_other=`?${bark_other}`}
-	else{bark_other=''}
-	let url =`${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}${bark_other}`
-
-	$.post({url})
-    }else{$.notice(title,body,body1)}
-	
-}    
 
 
 function Env(name) {

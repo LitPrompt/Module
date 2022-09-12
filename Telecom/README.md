@@ -26,7 +26,14 @@
 ![App Screenshots](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Screenshots/Shadow.jpg)
 
 ### QX(圈叉)使用方法
+长按重写-右上角-粘贴如下连接
+获取Body:
+> https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/GetBd.js
 
+电信余量:
+>https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Cellular.js
+
+需要[BoxJS](https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.surge.sgmodule)进行后续配置[一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fraw.githubusercontent.com%2FQGCliveDavis%2FModule%2Fmain%2FTeleV2.0%2FTele.json)
 
 ```
 [MITM]

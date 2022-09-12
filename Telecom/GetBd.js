@@ -1,5 +1,5 @@
 
-/*
+/* *
 [MITM]
 czapp.bestpay.com.cn
 [rewrite_local]

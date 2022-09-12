@@ -2,6 +2,7 @@
 /* *
 [MITM]
 czapp.bestpay.com.cn
+
 [rewrite_local]
 ^https?:\/\/czapp\.bestpay\.com\.cn url script-request-body https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/GetBd.js
 * */
@@ -9,7 +10,6 @@ czapp.bestpay.com.cn
 const $ = new Env('中国电信获取body');
 const effective = $request.body.indexOf("BILLCYCLE")
 $.notice($request.body,'','')
-let loginerror=$.read('Bodyswitch')
 
 !(async () => {await GetBody();})().catch((e) => {$.log(e)}).finally(() => {$.done({});});
 

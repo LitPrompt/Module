@@ -72,15 +72,14 @@ const $ = new Env(`电信余量`)
                 title="当前为初次查询或上次查询有误"
 				body='已将上次通用查询归0'
 				body1=''
-                Notice(title,body,body1)
             }
             if(e=='unlimiarr'){
                 $.write(0,'unlimitStore')
                 title="当前为初次查询或上次查询有误"
     			body='已将上次定向查询归0'
             	body1=''
-                Notice(title,body,body1)
             }
+			Notice(title,body,body1)
         }
         limitChange=limitThis-limitLast
 		unlimitChange=unlimitThis-unlimitLast
@@ -182,6 +181,7 @@ async function Query(Tele_body){//余量原始数据
         })
     })
 }
+
 
 function Query_All(jsonData){//原始量累计
     let unlimitratabletotal=0

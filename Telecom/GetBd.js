@@ -52,7 +52,7 @@ function Notice(title,body,body1){
 	
 }    
 
-function GetBody(){
+async function GetBody(){
     return new Promise ((resolve,reject)=>{
         if (effective=="0"&&loginerror==1) {
         $.write(bodyVal, "Tele_BD")

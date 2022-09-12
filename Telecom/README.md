@@ -1,18 +1,21 @@
 # 电信余量
 可以关注我的[电报频道](https://t.me/CatStudyCase)小更新会在里面，反馈可直接联系我
 
->目前支持 **STASH** **QX** **小火箭** 等平台的流量跳点通知
+```
+目前支持 **STASH** **QX** **小火箭** 等平台的流量跳点通知
+```
+---
 
 ## STASH使用方法
 
 进入STASH覆写库安装请求体获取脚本以及余量脚本
 
-同时需要BoxJS进行后续配置[一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fraw.githubusercontent.com%2FQGCliveDavis%2FModule%2Fmain%2FTeleV2.0%2FTele.json)
+同时需要[BoxJS](https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.stash.stoverride)进行后续配置[一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fraw.githubusercontent.com%2FQGCliveDavis%2FModule%2Fmain%2FTeleV2.0%2FTele.json)
 
 ![App Screenshots](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Screenshots/STASH.jpg)
 
 ## 小火箭使用方法
-点击小火箭下方的配置，点击模块后安装
+点击小火箭-配置-模块后安装如下链接
 
 > [https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_ShadowRocket.Module](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_ShadowRocket.Module)
 
@@ -36,7 +39,8 @@ STASH覆写库中默认为5分钟查询一次，如有需要可按照如下图�
 */5 * * * * https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/10000.js
 ```
 
-## Bark部分参数设置
+
+# Bark部分参数设置
 
 ```
 https://api.day.app/xxxxxxxxxxxx/附加参数

@@ -10,17 +10,7 @@ const $ = new Env('中国电信获取body');
 const effective = $request.body.indexOf("BILLCYCLE")
 let loginerror=$.read('Bodyswitch')
 
-!(async () => {
-        await GetBody();
-
-})().catch((e) => {
-  $.log(e)
-})
-.finally(() => {
-  $.done({});
-});
-
-
+!(async () => {await GetBody();})().catch((e) => {$.log(e)}).finally(() => {$.done({});});
 
 async function GetBody() {
     if (effective==0 &&loginerror==1) {

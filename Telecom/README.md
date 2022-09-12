@@ -70,6 +70,9 @@ STASH覆写库中默认为5分钟查询一次
 ### 小火箭
 修改模块中Cron后面即可
 
+![App Screenshots](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Screenshots/Shadowcron.jpg)
+
+
 ### QX
 在配置中修改Cron定时任务即可
 

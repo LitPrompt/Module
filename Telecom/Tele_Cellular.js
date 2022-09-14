@@ -13,8 +13,8 @@ const $ = new Env(`电信余量`)
         backgroundColor: "#0099FF",
         icon: "dial.max.fill",
     }
-    Month0=formatTime().month-1
-	Month1=formatTime().month
+    let Month0=formatTime().month-1
+	let Month1=formatTime().month
 	if(Month1==1){Month0=12}
 	if(Month0<=9){Month0='0'+Month0}
 	if(Month1<=9){Month1='0'+Month1}
@@ -25,12 +25,13 @@ const $ = new Env(`电信余量`)
 		let Tele_body1= Tele_body.replace(oldtime,thistime)
 		$.write(Tele_body1,'Tele_BD')
 	}
-	thishours=formatTime().hours
-    thisminutes=formatTime().minutes
-    Days=formatTime().day
-    lasthours=$.read('hourstimeStore')
-    lastminutes=$.read('minutestimeStore')
-    hoursused=thishours-lasthours
+	let thishours=formatTime().hours
+    let thisminutes=formatTime().minutes
+    let Days=formatTime().day
+    let lasthours=$.read('hourstimeStore')
+    let lastminutes=$.read('minutestimeStore')
+    let hoursused=thishours-lasthours
+	let minutesused
 
 	if(hoursused>=0){minutesused=(thisminutes-lastminutes)+hoursused*60} //上次查询的时间大于等于当前查询的时间
     else if(hoursused<0&&lasthours==23){minutesused=(60-lastminutes)+thishours*60+thisminutes} 
@@ -55,10 +56,10 @@ const $ = new Env(`电信余量`)
 			brond = result.RESULTDATASET[brondid].PRODUCTOFFNAME
 			$.write(brond,"key_brond")
     	}  	
-        limitThis=ArrayQuery.limitusage//通用使用量
-        unlimitThis=ArrayQuery.unlimitusage//定向使用量
-        limitLast=$.read("limitStore") //将上次查询到的值读出来
-        unlimitLast=$.read("unlimitStore") //将上次查询到的值读出来
+        let limitThis=ArrayQuery.limitusage//通用使用量
+        let unlimitThis=ArrayQuery.unlimitusage//定向使用量
+        let limitLast=$.read("limitStore") //将上次查询到的值读出来
+        let unlimitLast=$.read("unlimitStore") //将上次查询到的值读出来
         $.log("当前通用使用"+limitThis)
 		$.log("当前定向使用"+unlimitThis)
 		$.log("上次通用使用"+limitLast)
@@ -97,10 +98,10 @@ const $ = new Env(`电信余量`)
 			$.write(ArrayQuery.unlimitusage,'unlimittoday')
 			$.write(ArrayQuery.limitusage,'limittoday')
 		}
-		tile_unlimitTotal=ArrayQuery.unlimitusage-tile_unlimittoday//面板今日定向用量
-		tile_limitTotal=ArrayQuery.limitusage-tile_limittoday//面板今天通用用量
-		tile_unlimitUsageTotal=ArrayQuery.unlimitusage//面板本月定向使用量
-		tile_limitUsageTotal=ArrayQuery.limitusage//面板本月通用使用量
+		let tile_unlimitTotal=ArrayQuery.unlimitusage-tile_unlimittoday//面板今日定向用量
+		let tile_limitTotal=ArrayQuery.limitusage-tile_limittoday//面板今天通用用量
+		let tile_unlimitUsageTotal=ArrayQuery.unlimitusage//面板本月定向使用量
+		let tile_limitUsageTotal=ArrayQuery.limitusage//面板本月通用使用量
 
         if(thishours<10){tile_hour='0'+thishours}
 		else{tile_hour=thishours}
@@ -114,8 +115,8 @@ const $ = new Env(`电信余量`)
 		let notice_body=$.read('notice_body').split('/')
 		// let threshold_switch=$.read('threshold_switch')
 
-		limitChange=limitThis-limitLast
-		unlimitChange=unlimitThis-unlimitLast
+		let limitChange=limitThis-limitLast
+		let unlimitChange=unlimitThis-unlimitLast
 		$.log("定向变化量:"+unlimitChange)
 		$.log("通用变化量:"+limitChange)
 

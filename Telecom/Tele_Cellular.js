@@ -82,14 +82,7 @@ const $ = new Env(`电信余量`)
 				Notice(title,body,body1)
             }
         }
-        limitChange=limitThis-limitLast
-		unlimitChange=unlimitThis-unlimitLast
-		$.log("定向变化量:"+unlimitChange)
-		$.log("通用变化量:"+limitChange)
-  		if(limitChange!=0){
-			$.write(ArrayQuery.limitusage,"limitStore")
-			$.write(ArrayQuery.unlimitusage,"unlimitStore")
-		}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
+  		
   		// if(unlimitChange!=0){$.write(ArrayQuery.unlimitusage,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
         
         //***********
@@ -121,7 +114,14 @@ const $ = new Env(`电信余量`)
 		let notice_body=$.read('notice_body').split('/')
 		// let threshold_switch=$.read('threshold_switch')
 
+		limitChange=limitThis-limitLast
+		unlimitChange=unlimitThis-unlimitLast
+		$.log("定向变化量:"+unlimitChange)
+		$.log("通用变化量:"+limitChange)
+
 		if(Timer_Notice=="true"&&limitChange>Tele_value){
+			$.write(ArrayQuery.limitusage,"limitStore")
+			$.write(ArrayQuery.unlimitusage,"unlimitStore")
 			$.write(thishours,"hourstimeStore")
 			$.write(thisminutes,"minutestimeStore") 
 			title=brond+'  耗时:'+minutesused+'分钟'

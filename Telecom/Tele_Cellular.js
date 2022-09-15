@@ -65,8 +65,8 @@ const $ = new Env(`电信余量`)
 		$.log("上次通用使用"+limitLast)
 		$.log("上次定向使用"+unlimitLast)
         try{
-            if(limitLast==null||limitThis-limitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1){throw 'limiterr'}
-            if(unlimitLast==null||unlimitThis-unlimitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1){throw 'unlimiterr'}
+            if(limitLast==''||limitThis-limitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1){throw 'limiterr'}
+            if(unlimitLast==''||unlimitThis-unlimitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1){throw 'unlimiterr'}
         }catch(e){
             if(e=='limiterr'){
                 $.write(0,'limitStore')
@@ -89,10 +89,10 @@ const $ = new Env(`电信余量`)
         //***********
 
         let tile_date=$.read('day')
-		if(tile_date==undefined){$.write(Days,'day')}//初次
+		if(tile_date==''){$.write(Days,'day')}//初次
 		let tile_unlimittoday=$.read('unlimittoday')
 		let tile_limittoday=$.read('limittoday')
-  		if((thishours==0&&thisminutes==0)||(tile_unlimittoday==undefined||tile_limittoday==undefined)||tile_date!=Days)//面板更新时间
+  		if((thishours==0&&thisminutes==0)||(tile_unlimittoday==''||tile_limittoday=='')||tile_date!=Days)//面板更新时间
 		{
 			$.write(Days,'day')
 			$.write(ArrayQuery.unlimitusage,'unlimittoday')

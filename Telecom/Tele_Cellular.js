@@ -133,6 +133,8 @@ const $ = new Env(`电信余量`)
 			// if(threshold_switch=='true'&&limitChange>Tele_value){Notice(title,body,body1)}
 			// else{Notice(title,body,body1)}
 		}else if(Timer_Notice=="false"){
+			$.write(ArrayQuery.limitusage,"limitStore")
+			$.write(ArrayQuery.unlimitusage,"unlimitStore")
 			$.write(thishours,"hourstimeStore")
 			$.write(thisminutes,"minutestimeStore") 
 			title=brond+'  耗时:'+minutesused+'分钟'

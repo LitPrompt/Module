@@ -26,12 +26,7 @@ async function GetBody() {
     }
     else{
         if(loginerror==0){console.log('当前Body有效，无需获取')}
-        else{
-            title='当前操作'
-    		    body='请点击已用流量'
-    		    body1=''
-            $.notice(title,body,body1)
-            }
+        
         }   
 
 }

@@ -7,6 +7,7 @@
 const $ = new Env(`电信余量`)
 
 !(async () => {
+  try{
     let panel = {
         title: '电信余量',
         content: ``,
@@ -162,7 +163,7 @@ const $ = new Env(`电信余量`)
 		panel['content']='今日免流/跳点：'+Tile_All['Tile_Today']+`\n`+'本月免流/跳点：'+Tile_All['Tile_Month']+`\n`+'查询时间：'+Tile_All['Tile_Time']
         $done(panel)
       })
-      
+  }catch(e){$.log('错误：'+e)}   
 
 })()
 

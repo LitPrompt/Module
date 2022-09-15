@@ -65,23 +65,23 @@ const $ = new Env(`电信余量`)
 		$.log("上次通用使用"+limitLast)
 		$.log("上次定向使用"+unlimitLast)
         try{
-            if(limitLast==''||limitThis-limitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1){throw 'limiterr'}
-            if(unlimitLast==''||unlimitThis-unlimitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1){throw 'unlimiterr'}
+            if(unlimitLast==''||unlimitThis-unlimitLast<0||limitLast==''||limitThis-limitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1){throw 'err'}
+            // if(unlimitLast==''||unlimitThis-unlimitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1){throw 'unlimiterr'}
         }catch(e){
-            if(e=='limiterr'){
+            if(e=='err'){
                 $.write(0,'limitStore')
                 title="当前为初次查询或上次查询有误"
-				body='已将上次通用查询归0'
-				body1=''
+				body='已将上次查询归0'
+				body1='下次通知可能会有误，不用在意'
 				Notice(title,body,body1)
             }
-            if(e=='unlimiarr'){
-                $.write(0,'unlimitStore')
-                title="当前为初次查询或上次查询有误"
-    			body='已将上次定向查询归0'
-            	body1=''
-				Notice(title,body,body1)
-            }
+            // if(e=='unlimiarr'){
+            //     $.write(0,'unlimitStore')
+            //     title="当前为初次查询或上次查询有误"
+    		// 	body='已将上次定向查询归0'
+            // 	body1=''
+			// 	Notice(title,body,body1)
+            // }
         }
   		
   		// if(unlimitChange!=0){$.write(ArrayQuery.unlimitusage,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用

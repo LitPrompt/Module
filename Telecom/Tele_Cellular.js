@@ -70,6 +70,7 @@ const $ = new Env(`电信余量`)
         }catch(e){
             if(e=='err'){
                 $.write(0,'limitStore')
+				$.write(0,'unlimitStore')
                 title="当前为初次查询或上次查询有误"
 				body='已将上次查询归0'
 				body1='下次通知可能会有误，不用在意'

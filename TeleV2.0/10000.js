@@ -1,14 +1,21 @@
+/* *
+[task_local]
+#电信余量
+0-59/5 * * * * https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Cellular.js, tag=电信余量, enabled=true
+* */
+
 const $ = new Env(`电信余量`)
 
 !(async () => {
+  try{
     let panel = {
         title: '电信余量',
         content: ``,
         backgroundColor: "#0099FF",
         icon: "dial.max.fill",
     }
-    Month0=formatTime().month-1
-	Month1=formatTime().month
+    let Month0=formatTime().month-1
+	let Month1=formatTime().month
 	if(Month1==1){Month0=12}
 	if(Month0<=9){Month0='0'+Month0}
 	if(Month1<=9){Month1='0'+Month1}
@@ -19,12 +26,13 @@ const $ = new Env(`电信余量`)
 		let Tele_body1= Tele_body.replace(oldtime,thistime)
 		$.write(Tele_body1,'Tele_BD')
 	}
-	thishours=formatTime().hours
-    thisminutes=formatTime().minutes
-    Days=formatTime().day
-    lasthours=$.read('hourstimeStore')
-    lastminutes=$.read('minutestimeStore')
-    hoursused=thishours-lasthours
+	let thishours=formatTime().hours
+    let thisminutes=formatTime().minutes
+    let Days=formatTime().day
+    let lasthours=$.read('hourstimeStore')
+    let lastminutes=$.read('minutestimeStore')
+    let hoursused=thishours-lasthours
+	let minutesused
 
 	if(hoursused>=0){minutesused=(thisminutes-lastminutes)+hoursused*60} //上次查询的时间大于等于当前查询的时间
     else if(hoursused<0&&lasthours==23){minutesused=(60-lastminutes)+thishours*60+thisminutes} 
@@ -49,56 +57,53 @@ const $ = new Env(`电信余量`)
 			brond = result.RESULTDATASET[brondid].PRODUCTOFFNAME
 			$.write(brond,"key_brond")
     	}  	
-        limitThis=ArrayQuery.limitusage//通用使用量
-        unlimitThis=ArrayQuery.unlimitusage//定向使用量
-        limitLast=$.read("limitStore") //将上次查询到的值读出来
-        unlimitLast=$.read("unlimitStore") //将上次查询到的值读出来
+        let limitThis=ArrayQuery.limitusage//通用使用量
+        let unlimitThis=ArrayQuery.unlimitusage//定向使用量
+        let limitLast=$.read("limitStore") //将上次查询到的值读出来
+        let unlimitLast=$.read("unlimitStore") //将上次查询到的值读出来
         $.log("当前通用使用"+limitThis)
 		$.log("当前定向使用"+unlimitThis)
 		$.log("上次通用使用"+limitLast)
 		$.log("上次定向使用"+unlimitLast)
         try{
-            if(limitLast==null||limitThis-limitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1){throw 'limiterr'}
-            if(unlimitLast==null||unlimitThis-unlimitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1){throw 'unlimiterr'}
+            if(unlimitLast==''||unlimitThis-unlimitLast<0||limitLast==''||limitThis-limitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1){throw 'err'}
+            // if(unlimitLast==''||unlimitThis-unlimitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1){throw 'unlimiterr'}
         }catch(e){
-            if(e=='limiterr'){
+            if(e=='err'){
                 $.write(0,'limitStore')
+				$.write(0,'unlimitStore')
                 title="当前为初次查询或上次查询有误"
-				body='已将上次通用查询归0'
-				body1=''
-                Notice(title,body,body1)
+				body='已将上次查询归0'
+				body1='下次通知可能会有误，不用在意'
+				Notice(title,body,body1)
             }
-            if(e=='unlimiarr'){
-                $.write(0,'unlimitStore')
-                title="当前为初次查询或上次查询有误"
-    			body='已将上次定向查询归0'
-            	body1=''
-                Notice(title,body,body1)
-            }
+            // if(e=='unlimiarr'){
+            //     $.write(0,'unlimitStore')
+            //     title="当前为初次查询或上次查询有误"
+    		// 	body='已将上次定向查询归0'
+            // 	body1=''
+			// 	Notice(title,body,body1)
+            // }
         }
-        limitChange=limitThis-limitLast
-		unlimitChange=unlimitThis-unlimitLast
-		$.log("定向变化量:"+unlimitChange)
-		$.log("通用变化量:"+limitChange)
-  		if(limitChange!=0){$.write(ArrayQuery.limitusage,"limitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
-  		if(unlimitChange!=0){$.write(ArrayQuery.unlimitusage,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
+  		
+  		// if(unlimitChange!=0){$.write(ArrayQuery.unlimitusage,"unlimitStore")}  //进行判断是否将本次查询到的值存到本地存储器中供下次使用
         
         //***********
 
         let tile_date=$.read('day')
-		if(tile_date==undefined){$.write(Days,'day')}//初次
+		if(tile_date==''){$.write(Days,'day')}//初次
 		let tile_unlimittoday=$.read('unlimittoday')
 		let tile_limittoday=$.read('limittoday')
-  		if((thishours==0&&thisminutes==0)||(tile_unlimittoday==undefined||tile_limittoday==undefined)||tile_date!=Days)//面板更新时间
+  		if((thishours==0&&thisminutes==0)||(tile_unlimittoday==''||tile_limittoday=='')||tile_date!=Days)//面板更新时间
 		{
 			$.write(Days,'day')
 			$.write(ArrayQuery.unlimitusage,'unlimittoday')
 			$.write(ArrayQuery.limitusage,'limittoday')
 		}
-		tile_unlimitTotal=ArrayQuery.unlimitusage-tile_unlimittoday//面板今日定向用量
-		tile_limitTotal=ArrayQuery.limitusage-tile_limittoday//面板今天通用用量
-		tile_unlimitUsageTotal=ArrayQuery.unlimitusage//面板本月定向使用量
-		tile_limitUsageTotal=ArrayQuery.limitusage//面板本月通用使用量
+		let tile_unlimitTotal=ArrayQuery.unlimitusage-tile_unlimittoday//面板今日定向用量
+		let tile_limitTotal=ArrayQuery.limitusage-tile_limittoday//面板今天通用用量
+		let tile_unlimitUsageTotal=ArrayQuery.unlimitusage//面板本月定向使用量
+		let tile_limitUsageTotal=ArrayQuery.limitusage//面板本月通用使用量
 
         if(thishours<10){tile_hour='0'+thishours}
 		else{tile_hour=thishours}
@@ -110,15 +115,27 @@ const $ = new Env(`电信余量`)
 		Tile_All['Tile_Time']=tile_hour+':'+tile_minute
 
 		let notice_body=$.read('notice_body').split('/')
+		// let threshold_switch=$.read('threshold_switch')
 
-		if(Timer_Notice=="true"&&(limitChange>Tele_value||unlimitChange>Tele_value)){
+		let limitChange=limitThis-limitLast
+		let unlimitChange=unlimitThis-unlimitLast
+		$.log("定向变化量:"+unlimitChange)
+		$.log("通用变化量:"+limitChange)
+
+		if(Timer_Notice=="true"&&limitChange>Tele_value){
+			$.write(ArrayQuery.limitusage,"limitStore")
+			$.write(ArrayQuery.unlimitusage,"unlimitStore")
 			$.write(thishours,"hourstimeStore")
 			$.write(thisminutes,"minutestimeStore") 
 			title=brond+'  耗时:'+minutesused+'分钟'
 			body=notice_body[0]+ToSize(unlimitChange,2,1,1)+' '+notice_body[1]+ToSize(limitChange,2,1,1)
 			body1=notice_body[2]+ToSize(ArrayQuery.unlimitusage,2,1,1)+' '+notice_body[3]+ToSize(ArrayQuery.limitleft,2,1,1)
 			Notice(title,body,body1)
+			// if(threshold_switch=='true'&&limitChange>Tele_value){Notice(title,body,body1)}
+			// else{Notice(title,body,body1)}
 		}else if(Timer_Notice=="false"){
+			$.write(ArrayQuery.limitusage,"limitStore")
+			$.write(ArrayQuery.unlimitusage,"unlimitStore")
 			$.write(thishours,"hourstimeStore")
 			$.write(thisminutes,"minutestimeStore") 
 			title=brond+'  耗时:'+minutesused+'分钟'
@@ -146,12 +163,13 @@ const $ = new Env(`电信余量`)
 		panel['content']='今日免流/跳点：'+Tile_All['Tile_Today']+`\n`+'本月免流/跳点：'+Tile_All['Tile_Month']+`\n`+'查询时间：'+Tile_All['Tile_Time']
         $done(panel)
       })
-      
+  }catch(e){$.log('错误：'+e)}   
 
 })()
 
 async function Query(Tele_body){//余量原始数据
     return new Promise((resolve,reject)=>{
+		if(SG_STH_SDR&&Tele_body==''){reject('010040')}
         $.post({
             url: 'https://czapp.bestpay.com.cn/payassistant-client?method=queryUserResource',
 			headers: "",
@@ -176,6 +194,7 @@ async function Query(Tele_body){//余量原始数据
         })
     })
 }
+
 
 function Query_All(jsonData){//原始量累计
     let unlimitratabletotal=0

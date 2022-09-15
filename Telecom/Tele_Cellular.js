@@ -153,9 +153,14 @@ const $ = new Env(`电信余量`)
 			Notice(title,body,body1)
             let loginerror=1
             $.write(loginerror,'Bodyswitch')
-        }else{
-            $.log(e)
-        }
+        }else if(e=='000001'){
+			title="当前为首次使用"
+            body='请去翼支付或公众号抓取Body'
+            body1=""
+			Notice(title,body,body1)
+            let loginerror=1
+            $.write(loginerror,'Bodyswitch')
+        }else{$.log(e)}
 
     }).finally(() => {
 		panel['title']=brond
@@ -168,7 +173,8 @@ const $ = new Env(`电信余量`)
 
 async function Query(Tele_body){//余量原始数据
     return new Promise((resolve,reject)=>{
-        $.post({
+        if(Tele_body==''){
+		$.post({
             url: 'https://czapp.bestpay.com.cn/payassistant-client?method=queryUserResource',
 			headers: "",
     		body: Tele_body, // 请求体
@@ -190,6 +196,7 @@ async function Query(Tele_body){//余量原始数据
             }
             
         })
+		}else{reject('000001')}
     })
 }
 

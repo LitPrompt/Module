@@ -168,7 +168,10 @@ const $ = new Env(`电信余量`)
 
 async function Query(Tele_body,loginerr){//余量原始数据
     return new Promise((resolve,reject)=>{
-		if(SG_STH_SDR&&(Tele_body==''||loginerr==1)){reject('010040')}
+		if(SG_STH_SDR&&(Tele_body==''||loginerr==1)){
+			reject('010040')
+			return
+			}
         $.post({
             url: 'https://czapp.bestpay.com.cn/payassistant-client?method=queryUserResource',
 			headers: "",

@@ -42,10 +42,11 @@ const $ = new Env(`电信余量`)
     let brond=$.read('key_brond')
 	let Timer_Notice=$.read('notice_switch')
 	let Tele_value=$.read('threshold')
+	let loginerr=$.read('Bodyswitch')
 
 	let Tile_All={Tile_Today:'',Tile_Month:'',Tile_Time:''}
     
-    Query(Tele_body).then(result=>{
+    Query(Tele_body,loginerr).then(result=>{
         let ArrayQuery=Query_All(result)
 
         if(brond==''){
@@ -146,8 +147,6 @@ const $ = new Env(`电信余量`)
 		}
 
     }).catch(e=>{
-		let loginerr=$.read('Bodyswitch')
-
         if(e=="010040"&&loginerr==0){
             title="Body错误或已过期❌（也可能是电信的问题）"
             body='请尝试重新抓取Body(不抓没得用了！)'
@@ -167,9 +166,9 @@ const $ = new Env(`电信余量`)
 
 })()
 
-async function Query(Tele_body){//余量原始数据
+async function Query(Tele_body,loginerr){//余量原始数据
     return new Promise((resolve,reject)=>{
-		if(SG_STH_SDR&&Tele_body==''){reject('010040')}
+		if(SG_STH_SDR&&(Tele_body==''||loginerr==1)){reject('010040')}
         $.post({
             url: 'https://czapp.bestpay.com.cn/payassistant-client?method=queryUserResource',
 			headers: "",

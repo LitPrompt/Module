@@ -146,14 +146,14 @@ const $ = new Env(`电信余量`)
 		}
 
     }).catch(e=>{
+		let loginerr=$.read('Bodyswitch')
 
-        if(e=="010040"){
+        if(e=="010040"&&loginerr==0){
             title="Body错误或已过期❌（也可能是电信的问题）"
             body='请尝试重新抓取Body(不抓没得用了！)'
             body1="覆写获取到Body后可以不用关闭覆写"
 			Notice(title,body,body1)
-            let loginerror=1
-            $.write(loginerror,'Bodyswitch')
+            $.write(1,'Bodyswitch')
         }else{
             $.log(e)
         }

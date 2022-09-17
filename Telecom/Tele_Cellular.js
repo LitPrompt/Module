@@ -35,7 +35,7 @@ const $ = new Env(`电信余量`)
 	let minutesused
 
 	if(hoursused>=0){minutesused=(thisminutes-lastminutes)+hoursused*60} //上次查询的时间大于等于当前查询的时间
-    else if(hoursused<0&&lasthours==23){minutesused=(60-lastminutes)+thishours*60+thisminutes} 
+    else if(hoursused<0&&lasthours<=23){minutesused=(60-lastminutes)+(23-lasthours+thishours)*60+thisminutes} 
     //**********
 
     let Tele_body = $.read("Tele_BD");

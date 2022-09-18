@@ -147,6 +147,7 @@ const $ = new Env(`电信余量`)
 		}
 
     }).catch(e=>{
+		if(loginerr==''){$.write(0,'Bodyswitch')}//对BodySwitch进行初始化
         if(e=="010040"&&loginerr==0){
             title="Body错误或已过期❌（也可能是电信的问题）"
             body='请尝试重新抓取Body(不抓没得用了！)'

@@ -43,6 +43,9 @@ const $ = new Env(`电信余量`)
 	let Timer_Notice=$.read('notice_switch')
 	let Tele_value=$.read('threshold')
 	let loginerr=$.read('Bodyswitch')
+	if(loginerr==undefined){//初次使用判断
+		$.write(0,'Bodyswitch')
+		loginerr=$.read('Bodyswitch')}
 
 	let Tile_All={Tile_Today:'',Tile_Month:'',Tile_Time:''}
     

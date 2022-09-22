@@ -5,6 +5,8 @@ var rest 	 = require('restler'),
 const { resolve } = require('path')
 const { rejects } = require('assert');
 const { Console } = require('console');
+const { Agent } = require('http');
+const useragent= `Mozilla/5.0 (iPad; CPU OS 15_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.28(0x18001c29) NetType/WIFI Language/zh_CN`
 
 let userid_name = '1942065254'
 let userid_password = '%7DW3AI6IH8P%7DZ-DXX'
@@ -15,6 +17,8 @@ try{
   let token
 
     if(await getdata()=='') {//内容为空时重新获取
+      let time= formatTime().year+'-'+formatTime().month+"-"+formatTime().day
+      console.log(time)
 
       console.log(`尝试重新获取Token\n`)
       token=(await httprequest(userid_name,userid_password)).data.token
@@ -31,6 +35,8 @@ try{
 
         userid=(await user_id(token)).data.id //获取用户id
         capttoken=(await capt_token(userid,userid_name)).token //获取用户验证token
+
+
         // console.log('000')
         let captcha=await Promise.all([pic_down1(capttoken), pic_down2(capttoken)])//等待验证码
         let picbase1,picbase2//base64的验证码编码
@@ -49,15 +55,22 @@ try{
       pic_str: '因,14,85|在,111,79|其,253,90|紧,198,84',
       md5: '77c279ec44fe1037804ed7aa6a2ff005'
     }
+    // let YZM_RES=JSON.parse(await YZM(picbase1))
 
-    // console.log('11')
-      let singleword=JSON.parse(await single_word(picbase2)).words_result[0].words//{err_no: 0,err_str: 'OK',pic_id: '2190415260968890001',pic_str: 'k',md5: 'fe90f798bb323010278cf2659f1eac9f'}
+
+      // let YZM_RES=JSON.parse(await YZM(picbase1))//{err_no: 0,err_str: 'OK',pic_id: '2190415260968890001',pic_str: 'k',md5: 'fe90f798bb323010278cf2659f1eac9f'}
+      // if (YZM_RES.err_no == 0) {console.log('识别结果 ='+ YZM_RES.pic_str)} else {console.log('错误原因：'+ YZM_RES.err_str)}
+      // console.log(YZM_RES)
+
+
+      let singleword=JSON.parse(await single_word(picbase2)).words_result[0]//{err_no: 0,err_str: 'OK',pic_id: '2190415260968890001',pic_str: 'k',md5: 'fe90f798bb323010278cf2659f1eac9f'}
+      console.log(singleword)
       
-      let v,s,wordloc
-      let b=(a.pic_str).split('|')
+      let v,s,wordloc,word//v: 未加密的坐标位置 s：转换为base前的二进制编码 word; 服务器返回的word [0]为返回的文字， [1]为x坐标，[2]为y坐标
+      let b=(a.pic_str).split('|')//pic_str中四个字以|分开后的数组
       for(var i in b){
-        let word=b[i].split(',')
-        if(word[0]==singleword)
+        word=b[i].split(',')
+        if(word[0]=='紧')
         {
           v=`[{"x":${word[1]},"y":${word[2]}}]`
           s =Buffer.from(v);
@@ -68,17 +81,13 @@ try{
         }
       }
 
-     if(wordloc!=undefined) console.log(wordloc)
-      // console.log('22')
-      console.log(singleword)
-      // let YZM_RES=JSON.parse(await YZM(picbase1))//{err_no: 0,err_str: 'OK',pic_id: '2190415260968890001',pic_str: 'k',md5: 'fe90f798bb323010278cf2659f1eac9f'}
-      // if (YZM_RES.err_no == 0) {console.log('识别结果 ='+ YZM_RES.pic_str)} else {console.log('错误原因：'+ YZM_RES.err_str)}
-      // console.log(YZM_RES)
-
-
-      // let reserveInfo=await reserve_info(token)
-      
-      // console.log(reserveInfo.data.reservations)
+     if(wordloc!=undefined) {
+      await chickincapt(wordloc,capttoken,token)
+      console.log(wordloc)
+    }
+ 
+  
+    // console.log(await chickincapt(wordloc,capttoken,token))
       }
      
 
@@ -92,6 +101,20 @@ try{
 }
 
 Run()
+
+function formatTime() {
+  let dateObj = new Date()//获取时间
+let Minutes = dateObj.getMinutes();//获取分钟
+  let Hours = dateObj.getHours(); //获取小时
+
+  let Dates = dateObj.getDate(); //获取日期天
+  if(Dates<10) Dates = '0'+dateObj.getDate(); //获取日期天
+let Month = dateObj.getMonth()+1//获取日期月
+if(Month<10) Month = '0'+(dateObj.getMonth()+1)//获取日期月
+let Year = dateObj.getFullYear()//获取日期年
+  let objtime={year: Year, month: Month, day:Dates, hours:Hours, minutes:Minutes}
+  return objtime
+}
 
 
 function single_word(base64){
@@ -141,6 +164,75 @@ function YZM(base64){
   })
 }
 
+// function YZM1(base64){
+//   return new Promise((resolve,reject)=>{
+//     rest.post('https://aip.baidubce.com/rest/2.0/ocr/v1/accurate?access_token=24.c359932583f3321a56ce0fa1a656fa84.2592000.1666348488.282335-9777217', {
+//       multipart: true,
+//       data:{
+//         'image':base64,
+//         'vertexes_location':'true',
+//         'probability': 'true'
+        
+//     },    
+//       headers: { 
+//         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:24.0) Gecko/20100101 Firefox/24.0',
+//         'Content-Type' : 'application/x-www-form-urlencoded' 
+//       }
+//     }).on('complete', function(data) {
+//       var captcha = JSON.stringify(data);
+//       // console.log('Captcha Encoded.');
+//       resolve(captcha)
+//     });
+
+//   })
+// }
+
+function freeBook(seatid,date,start,end,capttoken,token){//座位预约请求
+  return new Promise((resolve, reject)=>{
+     var url= `https://leosys.cn/axhu/rest/v2/freeBook`;
+     var option ={
+        url: url,
+        method: "POST",
+        headers:{
+          'content-type' : `application/x-www-form-urlencoded`,
+          'User-Agent' : useragent,
+          'token':token
+        },
+        body : `seat=${seatid}&date=${date}&startTime=${start}&endTime=${end}&authid=${capttoken}`,
+        json: true
+      }
+      request(option, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            resolve(body)
+        }else{
+          reject(error)
+        }
+      });
+  });
+};
+
+function chickincapt(wordloc,capttoken,token){//a=4a0d6b5d-347f-4fce-8928-15a2b48164a5 b=用户账户
+  return new Promise((resolve, reject)=>{
+     var url= `https://leosys.cn/axhucap/checkCaptcha?a=${wordloc}&token=${capttoken}`
+     var option ={
+        url: url,
+        method: "GET",
+        headers:{
+          'User-Agent' : useragent,
+          'token':token
+        },
+        json: true
+      }
+      request(option, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            resolve(body)
+        }else{
+          reject(error)
+        }
+      });
+  });
+};
+
 function pic_down1(capttoken){
   return new Promise((resolve,reject)=>{
       let imgUrl1 = `https://leosys.cn/axhucap/captchaImg/1?token=${capttoken}`;
@@ -155,8 +247,7 @@ function pic_down2(capttoken){
   })
 }
 
-
-function capt_token(a,b){//4a0d6b5d-347f-4fce-8928-15a2b48164a5
+function capt_token(a,b){//a=4a0d6b5d-347f-4fce-8928-15a2b48164a5 b=用户账户
   return new Promise((resolve, reject)=>{
      var url= `https://leosys.cn/axhucap/captcha`
      var option ={
@@ -183,8 +274,8 @@ function user_id(token){//20423
         method: "POST",
         json: true,
         headers: {
-
-            'token': token
+          'User-Agent' : useragent,
+          'token': token
         }
       }
       request(option, function(error, response, body) {
@@ -197,31 +288,6 @@ function user_id(token){//20423
   });
 };
 
-function reserve_info(token){
-  return new Promise((resolve, reject)=>{
-     var url= `https://leosys.cn/axhu/rest/v2/history/1/50?page=1`   
-     var option ={
-        url: url,
-        method: "POST",
-        json: true,
-        headers: {
-            "content-type": "application/json",
-            'actCode' : `true`,
-            'token': token
-        }
-      }
-      request(option, function(error, response, body) {
-        if (!error && response.statusCode == 200) {
-            resolve(body)
-        }else{
-          reject(body.message)
-        }
-      });
-  });
-};
-
-
-
 function httprequest(userid_name,userid_password){//token获取
     return new Promise((resolve, reject)=>{
         var url=`https://leosys.cn/axhu/rest/auth?username=${userid_name}&password=${userid_password}` 
@@ -230,6 +296,7 @@ function httprequest(userid_name,userid_password){//token获取
           method: "POST",
           json: true,
           headers: {
+            'User-Agent' : useragent,
               "content-type": "application/json",
               'actCode' : `true`
           },

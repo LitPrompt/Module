@@ -1,8 +1,8 @@
 #!name=电信余量
-#!desc=请前往BoxJS安装 https://raw.githubusercontent.com/QGCliveDavis/Module/main/TeleV2.0/Tele.json这个订阅，跟着订阅里的操作来
+#!desc=请前往BoxJS安装 https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele.json这个订阅
 
 [Script]
 请求体获取 = type=http-request,script-path=https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/GetBd.js,pattern=^https?:\/\/czapp\.bestpay\.com\.cn,max-size=131072,requires-body=true,timeout=10,script-update-interval=86400
 电信余量 = type=cron,script-path=https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Cellular.js,cronexpr="*/5 * * * *",timeout=10,script-update-interval=86400
 [MITM]
-hostname = czapp.bestpay.com.cn
+hostname = %APPEND% czapp.bestpay.com.cn

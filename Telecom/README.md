@@ -26,28 +26,20 @@
 ![App Screenshots](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Screenshots/Shadow.jpg)
 
 ### QX(圈叉)使用方法
-长按重写-右上角-粘贴如下连接
+长按重写-右上角-粘贴如下链接(开启解析器)
 
 获取Body:
 > https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_QX.conf
 
+在QX右下角三条横线(构造请求)中，任务仓库添加如下任务(是加号左边第三个)
+
 电信余量:
->https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Cellular.js
+>https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_QX_LocalTask.conf
 
 需要[BoxJS](https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.surge.sgmodule)进行后续配置[一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fraw.githubusercontent.com%2FQGCliveDavis%2FModule%2Fmain%2FTeleV2.0%2FTele.json)
 
 **若无法获取Body请检查Mitm开关与域名是否添加**
-```
-[MITM]
-czapp.bestpay.com.cn
 
-[rewrite_local]
-^https?:\/\/czapp\.bestpay\.com\.cn url script-request-body https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/GetBd.js
-
-[task_local]
-0-59/5 * * * * https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Cellular.js, tag=电信余量, enabled=true
-
-```
 
 # BoxJs后续配置
 BoxJs中请求体(Body)获取方法：

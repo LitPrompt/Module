@@ -209,8 +209,7 @@ function Query_All(jsonData){//原始量累计
     let limitbalancetotal=0
     let limitusagetotal=0
 
-    let x = $.read("limititems").split(' ');//通用正则选择
-	let y = $.read('unlimititems').split(' ');//定向正则选择
+    
 	let packge_switch = $.read("auto_switch");//自动选包开关
 	//35110000元30g小区流量
 	//
@@ -238,6 +237,8 @@ function Query_All(jsonData){//原始量累计
 		}
     }
     }else{
+      let x = $.read("limititems").split(' ');//通用正则选择
+	  let y = $.read('unlimititems').split(' ');//定向正则选择
         for(var j=0;j+1<=jsonData.RESULTDATASET.length;j++){
 		    for(var i=0;i+1<=x.length;i++){
 		    	const limitRegExp=new RegExp(x[i])//正则判断是否包含算选包正则

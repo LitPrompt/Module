@@ -1,6 +1,8 @@
 {
   "name": "b943eb11-7449-481f-b76b-c5005eb551f7",
   "dependencies": {
-    "restler": "latest"
+    "restler": "latest",
+    "request": "latest",
+    "fs": "latest"
   }
 }

@@ -69,10 +69,10 @@ const $ = new Env(`电信余量`)
         if(limitLast==undefined) limitLast=limitThis
         let unlimitLast=$.read("unlimitStore") //将上次查询到的值读出来
         if(unlimitLast==undefined) unlimitLast=unlimitThis
-        $.log("当前通用使用"+limitThis)
-		$.log("当前定向使用"+unlimitThis)
-		$.log("上次通用使用"+limitLast)
-		$.log("上次定向使用"+unlimitLast)
+        $.log("当前通用使用"+ToSize(limitThis,2,0,1))
+		$.log("当前定向使用"+ToSize(unlimitThis,2,0,1))
+		$.log("上次通用使用"+ToSize(limitLast,2,0,1))
+		$.log("上次定向使用"+ToSize(unlimitLast,2,0,1))
         try{
             if(unlimitLast==''||unlimitThis-unlimitLast<0||limitLast==''||limitThis-limitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1){throw 'err'}
             // if(unlimitLast==''||unlimitThis-unlimitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1){throw 'unlimiterr'}
@@ -127,8 +127,8 @@ const $ = new Env(`电信余量`)
 
 		let limitChange=limitThis-limitLast
 		let unlimitChange=unlimitThis-unlimitLast
-		$.log("定向变化量:"+unlimitChange)
-		$.log("通用变化量:"+limitChange)
+		$.log("定向变化量:"+ToSize(unlimitChange,2,0,1))
+		$.log("通用变化量:"+ToSize(limitChange,2,0,1))
 
 		if(Timer_Notice=="true"&&limitChange>Tele_value){
 			$.write(ArrayQuery.limitusage,"limitStore")

@@ -145,7 +145,7 @@ function YZM(base64){
       multipart: true,
       data: {
         'user': '859364954',
-        'pass': 'ADSLCJY123',
+        'pass': '',
         'softid':'939195',  //软件ID 可在用户中心生成
         'codetype': '9501',  //验证码类型 http://www.chaojiying.com/price.html 选择
         'file_base64': base64  // filename: 抓取回来的码证码文件

@@ -70,9 +70,9 @@ const $ = new Env(`电信余量`)
         let unlimitLast=$.read("unlimitStore") //将上次查询到的值读出来
         if(unlimitLast==undefined) unlimitLast=unlimitThis
         $.log("当前通用使用"+ToSize(limitThis,2,0,1))
-		$.log("当前定向使用"+ToSize(unlimitThis,2,0,1))
+		$.log("当前定向使用"+ToSize(unlimitThis,2,0,1)+`\n`)
 		$.log("上次通用使用"+ToSize(limitLast,2,0,1))
-		$.log("上次定向使用"+ToSize(unlimitLast,2,0,1))
+		$.log("上次定向使用"+ToSize(unlimitLast,2,0,1)+`\n`)
         try{
             if(unlimitLast==''||unlimitThis-unlimitLast<0||limitLast==''||limitThis-limitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1){throw 'err'}
             // if(unlimitLast==''||unlimitThis-unlimitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1){throw 'unlimiterr'}

@@ -31,7 +31,7 @@ const $ = new Env(`电信余量`)
     let Days=formatTime().day
     let lasthours=$.read('hourstimeStore')
     if(lasthours==undefined)lasthours=thishours    
-    let lastminutes=$.read('minutestimeSto
+    let lastminutes=$.read('minutestimeStore')
     if(lastminutes==undefined) lastminutes=thisminutes
     let hoursused=thishours-lasthours
 	let minutesused

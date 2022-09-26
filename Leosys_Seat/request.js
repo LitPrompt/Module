@@ -6,10 +6,12 @@ const { resolve } = require('path')
 const { rejects } = require('assert');
 const { Console } = require('console');
 const { Agent } = require('http');
+const { findSourceMap } = require('module');
+const { networkInterfaces } = require('os');
 const useragent= `Mozilla/5.0 (iPad; CPU OS 15_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.28(0x18001c29) NetType/WIFI Language/zh_CN`
 
-let userid_name = '1942065254'
-let userid_password = '%7DW3AI6IH8P%7DZ-DXX'
+let userid_name = '1942065211'
+let userid_password = 'I16HU%7C3BH66%5BMAGF'
 
 
 async function Run(){
@@ -17,8 +19,6 @@ try{
   let token
 
     if(await getdata()=='') {//内容为空时重新获取
-      let time= formatTime().year+'-'+formatTime().month+"-"+formatTime().day
-      console.log(time)
 
       console.log(`尝试重新获取Token\n`)
       token=(await httprequest(userid_name,userid_password)).data.token
@@ -32,9 +32,17 @@ try{
         fs.writeFile('./test2.txt', '', function(err){});
         Run()
       }else{
-
+        let date=formatTime().year+'-'+formatTime().month+'-'+formatTime().day
         userid=(await user_id(token)).data.id //获取用户id
         capttoken=(await capt_token(userid,userid_name)).token //获取用户验证token
+
+
+        let seachseat=await searchSeats(date,1200,1320,token)
+        let test11=await test(date,token)
+        let test12=await test1(date,token)
+        console.log(JSON.stringify(test11))
+        console.log(JSON.stringify(test12))
+        console.log(JSON.stringify(seachseat))
 
 
         // console.log('000')
@@ -55,39 +63,70 @@ try{
       pic_str: '因,14,85|在,111,79|其,253,90|紧,198,84',
       md5: '77c279ec44fe1037804ed7aa6a2ff005'
     }
-    // let YZM_RES=JSON.parse(await YZM(picbase1))
+    let time= formatTime().year+'-'+formatTime().month+"-"+(formatTime().day)
+    console.log(time)
+    let YZM_RES=JSON.parse((await YZM1(picbase1))) 
+
+    if(YZM_RES.words_result[0]!=undefined){
+      fourwords=YZM_RES.words_result[0].words
+      loc2=YZM_RES.words_result[0].location.top+20
+      loc1=YZM_RES.words_result[0].location.left+20
+    }else{
+      fourwords='一'
+      loc1=1
+      loc2=1
+    }
+
+    // console.log('x:'+loc1+' y:'+loc2)
+    console.log(JSON.stringify(YZM_RES))
+    console.log(fourwords)
 
 
       // let YZM_RES=JSON.parse(await YZM(picbase1))//{err_no: 0,err_str: 'OK',pic_id: '2190415260968890001',pic_str: 'k',md5: 'fe90f798bb323010278cf2659f1eac9f'}
       // if (YZM_RES.err_no == 0) {console.log('识别结果 ='+ YZM_RES.pic_str)} else {console.log('错误原因：'+ YZM_RES.err_str)}
-      // console.log(YZM_RES)
+     
 
-
-      let singleword=JSON.parse(await single_word(picbase2)).words_result[0]//{err_no: 0,err_str: 'OK',pic_id: '2190415260968890001',pic_str: 'k',md5: 'fe90f798bb323010278cf2659f1eac9f'}
+      if((JSON.parse(await single_word(picbase2))).words_result[0]!=undefined){
+      singleword=JSON.parse(await single_word(picbase2)).words_result[0].words//{err_no: 0,err_str: 'OK',pic_id: '2190415260968890001',pic_str: 'k',md5: 'fe90f798bb323010278cf2659f1eac9f'}
+      }else{
+        singleword='二'
+      }
       console.log(singleword)
       
       let v,s,wordloc,word//v: 未加密的坐标位置 s：转换为base前的二进制编码 word; 服务器返回的word [0]为返回的文字， [1]为x坐标，[2]为y坐标
       let b=(a.pic_str).split('|')//pic_str中四个字以|分开后的数组
-      for(var i in b){
-        word=b[i].split(',')
-        if(word[0]=='紧')
+      // for(var i in b){
+        // word=b[i].split(',')
+        // if(word[0]=='紧')
+        console.log('是否进入加密：'+(fourwords==singleword))
+        if(fourwords==singleword)
         {
-          v=`[{"x":${word[1]},"y":${word[2]}}]`
+          v=`[{"x":${loc1},"y":${loc2}}]`
+          console.log('加密前的坐标：'+v)
           s =Buffer.from(v);
           wordloc = s.toString('base64');//加密后的位置
+          console.log('加密后的位置：'+wordloc)
+          
         }
         else{
-          //  Run()
+           Run()
         }
-      }
+      // }
+      
+      
+      console.log('是否有坐标信息：'+(wordloc!=undefined))
 
      if(wordloc!=undefined) {
-      await chickincapt(wordloc,capttoken,token)
-      console.log(wordloc)
+      let server=(await chickincapt(wordloc,capttoken,token)).status
+      console.log('验证码服务器返回信息：'+server)
+      if(server=='OK'){
+          await freeBook(10287,date,1200,1260,capttoken,token)
+          console.log('验证信息：'+(JSON.stringify(await freeBook(10287,date,1260,1260,capttoken,token)))+' 验证码Token：'+capttoken)
+        }
     }
  
   
-    // console.log(await chickincapt(wordloc,capttoken,token))
+
       }
      
 
@@ -145,7 +184,7 @@ function YZM(base64){
       multipart: true,
       data: {
         'user': '859364954',
-        'pass': '',
+        'pass': 'ADSLCJY123',
         'softid':'939195',  //软件ID 可在用户中心生成
         'codetype': '9501',  //验证码类型 http://www.chaojiying.com/price.html 选择
         'file_base64': base64  // filename: 抓取回来的码证码文件
@@ -164,28 +203,28 @@ function YZM(base64){
   })
 }
 
-// function YZM1(base64){
-//   return new Promise((resolve,reject)=>{
-//     rest.post('https://aip.baidubce.com/rest/2.0/ocr/v1/accurate?access_token=24.c359932583f3321a56ce0fa1a656fa84.2592000.1666348488.282335-9777217', {
-//       multipart: true,
-//       data:{
-//         'image':base64,
-//         'vertexes_location':'true',
-//         'probability': 'true'
+function YZM1(base64){
+  return new Promise((resolve,reject)=>{
+    rest.post('https://aip.baidubce.com/rest/2.0/ocr/v1/accurate?access_token=24.c359932583f3321a56ce0fa1a656fa84.2592000.1666348488.282335-9777217', {
+      multipart: true,
+      data:{
+        'image':base64,
+        'vertexes_location':'true',
+        'probability': 'true'
         
-//     },    
-//       headers: { 
-//         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:24.0) Gecko/20100101 Firefox/24.0',
-//         'Content-Type' : 'application/x-www-form-urlencoded' 
-//       }
-//     }).on('complete', function(data) {
-//       var captcha = JSON.stringify(data);
-//       // console.log('Captcha Encoded.');
-//       resolve(captcha)
-//     });
+    },    
+      headers: { 
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:24.0) Gecko/20100101 Firefox/24.0',
+        'Content-Type' : 'application/x-www-form-urlencoded' 
+      }
+    }).on('complete', function(data) {
+      var captcha = JSON.stringify(data);
+      // console.log('Captcha Encoded.');
+      resolve(captcha)
+    });
 
-//   })
-// }
+  })
+}
 
 function freeBook(seatid,date,start,end,capttoken,token){//座位预约请求
   return new Promise((resolve, reject)=>{
@@ -194,11 +233,94 @@ function freeBook(seatid,date,start,end,capttoken,token){//座位预约请求
         url: url,
         method: "POST",
         headers:{
+          'X-request-date': Date.now(),
+          'user_ip' : `1.1.1.1`,
+          'X-hmac-request-key' : `cccc1d8179ba4f2b5cc66eb08ba80bfd7245e5d368f4be4fbc7de5ff52e1cf89`,
+          'X-request-id' : `46f2f039-dabd-48d5-ae71-3b84d642b663`,
+          'Accept-Encoding' : `gzip,compress,br,deflate`,
+          'Connection' : `keep-alive`,
           'content-type' : `application/x-www-form-urlencoded`,
+          'Referer' : `https://servicewechat.com/wx8adafd853fc21fd6/38/page-frame.html`,
+          'Host' : `leosys.cn`,
           'User-Agent' : useragent,
           'token':token
         },
         body : `seat=${seatid}&date=${date}&startTime=${start}&endTime=${end}&authid=${capttoken}`,
+        json: true
+      }
+      request(option, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            resolve(body)
+        }else{
+          reject(error)
+        }
+      });
+  });
+};
+
+function searchSeats(time,starttime,endtime,token){
+  return new Promise((resolve, reject)=>{
+     var url= `https://leosys.cn/axhu/rest/v2/searchSeats/${time}/${starttime}/${endtime}?roomId=2&batch=999&page=1`;
+     var option ={
+        url: url,
+        method: "GET",
+        headers:{
+          'X-request-date': Date.now(),
+          'content-type' : `application/x-www-form-urlencoded`,
+          'User-Agent' : useragent,
+          'token':token
+        },
+        body : ``,
+        json: true
+      }
+      request(option, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            resolve(body)
+        }else{
+          reject(error)
+        }
+      });
+  });
+};
+
+function test(time,token){
+  return new Promise((resolve, reject)=>{
+     var url= `https://leosys.cn/axhu/rest/v2/startTimesForSeat/10287/${time}`;
+     var option ={
+        url: url,
+        method: "GET",
+        headers:{
+          'X-request-date': Date.now(),
+          'content-type' : `application/x-www-form-urlencoded`,
+          'User-Agent' : useragent,
+          'token':token
+        },
+        body : ``,
+        json: true
+      }
+      request(option, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            resolve(body)
+        }else{
+          reject(error)
+        }
+      });
+  });
+};
+
+function test1(time,token){
+  return new Promise((resolve, reject)=>{
+     var url= `https://leosys.cn/axhu/rest/v2/endTimesForSeat/10287/${time}/1260`;
+     var option ={
+        url: url,
+        method: "GET",
+        headers:{
+          'X-request-date': Date.now(),
+          'content-type' : `application/x-www-form-urlencoded`,
+          'User-Agent' : useragent,
+          'token':token
+        },
+        body : ``,
         json: true
       }
       request(option, function(error, response, body) {

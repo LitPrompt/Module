@@ -30,7 +30,9 @@ const $ = new Env(`电信余量`)
     let thisminutes=formatTime().minutes
     let Days=formatTime().day
     let lasthours=$.read('hourstimeStore')
-    let lastminutes=$.read('minutestimeStore')
+    if(lasthours==undefined)lasthours=thishours    
+    let lastminutes=$.read('minutestimeSto
+    if(lastminutes==undefined) lastminutes=thisminutes
     let hoursused=thishours-lasthours
 	let minutesused
 
@@ -64,7 +66,9 @@ const $ = new Env(`电信余量`)
         let limitThis=ArrayQuery.limitusage//通用使用量
         let unlimitThis=ArrayQuery.unlimitusage//定向使用量
         let limitLast=$.read("limitStore") //将上次查询到的值读出来
+        if(limitLast==undefined) limitLast=limitThis
         let unlimitLast=$.read("unlimitStore") //将上次查询到的值读出来
+        if(unlimitLast==undefined) unlimitLast=unlimitThis
         $.log("当前通用使用"+limitThis)
 		$.log("当前定向使用"+unlimitThis)
 		$.log("上次通用使用"+limitLast)

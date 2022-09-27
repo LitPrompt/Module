@@ -35,14 +35,15 @@ try{
         let date=formatTime().year+'-'+formatTime().month+'-'+formatTime().day
         userid=(await user_id(token)).data.id //获取用户id
         capttoken=(await capt_token(userid,userid_name)).token //获取用户验证token
+        
 
 
         let seachseat=await searchSeats(date,1200,1320,token)
-        let test11=await test(date,token)
-        let test12=await test1(date,token)
-        console.log(JSON.stringify(test11))
-        console.log(JSON.stringify(test12))
-        console.log(JSON.stringify(seachseat))
+        //let test11=await test(date,token)
+        //let test12=await test1(date,token)
+        //console.log(JSON.stringify(test11))
+        //console.log(JSON.stringify(test12))
+        //console.log(JSON.stringify(seachseat))
 
 
         // console.log('000')
@@ -65,25 +66,25 @@ try{
     }
     let time= formatTime().year+'-'+formatTime().month+"-"+(formatTime().day)
     console.log(time)
-    let YZM_RES=JSON.parse((await YZM1(picbase1))) 
+    //let YZM_RES=JSON.parse((await YZM1(picbase1))) 
 
-    if(YZM_RES.words_result[0]!=undefined){
-      fourwords=YZM_RES.words_result[0].words
-      loc2=YZM_RES.words_result[0].location.top+20
-      loc1=YZM_RES.words_result[0].location.left+20
-    }else{
-      fourwords='一'
-      loc1=1
-      loc2=1
-    }
+    //if(YZM_RES.words_result[0]!=undefined){
+      //fourwords=YZM_RES.words_result[0].words
+      //loc2=YZM_RES.words_result[0].location.top+20
+      //loc1=YZM_RES.words_result[0].location.left+20
+    //}else{
+    //  fourwords='一'
+      //loc1=1
+      //loc2=1
+    //}
 
     // console.log('x:'+loc1+' y:'+loc2)
-    console.log(JSON.stringify(YZM_RES))
-    console.log(fourwords)
+    //console.log(JSON.stringify(YZM_RES))
+    //console.log(fourwords)
 
 
-      // let YZM_RES=JSON.parse(await YZM(picbase1))//{err_no: 0,err_str: 'OK',pic_id: '2190415260968890001',pic_str: 'k',md5: 'fe90f798bb323010278cf2659f1eac9f'}
-      // if (YZM_RES.err_no == 0) {console.log('识别结果 ='+ YZM_RES.pic_str)} else {console.log('错误原因：'+ YZM_RES.err_str)}
+      let YZM_RES=JSON.parse(await YZM(picbase1))
+      if (YZM_RES.err_no == 0) {console.log('识别结果 ='+ YZM_RES.pic_str)} else {console.log('错误原因：'+ YZM_RES.err_str)}
      
 
       if((JSON.parse(await single_word(picbase2))).words_result[0]!=undefined){
@@ -94,14 +95,13 @@ try{
       console.log(singleword)
       
       let v,s,wordloc,word//v: 未加密的坐标位置 s：转换为base前的二进制编码 word; 服务器返回的word [0]为返回的文字， [1]为x坐标，[2]为y坐标
-      let b=(a.pic_str).split('|')//pic_str中四个字以|分开后的数组
-      // for(var i in b){
-        // word=b[i].split(',')
-        // if(word[0]=='紧')
-        console.log('是否进入加密：'+(fourwords==singleword))
-        if(fourwords==singleword)
-        {
-          v=`[{"x":${loc1},"y":${loc2}}]`
+      let b=(YZM_RES.pic_str).split('|')//pic_str中四个字以|分开后的数组
+      for(var i in b){
+        word=b[i].split(',')
+        if(word[0]==singleword){
+        console.log('是否进入加密：'+(word[0]==singleword))
+        
+          v=`[{"x":${word[1]},"y":${word[2]}}]`
           console.log('加密前的坐标：'+v)
           s =Buffer.from(v);
           wordloc = s.toString('base64');//加密后的位置
@@ -109,23 +109,32 @@ try{
           
         }
         else{
-           Run()
+           //Run()
         }
-      // }
+      }
       
       
       console.log('是否有坐标信息：'+(wordloc!=undefined))
-
+      //console.log("验证AutherID："+capttoken)
+      console.log("用户Token："+token)
+      let server
      if(wordloc!=undefined) {
-      let server=(await chickincapt(wordloc,capttoken,token)).status
-      console.log('验证码服务器返回信息：'+server)
-      if(server=='OK'){
-          await freeBook(10287,date,1200,1260,capttoken,token)
-          console.log('验证信息：'+(JSON.stringify(await freeBook(10287,date,1260,1260,capttoken,token)))+' 验证码Token：'+capttoken)
-        }
+      setTimeout(async function(){
+      server=(await chickincapt(wordloc,capttoken,token)).status
+      console.log('验证码服务器返回信息：'+server)          },2000)
+      
+     setTimeout(async function(){
+            console.log("等待两秒")
+            let t1=await freeBook2(token)
+          console.log("保留信息："+t1)
+          let t=await freeBook(10292,date,480,540,capttoken,token)
+
+          console.log('验证信息：'+t+' 验证码Token：'+capttoken)
+          },2500)
+          
     }
  
-  
+
 
       }
      
@@ -183,9 +192,9 @@ function YZM(base64){
     rest.post('http://upload.chaojiying.net/Upload/Processing.php', {
       multipart: true,
       data: {
-        'user': '859364954',
-        'pass': '',
-        'softid':'939195',  //软件ID 可在用户中心生成
+        'user': 'pan951105',
+        'pass': 'happy15157951',
+        'softid':'900450',  //软件ID 可在用户中心生成
         'codetype': '9501',  //验证码类型 http://www.chaojiying.com/price.html 选择
         'file_base64': base64  // filename: 抓取回来的码证码文件
       },
@@ -233,10 +242,8 @@ function freeBook(seatid,date,start,end,capttoken,token){//座位预约请求
         url: url,
         method: "POST",
         headers:{
-          'X-request-date': Date.now(),
+          'X-request-date': (Date.now()),
           'user_ip' : `1.1.1.1`,
-          'X-hmac-request-key' : `cccc1d8179ba4f2b5cc66eb08ba80bfd7245e5d368f4be4fbc7de5ff52e1cf89`,
-          'X-request-id' : `46f2f039-dabd-48d5-ae71-3b84d642b663`,
           'Accept-Encoding' : `gzip,compress,br,deflate`,
           'Connection' : `keep-alive`,
           'content-type' : `application/x-www-form-urlencoded`,
@@ -250,6 +257,38 @@ function freeBook(seatid,date,start,end,capttoken,token){//座位预约请求
       }
       request(option, function(error, response, body) {
         if (!error && response.statusCode == 200) {
+          body=JSON.stringify(body)
+            resolve(body)
+        }else{
+          reject(error)
+        }
+      });
+  });
+};
+
+function freeBook2(token){//座位预约请求
+  return new Promise((resolve, reject)=>{
+     var url= `https://leosys.cn/axhu/rest/v2/user/reservations`;
+     var option ={
+        url: url,
+        method: "GET",
+        headers:{
+          'X-request-date': (Date.now()),
+          'user_ip' : `1.1.1.1`,
+          'Accept-Encoding' : `gzip,compress,br,deflate`,
+          'Connection' : `keep-alive`,
+          'content-type' : `application/x-www-form-urlencoded`,
+          'Referer' : `https://servicewechat.com/wx8adafd853fc21fd6/38/page-frame.html`,
+          'Host' : `leosys.cn`,
+          'User-Agent' : useragent,
+          'token':token
+        },
+        body : ``,
+        json: true
+      }
+      request(option, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+          body=JSON.stringify(body)
             resolve(body)
         }else{
           reject(error)

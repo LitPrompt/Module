@@ -142,6 +142,10 @@ const $ = new Env(`电信余量`)
 			// if(threshold_switch=='true'&&limitChange>Tele_value){Notice(title,body,body1)}
 			// else{Notice(title,body,body1)}
 		}else if(Timer_Notice=="false"){
+		  let interval=$.read('timeinterval')
+		  if(interval==undefined) interval=0
+		  if(minutesused>=interval){
+		  
 			$.write(ArrayQuery.limitusage,"limitStore")
 			$.write(ArrayQuery.unlimitusage,"unlimitStore")
 			$.write(thishours,"hourstimeStore")
@@ -150,7 +154,7 @@ const $ = new Env(`电信余量`)
 			body=notice_body[0]+ToSize(unlimitChange,2,1,1)+' '+notice_body[1]+ToSize(limitChange,2,1,1)
 			body1=notice_body[2]+ToSize(ArrayQuery.unlimitusage,2,1,1)+' '+notice_body[3]+ToSize(ArrayQuery.limitleft,2,1,1)
 			Notice(title,body,body1)
-
+           }
 		}
 
     }).catch(e=>{

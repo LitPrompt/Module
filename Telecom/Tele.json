@@ -48,6 +48,13 @@
           "desc": "开启后将在流量变化时通知流量信息"
         },    
         {
+          "id": "timeinterval",
+          "name": "定时通知时间间隔",
+          "val": 0,
+          "type": "number",
+          "desc": "默认间隔为0分钟，开启定时通知后每次通知的间隔"
+        },
+        {
           "id": "auto_switch",
           "name": "是否开启自动选择包(默认自动选包)",
           "val": true,

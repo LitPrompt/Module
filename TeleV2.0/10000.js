@@ -30,22 +30,28 @@ const $ = new Env(`电信余量`)
     let thisminutes=formatTime().minutes
     let Days=formatTime().day
     let lasthours=$.read('hourstimeStore')
+    if(lasthours==undefined)lasthours=thishours    
     let lastminutes=$.read('minutestimeStore')
+    if(lastminutes==undefined) lastminutes=thisminutes
     let hoursused=thishours-lasthours
 	let minutesused
 
 	if(hoursused>=0){minutesused=(thisminutes-lastminutes)+hoursused*60} //上次查询的时间大于等于当前查询的时间
-    else if(hoursused<0&&lasthours==23){minutesused=(60-lastminutes)+thishours*60+thisminutes} 
+    else if(hoursused<0&&lasthours<=23){minutesused=(60-lastminutes)+(23-lasthours+thishours)*60+thisminutes} 
     //**********
 
     let Tele_body = $.read("Tele_BD");
     let brond=$.read('key_brond')
 	let Timer_Notice=$.read('notice_switch')
 	let Tele_value=$.read('threshold')
+	let loginerr=$.read('Bodyswitch')
+	if(loginerr==undefined){//初次使用判断
+		$.write(0,'Bodyswitch')
+		loginerr=$.read('Bodyswitch')}
 
 	let Tile_All={Tile_Today:'',Tile_Month:'',Tile_Time:''}
     
-    Query(Tele_body).then(result=>{
+    Query(Tele_body,loginerr).then(result=>{
         let ArrayQuery=Query_All(result)
 
         if(brond==''){
@@ -60,11 +66,13 @@ const $ = new Env(`电信余量`)
         let limitThis=ArrayQuery.limitusage//通用使用量
         let unlimitThis=ArrayQuery.unlimitusage//定向使用量
         let limitLast=$.read("limitStore") //将上次查询到的值读出来
+        if(limitLast==undefined) limitLast=limitThis
         let unlimitLast=$.read("unlimitStore") //将上次查询到的值读出来
-        $.log("当前通用使用"+limitThis)
-		$.log("当前定向使用"+unlimitThis)
-		$.log("上次通用使用"+limitLast)
-		$.log("上次定向使用"+unlimitLast)
+        if(unlimitLast==undefined) unlimitLast=unlimitThis
+        $.log("当前通用使用"+ToSize(limitThis,2,0,1))
+		$.log("当前定向使用"+ToSize(unlimitThis,2,0,1)+`\n`)
+		$.log("上次通用使用"+ToSize(limitLast,2,0,1))
+		$.log("上次定向使用"+ToSize(unlimitLast,2,0,1)+`\n`)
         try{
             if(unlimitLast==''||unlimitThis-unlimitLast<0||limitLast==''||limitThis-limitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1){throw 'err'}
             // if(unlimitLast==''||unlimitThis-unlimitLast<0||Dates==1&&Tele_body.indexOf(oldtime)!=-1){throw 'unlimiterr'}
@@ -110,8 +118,8 @@ const $ = new Env(`电信余量`)
     	if(thisminutes<10){tile_minute='0'+thisminutes}
 		else{tile_minute=thisminutes}
 
-		Tile_All['Tile_Today']=ToSize(tile_unlimitTotal,0,0,1)+'/'+ToSize(tile_limitTotal,0,0,1)
-		Tile_All['Tile_Month']=ToSize(tile_unlimitUsageTotal,0,0,1)+'/'+ToSize(tile_limitUsageTotal,0,0,1)
+		Tile_All['Tile_Today']=ToSize(tile_unlimitTotal,1,0,1)+'/'+ToSize(tile_limitTotal,1,0,1)
+		Tile_All['Tile_Month']=ToSize(tile_unlimitUsageTotal,1,0,1)+'/'+ToSize(tile_limitUsageTotal,1,0,1)
 		Tile_All['Tile_Time']=tile_hour+':'+tile_minute
 
 		let notice_body=$.read('notice_body').split('/')
@@ -119,8 +127,8 @@ const $ = new Env(`电信余量`)
 
 		let limitChange=limitThis-limitLast
 		let unlimitChange=unlimitThis-unlimitLast
-		$.log("定向变化量:"+unlimitChange)
-		$.log("通用变化量:"+limitChange)
+		$.log("定向变化量:"+ToSize(unlimitChange,2,0,1))
+		$.log("通用变化量:"+ToSize(limitChange,2,0,1))
 
 		if(Timer_Notice=="true"&&limitChange>Tele_value){
 			$.write(ArrayQuery.limitusage,"limitStore")
@@ -134,6 +142,10 @@ const $ = new Env(`电信余量`)
 			// if(threshold_switch=='true'&&limitChange>Tele_value){Notice(title,body,body1)}
 			// else{Notice(title,body,body1)}
 		}else if(Timer_Notice=="false"){
+		  let interval=$.read('timeinterval')
+		  if(interval==undefined) interval=0
+		  if(minutesused>=interval){
+		  
 			$.write(ArrayQuery.limitusage,"limitStore")
 			$.write(ArrayQuery.unlimitusage,"unlimitStore")
 			$.write(thishours,"hourstimeStore")
@@ -142,18 +154,16 @@ const $ = new Env(`电信余量`)
 			body=notice_body[0]+ToSize(unlimitChange,2,1,1)+' '+notice_body[1]+ToSize(limitChange,2,1,1)
 			body1=notice_body[2]+ToSize(ArrayQuery.unlimitusage,2,1,1)+' '+notice_body[3]+ToSize(ArrayQuery.limitleft,2,1,1)
 			Notice(title,body,body1)
-
+           }
 		}
 
     }).catch(e=>{
-
-        if(e=="010040"){
+        if(e=="010040"&&loginerr==0){
             title="Body错误或已过期❌（也可能是电信的问题）"
             body='请尝试重新抓取Body(不抓没得用了！)'
             body1="覆写获取到Body后可以不用关闭覆写"
 			Notice(title,body,body1)
-            let loginerror=1
-            $.write(loginerror,'Bodyswitch')
+            $.write(1,'Bodyswitch')
         }else{
             $.log(e)
         }
@@ -167,9 +177,12 @@ const $ = new Env(`电信余量`)
 
 })()
 
-async function Query(Tele_body){//余量原始数据
+async function Query(Tele_body,loginerr){//余量原始数据
     return new Promise((resolve,reject)=>{
-		if(SG_STH_SDR&&Tele_body==''){reject('010040')}
+		if(SG_STH_SDR&&(Tele_body==''||loginerr==1)){
+			reject('010040')
+			return
+			}
         $.post({
             url: 'https://czapp.bestpay.com.cn/payassistant-client?method=queryUserResource',
 			headers: "",
@@ -204,14 +217,15 @@ function Query_All(jsonData){//原始量累计
     let limitbalancetotal=0
     let limitusagetotal=0
 
-    let x = $.read("limititems").split(' ');//通用正则选择
-	let y = $.read('unlimititems').split(' ');//定向正则选择
+    
 	let packge_switch = $.read("auto_switch");//自动选包开关
+	//35110000元30g小区流量
+	//
 
     if(packge_switch=='true'){
     for(var s in jsonData.RESULTDATASET){
         const k = jsonData.RESULTDATASET[s].RATABLERESOURCEID//获取包名id判断定向与通用
-        if(k==3312000||k==331202||k==351100||k==3511000)//判断定向
+        if(k==33120004||k==331202||k==351100||k==3511000||k==3312000||k==3312010)//判断定向
 		{
 			unlimitratableAmount =jsonData.RESULTDATASET[s].RATABLEAMOUNT//单包定向总量
 			unlimitbalanceAmount =jsonData.RESULTDATASET[s].BALANCEAMOUNT//单包定向余量
@@ -220,7 +234,7 @@ function Query_All(jsonData){//原始量累计
 			unlimitbalancetotal+=Number(unlimitbalanceAmount)//余量累加
 			unlimitusagetotal+=Number(unlimitusageAmount)//使用累加
 		}
-		if(k==3311000||k==3321000||k==331100)//判断通用
+		if(k==33110004||k==33110001||k==33110104||k==33210004||k==331100||k==3311000||k==3321000)//判断通用
 		{
 			limitratableAmount =jsonData.RESULTDATASET[s].RATABLEAMOUNT//通用总量
 			limitbalanceAmount =jsonData.RESULTDATASET[s].BALANCEAMOUNT//通用余量
@@ -231,6 +245,8 @@ function Query_All(jsonData){//原始量累计
 		}
     }
     }else{
+      let x = $.read("limititems").split(' ');//通用正则选择
+	  let y = $.read('unlimititems').split(' ');//定向正则选择
         for(var j=0;j+1<=jsonData.RESULTDATASET.length;j++){
 		    for(var i=0;i+1<=x.length;i++){
 		    	const limitRegExp=new RegExp(x[i])//正则判断是否包含算选包正则

@@ -48,6 +48,13 @@
           "desc": "开启后将在流量变化时通知流量信息"
         },    
         {
+          "id": "timeinterval",
+          "name": "定时通知时间间隔",
+          "val": 0,
+          "type": "number",
+          "desc": "默认间隔为0分钟，开启定时通知后每次通知的间隔"
+        },
+        {
           "id": "auto_switch",
           "name": "是否开启自动选择包(默认自动选包)",
           "val": true,
@@ -121,7 +128,7 @@
           "autoGrow": true,
           "rows": 1,
           "type": "textarea",
-					"desc": "一定要用&隔开! 例如:level=timeSensitive&isArchive=0表示即时通知且bark不保存"
+		  "desc": "一定要用&隔开! 例如:level=timeSensitive&isArchive=0表示即时通知且bark不保存"
       	},
         {
           "id": "packge_detail",
@@ -136,7 +143,7 @@
     ],
       "author": "@Alt_Option",
       "repo": "https://github.com/QGCliveDavis/Module",
-      "script": "https://github.com/QGCliveDavis/Module/blob/main/TeleV2.0/10000.js",
+      "script": "https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Cellular.js",
       "icons": ["https://raw.githubusercontent.com/QGCliveDavis/Module/main/Asset/Cat.png","https://raw.githubusercontent.com/QGCliveDavis/Module/main/Asset/Cat.png"]
     }
   ]

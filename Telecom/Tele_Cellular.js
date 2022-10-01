@@ -166,7 +166,7 @@ const $ = new Env(`电信余量`)
 			Notice(title,body,body1)
             $.write(1,'Bodyswitch')
         }else{
-            $.log(e)
+            $.log('登录失败：请重新获取Body')
         }
 
     }).finally(() => {

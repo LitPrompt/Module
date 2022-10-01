@@ -24,6 +24,7 @@ const $ = new Env(`电信余量`)
 	let thistime=`${formatTime().year}`+`${Month1}`
     let Tele_body = $.read("Tele_BD");
 	if(formatTime().day==1&&Tele_body.indexOf(oldtime)!=-1){//月初Body信息修改
+	Notice('月初流量数据修正','将显示修正数据与流量')
 		let Tele_body1= Tele_body.replace(oldtime,thistime)
 		$.write(Tele_body1,'Tele_BD')
 	}

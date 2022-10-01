@@ -22,10 +22,10 @@ const $ = new Env(`电信余量`)
 		
     let oldtime =`${formatTime().year}`+`${Month0}`
 	let thistime=`${formatTime().year}`+`${Month1}`
-    let Tele_body = $.read("Tele_BD");
-	if(formatTime().day==1&&Tele_body.indexOf(oldtime)!=-1){//月初Body信息修改
-	Notice('月初流量数据修正','将显示修正数据与流量')
-		let Tele_body1= Tele_body.replace(oldtime,thistime)
+
+	if(formatTime().day==1&&$.read("Tele_BD").indexOf(oldtime)!=-1){//月初Body信息修改
+	Notice('月初流量数据修正')
+		let Tele_body1= $.read("Tele_BD").replace(oldtime,thistime)
 		$.write(Tele_body1,'Tele_BD')
 	}
 	let thishours=formatTime().hours
@@ -42,7 +42,7 @@ const $ = new Env(`电信余量`)
     else if(hoursused<0&&lasthours<=23){minutesused=(60-lastminutes)+(23-lasthours+thishours)*60+thisminutes} 
     //**********
 
-
+    let Tele_body = $.read("Tele_BD");
     let brond=$.read('key_brond')
 	let Timer_Notice=$.read('notice_switch')
 	let Tele_value=$.read('threshold')

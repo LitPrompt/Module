@@ -28,12 +28,9 @@ const $ = new Env(`电信余量`)
 		loginerr=$.read('Bodyswitch')}
 
 	if(formatTime().day==1&&$.read("Tele_BD").indexOf(oldtime)!=-1&&loginerr==0){//月初Body信息修改
-Query($.read("Tele_BD"),loginerr).then(result=>{
-        let ArrayQuery=Query_All(result)
-
-	Notice('月初流量数据修正','通用修正：'+ToSize(ArrayQuery.limitusage,2,0,1)+'  定向修正'+ToSize(ArrayQuery.unlimitusage,2,0,1),'') })
-		let Tele_body1= $.read("Tele_BD").replace(oldtime,thistime)
-		$.write(Tele_body1,'Tele_BD')
+		Query($.read("Tele_BD"),loginerr).then(result=>{
+		Notice('月初流量数据修正','通用修正：'+ToSize(Query_All(result).limitusage,2,0,1)+'  定向修正'+ToSize(Query_All(result).unlimitusage,2,0,1),'') })
+		$.write($.read("Tele_BD").replace(oldtime,thistime),'Tele_BD')
 	}
 	
 	

@@ -27,7 +27,7 @@ const $ = new Env(`电信余量`)
 		$.write(0,'Bodyswitch')
 		loginerr=$.read('Bodyswitch')}
 
-	if(formatTime().day==1&&$.read("Tele_BD").indexOf(oldtime)!=-1&&loginerr==1){//月初Body信息修改
+	if(formatTime().day==1&&$.read("Tele_BD").indexOf(oldtime)!=-1&&loginerr==0){//月初Body信息修改
 	Notice('月初流量数据修正','','')
 		let Tele_body1= $.read("Tele_BD").replace(oldtime,thistime)
 		$.write(Tele_body1,'Tele_BD')

@@ -22,9 +22,13 @@ const $ = new Env(`电信余量`)
 		
     let oldtime =`${formatTime().year}`+`${Month0}`
 	let thistime=`${formatTime().year}`+`${Month1}`
+	let loginerr=$.read('Bodyswitch')
+	if(loginerr==undefined){//初次使用判断
+		$.write(0,'Bodyswitch')
+		loginerr=$.read('Bodyswitch')}
 
-	if(formatTime().day==1&&$.read("Tele_BD").indexOf(oldtime)!=-1){//月初Body信息修改
-	Notice('月初流量数据修正')
+	if(formatTime().day==1&&$.read("Tele_BD").indexOf(oldtime)!=-1&&loginerr==1){//月初Body信息修改
+	Notice('月初流量数据修正','','')
 		let Tele_body1= $.read("Tele_BD").replace(oldtime,thistime)
 		$.write(Tele_body1,'Tele_BD')
 	}
@@ -46,10 +50,6 @@ const $ = new Env(`电信余量`)
     let brond=$.read('key_brond')
 	let Timer_Notice=$.read('notice_switch')
 	let Tele_value=$.read('threshold')
-	let loginerr=$.read('Bodyswitch')
-	if(loginerr==undefined){//初次使用判断
-		$.write(0,'Bodyswitch')
-		loginerr=$.read('Bodyswitch')}
 
 	let Tile_All={Tile_Today:'',Tile_Month:'',Tile_Time:''}
     

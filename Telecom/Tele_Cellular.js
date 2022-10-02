@@ -249,7 +249,7 @@ function Query_All(jsonData){//原始量累计
     if(packge_switch=='true'){
     for(var s in jsonData.RESULTDATASET){
         const k = jsonData.RESULTDATASET[s].RATABLERESOURCEID//获取包名id判断定向与通用
-        if(k==33120004||k==331202||k==351100||k==3511000||k==3312000||k==3312010||k==33120001||k==33140001)//判断定向
+        if(k==33120004||k==331202||k==351100||k==3511000||k==3312000||k==3312010||k==33120001||k==33140001||k==3322000)//判断定向
 		{
 			unlimitratableAmount =jsonData.RESULTDATASET[s].RATABLEAMOUNT//单包定向总量
 			unlimitbalanceAmount =jsonData.RESULTDATASET[s].BALANCEAMOUNT//单包定向余量

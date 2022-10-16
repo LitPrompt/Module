@@ -163,7 +163,8 @@
         "Tele_AutoCheck.bark_icon",
         "Tele_AutoCheck.bark_key",
         "Tele_AutoCheck.bark_add",
-        "Tele_AutoCheck.packge_detail"],
+        "Tele_AutoCheck.packge_detail",
+        "Tele_AutoCheck.querybody"],
       "settings": [  
         {
           "id": "Tele_AutoCheck.key_brond",

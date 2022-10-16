@@ -138,7 +138,142 @@
           "autoGrow": true,
           "rows": 1,
           "type": "text",
-					"desc": ""
+		 "desc": ""
+      	}
+    ],
+      "author": "@Alt_Option",
+      "repo": "https://github.com/QGCliveDavis/Module",
+      "script": "https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Cellular.js",
+      "icons": ["https://raw.githubusercontent.com/QGCliveDavis/Module/main/Asset/Cat.png","https://raw.githubusercontent.com/QGCliveDavis/Module/main/Asset/Cat.png"]
+    },
+    {
+      "id": "Tele_AutoCheck",
+      "name": "电信余量查询（自动版）",
+      "descs_html": [
+        "<b>Body获取方法：</b>",
+        "测试阶段"
+      ],
+      "keys": [
+        "Tele_AutoCheck.key_brond",
+        "Tele_AutoCheck.Tele_BD",
+        "Tele_AutoCheck.hourstimeStore",
+        "Tele_AutoCheck.minutestimeStore",
+        "Tele_AutoCheck.limitStore",
+        "Tele_AutoCheck.unlimitStore",
+        "Tele_AutoCheck.bark_icon",
+        "Tele_AutoCheck.bark_key",
+        "Tele_AutoCheck.bark_add",
+        "Tele_AutoCheck.packge_detail"],
+      "settings": [  
+        {
+          "id": "Tele_AutoCheck.key_brond",
+          "name": "流量卡名",
+          "val": "",
+          "type": "text",
+          "placeholder": "可以自动获取，也可以手动填写",
+          "autoGrow": true,
+          "rows": 1,
+          "desc": ""
+        }, 
+        {
+          "id": "Tele_AutoCheck.Tele_BD",
+          "name": "电信请求Body",
+          "val": "",
+          "type": "text",
+          "placeholder": "请求体",
+          "autoGrow": true,
+          "rows": 1,
+          "desc": "输入电信请求体"
+        }, 
+        {
+          "id": "Tele_AutoCheck.notice_switch",
+          "name": "是否禁用定时通知",
+          "val": false,
+          "type": "boolean",
+          "desc": "开启后将在流量变化时通知流量信息"
+        },    
+        {
+          "id": "Tele_AutoCheck.timeinterval",
+          "name": "定时通知时间间隔",
+          "val": 0,
+          "type": "number",
+          "desc": "默认间隔为0分钟，开启定时通知后每次通知的间隔"
+        },
+        {
+          "id": "Tele_AutoCheck.auto_switch",
+          "name": "是否开启自动选择包(默认自动选包)",
+          "val": true,
+          "type": "boolean",
+          "desc": "数据包不能正确显示的,只能关闭开关,手动选择特定包监控"
+        },
+        {
+          "id": "Tele_AutoCheck.threshold",
+          "name": "通知提醒阈值(定时通知时阈值不起作用)",
+          "val": 0,
+          "autoGrow": true,
+          "rows": 1,
+          "type": "number",
+          "desc": "默认阈值为0，单位为kb，即有变化就通知"
+        },
+        {
+          "id": "Tele_AutoCheck.notice_body",
+          "name": "通知格式",
+          "val": "免/跳/总免/剩余",
+          "placeholder": "以空格分开",
+          "autoGrow": true,
+          "rows": 1,
+          "type": "text",
+          "desc": "通知部分依次从左往右 从上往下"
+        },
+        {
+          "id": "Tele_AutoCheck.bark_icon",
+          "name": "Bark通知图标(非必要)",
+          "val": "",
+          "placeholder": "输入图标地址,默认为空既不修改图标",
+          "autoGrow": true,
+          "rows": 1,
+          "type": "text",
+          "desc": ""
+        },
+        {
+          "id": "Tele_AutoCheck.bark_key",
+          "name": "Bark服务器地址(Bark通知需要设置,否则不必设置）",
+          "val": "",
+          "placeholder": "例如:https://api.day.app/key(默认为空既不使用Bark通知)",
+          "autoGrow": true,
+          "rows": 1,
+          "type": "text",
+          "desc": "在Bark主页面右上角小云朵里，点击里面的复制地址与key填入"
+        },
+        {
+          "id": "Tele_AutoCheck.bark_add",
+          "name": "Bark附加属性(非必要)",
+          "val": "",
+          "placeholder": "1. level=timeSensitive/active/passive,分别表示即时通知，默认值，仅在通知栏中显示  2. url=www.xxx.com 点击通知打开网页  3. isArchive=1/0 1表示保存此通知 0不保存  4. sound=铃声名 可在bark中查看名字",
+          "autoGrow": true,
+          "rows": 1,
+          "type": "textarea",
+		  "desc": "一定要用&隔开! 例如:level=timeSensitive&isArchive=0表示即时通知且bark不保存"
+      	},
+        {
+          "id": "Tele_AutoCheck.packge_detail",
+          "name": "流量包数据",
+          "val": "",
+          "placeholder": "",
+          "autoGrow": true,
+          "rows": 1,
+          "type": "text",
+		 "desc": ""
+      	},
+      	{
+          "id": "Tele_AutoCheck.querybody",
+          "name": "请求体数据",
+          "val": "",
+          "placeholder": "",
+          "autoGrow": true,
+          "rows": 1,
+          "type": "text",
+		 "desc": ""
       	}
     ],
       "author": "@Alt_Option",

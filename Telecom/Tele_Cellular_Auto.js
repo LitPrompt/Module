@@ -61,11 +61,13 @@ const headers = { "Accept": "application/json", "Content-Type": "application/jso
 
             let trylogin=await Login(Body)
             $.setjson(trylogin,'Tele_AutoCheck.logininfo')
+
             Login_info=$.getjson('Tele_AutoCheck.logininfo')
 
             if(trylogin.responseData!=undefined&&trylogin.responseData.resultCode=="3001") throw 'err1'
             if(isFirst) $.log('当前为初次使用，尝试获取Token')
             if(Tokenexpired) $.log('当前Token已过期，尝试获取Token')
+            $.log(`\n`+``JSON.stringify(trylogin))
 
             let fieldData=new Object()
         	fieldData.provinceCode=Login_info.responseData.data.loginSuccessResult.provinceCode

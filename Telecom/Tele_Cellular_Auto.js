@@ -52,7 +52,7 @@ const headers = { "Accept": "application/json", "Content-Type": "application/jso
         let jsonData = await Query($.getjson('Tele_AutoCheck.querybody'))
         let Body = $.getjson("Tele_AutoCheck.Tele_BD")
         $.setjson(jsonData,'Tele_AutoCheck.packge_detail')
-        if(Body==(undefined||'')) {throw '请在Boxjs中设置请求体'}
+        if(Body==undefined||Body=='') {throw '请在Boxjs中设置请求体'}
 
 
         if(jsonData.status!='400'&&jsonData.headerInfos.code=='X201') Tokenexpired=true
@@ -63,7 +63,7 @@ const headers = { "Accept": "application/json", "Content-Type": "application/jso
             $.setjson(trylogin,'Tele_AutoCheck.logininfo')
             Login_info=$.getjson('Tele_AutoCheck.logininfo')
 
-            if(trylogin.responseData.resultCode=="3001") throw 'err1'
+            if(trylogin.responseData!=undefined&&trylogin.responseData.resultCode=="3001") throw 'err1'
             if(isFirst) $.log('当前为初次使用，尝试获取Token')
             if(Tokenexpired) $.log('当前Token已过期，尝试获取Token')
 

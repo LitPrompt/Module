@@ -62,7 +62,7 @@ const headers = { "Accept": "application/json", "Content-Type": "application/jso
             let trylogin=await Login(Body)
             $.setjson(trylogin,'Tele_AutoCheck.packge_detail')
 
-            Login_info=$.getjson('Tele_AutoCheck.logininfo')
+            Login_info=$.getjson('Tele_AutoCheck.packge_detail')
 
             if(trylogin.responseData!=undefined&&trylogin.responseData.resultCode=="3001") throw 'err1'
             if(isFirst) $.log('当前为初次使用，尝试获取Token')

@@ -1,6 +1,24 @@
 const $ = new Env(`电信余量`)
 const headers = { "Accept": "application/json", "Content-Type": "application/json; charset\u003dUTF-8", "Connection": "Keep-Alive", "Accept-Encoding": "gzip", }
 
+const Tele_AutoCheck_key_brond=`Tele_AutoCheck.key_brond`
+const Tele_AutoCheck_Tele_BD=`Tele_AutoCheck.Tele_BD`
+const Tele_AutoCheck_hourstimeStore=`Tele_AutoCheck.hourstimeStore`
+const Tele_AutoCheck_minutestimeStore=`Tele_AutoCheck.minutestimeStore`
+const Tele_AutoCheck_limitStore=`Tele_AutoCheck.limitStore`
+const Tele_AutoCheck_unlimitStore=`Tele_AutoCheck.unlimitStore`
+const Tele_AutoCheck_bark_icon=`Tele_AutoCheck.bark_icon`
+const Tele_AutoCheck_bark_key=`Tele_AutoCheck.bark_key`
+const Tele_AutoCheck_bark_add=`Tele_AutoCheck.bark_add`
+const Tele_AutoCheck_packge_detail=`Tele_AutoCheck.packge_detail`
+const Tele_AutoCheck_querybody=`Tele_AutoCheck.querybody`
+const Tele_AutoCheck_notice_switch=`Tele_AutoCheck.notice_switch`
+const Tele_AutoCheck_timeinterval=`Tele_AutoCheck.timeinterval`
+const Tele_AutoCheck_threshold=`Tele_AutoCheck.threshold`
+const Tele_AutoCheck_notice_body=`Tele_AutoCheck.notice_body`
+const Tele_AutoCheck_day=`Tele_AutoCheck.day`
+const Tele_AutoCheck_limittoday=`Tele_AutoCheck.limittoday`
+const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
 
 !(async () => {
     let panel = {
@@ -22,17 +40,17 @@ const headers = { "Accept": "application/json", "Content-Type": "application/jso
         let thishours = formatTime().hours
         let thisminutes = formatTime().minutes
         let Days = formatTime().day
-        let lasthours = $.getdata('Tele_AutoCheck.hourstimeStore')
-        let lastminutes = $.getdata('Tele_AutoCheck.minutestimeStore')
+        let lasthours = $.getdata(Tele_AutoCheck_hourstimeStore)
+        let lastminutes = $.getdata(Tele_AutoCheck_minutestimeStore)
         let minutesused, isFirst, Login_info, Tokenexpired
 
         if (lasthours == undefined && lastminutes == undefined) isFirst = true
         if (lasthours == undefined) lasthours = thishours
         if (lastminutes == undefined) lastminutes = thisminutes
         let hoursused = thishours - lasthours
-        let interval = $.getdata('Tele_AutoCheck.timeinterval')
+        let interval = $.getdata(Tele_AutoCheck_timeinterval)
         if (interval == undefined) {
-            $.setdata($.toStr(5), 'Tele_AutoCheck.timeinterval')
+            $.setdata($.toStr(5), Tele_AutoCheck_timeinterval)
             interval = '5'
         }
 
@@ -40,18 +58,19 @@ const headers = { "Accept": "application/json", "Content-Type": "application/jso
         else if (hoursused < 0 && lasthours <= 23) { minutesused = (60 - lastminutes) + (23 - lasthours + thishours) * 60 + thisminutes }
         //**********
 
-        let Timer_Notice = $.getdata('Tele_AutoCheck.notice_switch');
-        if (Timer_Notice == undefined) {$.setdata($.toStr(false), 'Tele_AutoCheck.notice_switch');Timer_Notice = 'false'}
+        let Timer_Notice = $.getdata(Tele_AutoCheck_notice_switch);
+        if (Timer_Notice == undefined) {$.setdata($.toStr(false), Tele_AutoCheck_notice_switch);Timer_Notice = 'false'}
 
-        let Tele_value = $.getdata('Tele_AutoCheck.threshold') //读取阈值
+        let Tele_value = $.getdata(Tele_AutoCheck_threshold) //读取阈值
 
-        if (Tele_value == undefined) { $.setdata($.toStr(0), 'Tele_AutoCheck.threshold'); Tele_value = '0' }
+        if (Tele_value == undefined) { $.setdata($.toStr(0), Tele_AutoCheck_threshold); Tele_value = '0' }
         
         let Tile_All = { Tile_Today: '', Tile_Month: '', Tile_Time: '' }
 
-        let jsonData = await Query($.getjson('Tele_AutoCheck.querybody'))
-        let Body = $.getjson("Tele_AutoCheck.Tele_BD")
-        $.setjson(jsonData,'Tele_AutoCheck.packge_detail')
+        let jsonData = await Query($.getjson(Tele_AutoCheck_querybody))
+        let Body = $.getjson(Tele_AutoCheck_Tele_BD)
+        console.log(jsonData)
+        $.setjson(jsonData,Tele_AutoCheck_packge_detail)
         if(Body==undefined||Body=='') {throw '请在Boxjs中设置请求体'}
 
 
@@ -60,9 +79,9 @@ const headers = { "Accept": "application/json", "Content-Type": "application/jso
         if(isFirst||Tokenexpired||jsonData.status=='400'||jsonData.status=='415') {
 
             let trylogin=await Login(Body)
-            $.setjson(trylogin,'Tele_AutoCheck.packge_detail')
+            $.setjson(trylogin,Tele_AutoCheck_packge_detail)
 
-            Login_info=$.getjson('Tele_AutoCheck.packge_detail')
+            Login_info=$.getjson(Tele_AutoCheck_packge_detail)
 
             if(trylogin.responseData!=undefined&&trylogin.responseData.resultCode=="3001") throw 'err1'
             if(isFirst) $.log('当前为初次使用，尝试获取Token')
@@ -91,23 +110,23 @@ const headers = { "Accept": "application/json", "Content-Type": "application/jso
         	querybody.content=content
         	querybody.headerInfos=headerInfos
         
-        	$.setjson(querybody,'Tele_AutoCheck.querybody')
-        	jsonData = await Query($.getjson('Tele_AutoCheck.querybody'))
+        	$.setjson(querybody,Tele_AutoCheck_querybody)
+        	jsonData = await Query($.getjson(Tele_AutoCheck_querybody))
 
         }
        
         let ArrayQuery = Query_All(jsonData)
 
-        let brond = $.getdata('Tele_AutoCheck.key_brond')
-        if ($.getdata('Tele_AutoCheck.key_brond') == (undefined||'')) {
+        let brond = $.getdata(Tele_AutoCheck_key_brond)
+        if ($.getdata(Tele_AutoCheck_key_brond) == undefined|| $.getdata(Tele_AutoCheck_key_brond) == '') {
             brond = jsonData.responseData.data.balanceInfo.phoneBillBars[0].title
-            $.setdata(brond, "Tele_AutoCheck.key_brond")
+            $.setdata(brond, Tele_AutoCheck_key_brond)
         }
 
         let limitThis = ArrayQuery.limitusage//通用使用量
         let unlimitThis = ArrayQuery.unlimitusage//定向使用量
-        let limitLast = $.getdata("Tele_AutoCheck.limitStore") //将上次查询到的值读出来
-        let unlimitLast = $.getdata("Tele_AutoCheck.unlimitStore") //将上次查询到的值读出来
+        let limitLast = $.getdata(Tele_AutoCheck_limitStore) //将上次查询到的值读出来
+        let unlimitLast = $.getdata(Tele_AutoCheck_unlimitStore) //将上次查询到的值读出来
         if (limitLast == undefined) limitLast = limitThis
         if (unlimitLast == undefined) unlimitLast = unlimitThis
         let limitChange = limitThis - limitLast
@@ -117,8 +136,8 @@ const headers = { "Accept": "application/json", "Content-Type": "application/jso
             if (unlimitLast == '' || unlimitThis - unlimitLast < 0 || limitLast == '') throw 'err'
         } catch (e) {
             if (e == 'err') {
-                $.setdata($.toStr(0), 'Tele_AutoCheck.limitStore')
-                $.setdata($.toStr(0), 'Tele_AutoCheck.unlimitStore')
+                $.setdata($.toStr(0), Tele_AutoCheck_limitStore)
+                $.setdata($.toStr(0), Tele_AutoCheck_unlimitStore)
                 title = "当前为初次查询或上次查询有误"
                 body = '已将上次查询归0'
                 body1 = '下次通知可能会有误，不用在意'
@@ -128,16 +147,16 @@ const headers = { "Accept": "application/json", "Content-Type": "application/jso
 
         //***********
 
-        let tile_date = $.getdata('Tele_AutoCheck.day')
+        let tile_date = $.getdata(Tele_AutoCheck_day)
 
-        if (tile_date == '') { $.setdata($.toStr(Days), 'Tele_AutoCheck.day') }//初次
-        let tile_unlimittoday = $.getdata('Tele_AutoCheck.unlimittoday')
-        let tile_limittoday = $.getdata('Tele_AutoCheck.limittoday')
+        if (tile_date == '') { $.setdata($.toStr(Days), Tele_AutoCheck_day) }//初次
+        let tile_unlimittoday = $.getdata(Tele_AutoCheck_unlimittoday)
+        let tile_limittoday = $.getdata(Tele_AutoCheck_limittoday)
         if ((thishours == 0 && thisminutes == 0) || (tile_unlimittoday == '' || tile_limittoday == '') || tile_date != Days)//面板更新时间
         {
-            $.setdata($.toStr(Days), 'Tele_AutoCheck.day')
-            $.setdata($.toStr(ArrayQuery.unlimitusage), 'Tele_AutoCheck.unlimittoday')
-            $.setdata($.toStr(ArrayQuery.limitusage), 'Tele_AutoCheck.limittoday')
+            $.setdata($.toStr(Days), Tele_AutoCheck_day)
+            $.setdata($.toStr(ArrayQuery.unlimitusage), Tele_AutoCheck_unlimittoday)
+            $.setdata($.toStr(ArrayQuery.limitusage), Tele_AutoCheck_limittoday)
         }
         let tile_unlimitTotal = ArrayQuery.unlimitusage - tile_unlimittoday//面板今日定向用量
         let tile_limitTotal = ArrayQuery.limitusage - tile_limittoday//面板今天通用用量
@@ -153,11 +172,11 @@ const headers = { "Accept": "application/json", "Content-Type": "application/jso
         Tile_All['Tile_Month'] = ToSize(tile_unlimitUsageTotal, 1, 0, 1) + '/' + ToSize(tile_limitUsageTotal, 1, 0, 1)
         Tile_All['Tile_Time'] = tile_hour + ':' + tile_minute
 
-        let notice_body = $.getdata('Tele_AutoCheck.notice_body');
+        let notice_body = $.getdata(Tele_AutoCheck_notice_body);
         if (notice_body == undefined) {
-            notice_body = $.setdata("免/跳/总免/剩余", 'Tele_AutoCheck.notice_body')
-            notice_body = $.getdata('Tele_AutoCheck.notice_body').split('/')
-        } else { notice_body = $.getdata('Tele_AutoCheck.notice_body').split('/') }
+            notice_body = $.setdata("免/跳/总免/剩余", Tele_AutoCheck_notice_body)
+            notice_body = $.getdata(Tele_AutoCheck_notice_body).split('/')
+        } else { notice_body = $.getdata(Tele_AutoCheck_notice_body).split('/') }
 
 
         $.log(`\n` + '流量卡名：' + brond + `\n` + '[1]' + brond + '通用：已用' + ToSize(ArrayQuery.limitusage, 2, 0, 1) + `\n` + '[2]' + brond + '定向：已用' + ToSize(ArrayQuery.unlimitusage, 2, 0, 1) + `\n` + '剩余流量：' + `\n` + '通用剩余：' + ToSize(ArrayQuery.limitleft, 2, 0, 1) + ' 定向剩余：' + ToSize(ArrayQuery.unlimitleft, 2, 0, 1) + `\n` + '定时通知间隔：' + interval + ' 分钟 流量变化阈值：' + ToSize(Tele_value, 1, 1, 1))
@@ -170,10 +189,10 @@ const headers = { "Accept": "application/json", "Content-Type": "application/jso
         if (Timer_Notice == "true") {
             $.log(`\n` + '当前为变化通知，变化阈值为：' + ToSize(Tele_value, 1, 0, 1))
             if (limitChange >= Tele_value) {
-                $.setdata($.toStr(ArrayQuery.limitusage), "Tele_AutoCheck.limitStore")
-                $.setdata($.toStr(ArrayQuery.unlimitusage), "Tele_AutoCheck.unlimitStore")
-                $.setdata($.toStr(thishours), "Tele_AutoCheck.hourstimeStore")
-                $.setdata($.toStr(thisminutes), "Tele_AutoCheck.minutestimeStore")
+                $.setdata($.toStr(ArrayQuery.limitusage), Tele_AutoCheck_limitStore)
+                $.setdata($.toStr(ArrayQuery.unlimitusage), Tele_AutoCheck_unlimitStore)
+                $.setdata($.toStr(thishours), Tele_AutoCheck_hourstimeStore)
+                $.setdata($.toStr(thisminutes), Tele_AutoCheck_minutestimeStore)
                 title = brond + '  耗时:' + minutesused + '分钟'
                 body = notice_body[0] + ToSize(unlimitChange, 2, 1, 1) + ' ' + notice_body[1] + ToSize(limitChange, 2, 1, 1)
                 body1 = notice_body[2] + ToSize(ArrayQuery.unlimitusage, 2, 1, 1) + ' ' + notice_body[3] + ToSize(ArrayQuery.limitleft, 2, 1, 1)
@@ -186,10 +205,10 @@ const headers = { "Accept": "application/json", "Content-Type": "application/jso
             if (isFirst == true) $.log('首次使用：通知已发送！')
             if (minutesused > interval || isFirst == true) {
 
-                $.setdata($.toStr(ArrayQuery.limitusage), "Tele_AutoCheck.limitStore")
-                $.setdata($.toStr(ArrayQuery.unlimitusage), "Tele_AutoCheck.unlimitStore")
-                $.setdata($.toStr(thishours), "Tele_AutoCheck.hourstimeStore")
-                $.setdata($.toStr(thisminutes), "Tele_AutoCheck.minutestimeStore")
+                $.setdata($.toStr(ArrayQuery.limitusage), Tele_AutoCheck_limitStore)
+                $.setdata($.toStr(ArrayQuery.unlimitusage),Tele_AutoCheck_unlimitStore)
+                $.setdata($.toStr(thishours), Tele_AutoCheck_hourstimeStore)
+                $.setdata($.toStr(thisminutes), Tele_AutoCheck_minutestimeStore)
                 title = brond + '  耗时:' + minutesused + '分钟'
                 body = notice_body[0] + ToSize(unlimitChange, 2, 1, 1) + ' ' + notice_body[1] + ToSize(limitChange, 2, 1, 1)
                 body1 = notice_body[2] + ToSize(ArrayQuery.unlimitusage, 2, 1, 1) + ' ' + notice_body[3] + ToSize(ArrayQuery.limitleft, 2, 1, 1)
@@ -197,7 +216,7 @@ const headers = { "Accept": "application/json", "Content-Type": "application/jso
             }
         }
 
-        panel['title'] = $.getdata('Tele_AutoCheck.key_brond')
+        panel['title'] = $.getdata(Tele_AutoCheck_key_brond)
         panel['content'] = '今日免流/跳点：' + Tile_All['Tile_Today'] + `\n` + '本月免流/跳点：' + Tile_All['Tile_Month'] + `\n` + '查询时间：' + Tile_All['Tile_Time']
 
     } catch (e) {
@@ -237,14 +256,14 @@ function Notice(title, body, body1) {
     let bark_title = title
     let bark_body = body
     let bark_body1 = body1
-    let bark_key = $.getdata('Tele_AutoCheck.bark_key')
-    let icon_url = $.getdata('Tele_AutoCheck.bark_icon')
+    let bark_key = $.getdata(Tele_AutoCheck_bark_key)
+    let icon_url = $.getdata(Tele_AutoCheck_bark_icon)
     if (bark_key) {
         let bark_icon
         if (icon_url) { bark_icon = `?icon=${icon_url}` }
         else { bark_icon = '' }
 
-        let bark_other = $.getdata('Tele_AutoCheck.bark_add')
+        let bark_other = $.getdata(Tele_AutoCheck_bark_add)
         let effective = bark_icon.indexOf("?icon")
         if ((effective != -1) && bark_other) { bark_other = `&${bark_other}` }
         else if ((effective == -1) && bark_other) { bark_other = `?${bark_other}` }
@@ -319,14 +338,14 @@ function Notice(title, body, body1) {
     let bark_title = title
     let bark_body = body
     let bark_body1 = body1
-    let bark_key = $.getdata('Tele_AutoCheck.bark_key')
-    let icon_url = $.getdata('Tele_AutoCheck.bark_icon')
+    let bark_key = $.getdata(Tele_AutoCheck_bark_key)
+    let icon_url = $.getdata(Tele_AutoCheck_bark_icon)
     if (bark_key) {
         let bark_icon
         if (icon_url) { bark_icon = `?icon=${icon_url}` }
         else { bark_icon = '' }
 
-        let bark_other = $.getdata('Tele_AutoCheck.bark_add')
+        let bark_other = $.getdata(Tele_AutoCheck_bark_add)
         let effective = bark_icon.indexOf("?icon")
         if ((effective != -1) && bark_other) { bark_other = `&${bark_other}` }
         else if ((effective == -1) && bark_other) { bark_other = `?${bark_other}` }

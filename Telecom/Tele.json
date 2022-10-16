@@ -279,7 +279,7 @@
     ],
       "author": "@Alt_Option",
       "repo": "https://github.com/QGCliveDavis/Module",
-      "script": "https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Cellular.js",
+      "script": "https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Cellular_Auto.js",
       "icons": ["https://raw.githubusercontent.com/QGCliveDavis/Module/main/Asset/Telecom.png","https://raw.githubusercontent.com/QGCliveDavis/Module/main/Asset/Telecom.png"]
     }
   ]

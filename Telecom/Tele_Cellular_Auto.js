@@ -60,7 +60,7 @@ const headers = { "Accept": "application/json", "Content-Type": "application/jso
         if(isFirst||Tokenexpired||jsonData.status=='400'||jsonData.status=='415') {
 
             let trylogin=await Login(Body)
-            $.setjson(trylogin,'Tele_AutoCheck.logininfo')
+            $.setjson(trylogin,'Tele_AutoCheck.packge_detail')
 
             Login_info=$.getjson('Tele_AutoCheck.logininfo')
 

@@ -69,7 +69,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
 
         let jsonData = await Query($.getjson(Tele_AutoCheck_querybody))
         let Body = $.getjson(Tele_AutoCheck_Tele_BD)
-        console.log(jsonData)
+
         $.setjson(jsonData,Tele_AutoCheck_packge_detail)
         if(Body==undefined||Body=='') {throw '请在Boxjs中设置请求体'}
 

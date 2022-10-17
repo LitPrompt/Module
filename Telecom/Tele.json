@@ -254,9 +254,9 @@
           "name": "流量包数据",
           "val": "",
           "placeholder": "",
-          "autoGrow": false,
+          "autoGrow": true,
           "rows": 1,
-          "type": "text",
+          "type": "textarea",
 		 "desc": ""
       	},
       	{
@@ -266,8 +266,8 @@
           "placeholder": "",
           "autoGrow": true,
           "rows": 1,
-          "type": "text",
-		      "desc": ""
+          "type": "textarea",
+		 "desc": ""
       	}
     ],
       "author": "@Alt_Option",

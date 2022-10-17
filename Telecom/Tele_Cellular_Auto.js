@@ -74,7 +74,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         if(Body==undefined||Body=='') {throw '请在Boxjs中设置请求体'}
 
 
-        if(jsonData.status!='400'&&jsonData.headerInfos.code=='X201') Tokenexpired=true
+        if(jsonData.status!='400'&&jsonData.headerInfos.code=='X104') Tokenexpired=true
 
         if(isFirst||Tokenexpired||jsonData.status=='400'||jsonData.status=='415') {
 

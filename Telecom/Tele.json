@@ -169,7 +169,6 @@
         "Tele_AutoCheck.packge_detail",
         "Tele_AutoCheck.querybody"],
       "settings": [  
-        
         {
           "id": "Tele_AutoCheck.LoginName",
           "name": "电信营业厅登录账号",

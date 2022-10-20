@@ -262,7 +262,7 @@ async function Login(Phone,PassWd) {//登录
 
 async function Query(Login_info) {//余量原始数据
     if(Login_info==''){
-      querybody={}
+      querybody=''
     }else{
     let fieldData=new Object()
     fieldData.provinceCode=Login_info.responseData.data.loginSuccessResult.provinceCode
@@ -282,7 +282,7 @@ async function Query(Login_info) {//余量原始数据
     headerInfos.token=Login_info.responseData.data.loginSuccessResult.token
     headerInfos.userLoginName=Login_info.responseData.data.loginSuccessResult.phoneNbr
 
-    let querybody=new Object()
+    querybody=new Object()
     querybody.content=content
     querybody.headerInfos=headerInfos
     }

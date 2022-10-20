@@ -81,7 +81,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
 
  
 
-        if(jsonData!=undefined&&(jsonData.headerInfos.code=='X104'||jsonData.headerInfos.code=='X201')) Tokenexpired=true
+        if(jsonData!=undefined&&(jsonData=='err'||jsonData.headerInfos.code=='X104'||jsonData.headerInfos.code=='X201')) Tokenexpired=true
 
         if(isFirst||Tokenexpired||jsonData.status=='400'||jsonData.status=='415') {
 
@@ -290,7 +290,11 @@ async function Query(Login_info) {//余量原始数据
             url: 'https://appfuwu.189.cn:9021/query/qryImportantData',
             headers: headers,
             body: JSON.stringify(querybody) // 请求体
-        }, function (error, response, data) { resolve(JSON.parse(data)) })
+        }, function (error, response, data) { 
+        if(response.status==200)
+        resolve(JSON.parse(data)) 
+        else resolve('err')
+        })
     })
 }
 

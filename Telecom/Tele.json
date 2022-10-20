@@ -150,8 +150,8 @@
       "id": "Tele_AutoCheck",
       "name": "电信余量查询（自动版）",
       "descs_html": [
-        "<b>Body获取方法：</b>",
-        "测试阶段"
+        "<b>使用方法：</b>",
+        "输入账号密码，一定记得保存"
       ],
       "keys": [
         "Tele_AutoCheck.key_brond",
@@ -177,14 +177,24 @@
           "desc": ""
         }, 
         {
-          "id": "Tele_AutoCheck.Tele_BD",
-          "name": "电信请求Body",
+          "id": "Tele_AutoCheck.LoginName",
+          "name": "电信营业厅登录账号",
           "val": "",
           "type": "text",
-          "placeholder": "请求体",
+          "placeholder": "手机号",
           "autoGrow": true,
           "rows": 1,
-          "desc": "输入电信请求体"
+          "desc": "输入电信手机号"
+        }, 
+        {
+          "id": "Tele_AutoCheck.LoginPw",
+          "name": "电信营业厅登录密码",
+          "val": "",
+          "type": "text",
+          "placeholder": "登录密码",
+          "autoGrow": true,
+          "rows": 1,
+          "desc": "输入电信登录密码"
         }, 
         {
           "id": "Tele_AutoCheck.notice_switch",
@@ -256,7 +266,7 @@
           "placeholder": "",
           "autoGrow": true,
           "rows": 1,
-          "type": "textarea",
+          "type": "text",
 		 "desc": ""
       	},
       	{

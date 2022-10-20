@@ -90,7 +90,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
 
             Login_info=$.getjson(Tele_AutoCheck_packge_detail)
 
-           if(trylogin.responseData!=undefined&&trylogin.responseData.resultCode=="3001") throw 'err1'
+           if(trylogin.responseData.resultCode!="0000") throw trylogin.responseData.resultDesc
             if(isFirst) $.log('当前为初次使用，尝试获取Token')
             if(Tokenexpired) $.log('当前Token已过期，尝试获取Token')
             $.log(`\n`+JSON.stringify(trylogin))
@@ -204,14 +204,8 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         panel['content'] = '今日免流/跳点：' + Tile_All['Tile_Today'] + `\n` + '本月免流/跳点：' + Tile_All['Tile_Month'] + `\n` + '查询时间：' + Tile_All['Tile_Time']
 
     } catch (e) {
-        if (e == 'err1') {
-            title = "频繁登录已触发电信风控"
-            body = '请稍后尝试登陆！！'
-            body1 = ''
-            Notice(title, body, body1)
-        }else{
+        
             $.log('错误：' + e)
-        }
 
     }
     $.done(panel)

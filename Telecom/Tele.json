@@ -155,7 +155,8 @@
       ],
       "keys": [
         "Tele_AutoCheck.key_brond",
-        "Tele_AutoCheck.Tele_BD",
+        "Tele_AutoCheck.LoginName",
+        "Tele_AutoCheck.LoginPw",
         "Tele_AutoCheck.hourstimeStore",
         "Tele_AutoCheck.minutestimeStore",
         "Tele_AutoCheck.limitStore",

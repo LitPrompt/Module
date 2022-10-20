@@ -31,8 +31,8 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
     }
     try {
         
-        let thishours = formatTime().hours
-        let thisminutes = formatTime().minutes
+        let thishours = Number(formatTime().hours)
+        let thisminutes = Number(formatTime().minutes)
         let Days = formatTime().day
         let lasthours = $.getdata(Tele_AutoCheck_hourstimeStore)
         let lastminutes = $.getdata(Tele_AutoCheck_minutestimeStore)

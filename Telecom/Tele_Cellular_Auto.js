@@ -255,7 +255,7 @@ async function Login(Phone,PassWd) {//登录
 }
 
 async function Query(Login_info) {//余量原始数据
-    if(Login_info==''||Login_info==undefined) querybody=''
+    if(Login_info==''||Login_info==undefined||Login_info.responseData.resultCode!='0000') querybody=''
     else{
     let fieldData=new Object()
     fieldData.provinceCode=Login_info.responseData.data.loginSuccessResult.provinceCode

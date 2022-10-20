@@ -261,7 +261,9 @@ async function Login(Phone,PassWd) {//登录
 }
 
 async function Query(Login_info) {//余量原始数据
-    
+    if(Login_info==''){
+      querybody={}
+    }else{
     let fieldData=new Object()
     fieldData.provinceCode=Login_info.responseData.data.loginSuccessResult.provinceCode
     fieldData.cityCode=Login_info.responseData.data.loginSuccessResult.cityCode
@@ -283,6 +285,7 @@ async function Query(Login_info) {//余量原始数据
     let querybody=new Object()
     querybody.content=content
     querybody.headerInfos=headerInfos
+    }
     return new Promise((resolve, reject) => {
         $.post({
             url: 'https://appfuwu.189.cn:9021/query/qryImportantData',

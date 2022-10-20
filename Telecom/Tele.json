@@ -151,7 +151,9 @@
       "name": "电信余量查询（自动版）",
       "descs_html": [
         "<b>使用方法：</b>",
-        "输入账号密码，一定记得保存"
+        "1.输入账号",
+        "2.输入密码",
+        "3.保存！！！"
       ],
       "keys": [
         "Tele_AutoCheck.key_brond",
@@ -167,16 +169,7 @@
         "Tele_AutoCheck.packge_detail",
         "Tele_AutoCheck.querybody"],
       "settings": [  
-        {
-          "id": "Tele_AutoCheck.key_brond",
-          "name": "流量卡名",
-          "val": "",
-          "type": "text",
-          "placeholder": "可以自动获取，也可以手动填写",
-          "autoGrow": true,
-          "rows": 1,
-          "desc": ""
-        }, 
+        
         {
           "id": "Tele_AutoCheck.LoginName",
           "name": "电信营业厅登录账号",
@@ -198,6 +191,16 @@
           "desc": "输入电信登录密码"
         }, 
         {
+          "id": "Tele_AutoCheck.key_brond",
+          "name": "流量卡名",
+          "val": "",
+          "type": "text",
+          "placeholder": "可以自动获取，也可以手动填写",
+          "autoGrow": true,
+          "rows": 1,
+          "desc": ""
+        }, 
+        {
           "id": "Tele_AutoCheck.notice_switch",
           "name": "是否禁用定时通知",
           "val": false,
@@ -207,7 +210,7 @@
         {
           "id": "Tele_AutoCheck.timeinterval",
           "name": "定时通知时间间隔",
-          "val": 0,
+          "val": 5,
           "type": "number",
           "desc": "默认间隔为0分钟，开启定时通知后每次通知的间隔"
         },

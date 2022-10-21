@@ -36,7 +36,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         let Days = formatTime().day
         let lasthours = $.getdata(Tele_AutoCheck_hourstimeStore)
         let lastminutes = $.getdata(Tele_AutoCheck_minutestimeStore)
-        let minutesused, Login_info, Tokenexpired
+        let minutesused, Login_info, Tokenexpired,jsonData
         let isFirst=false
 
         if (lasthours == undefined && lastminutes == undefined) isFirst = true
@@ -72,14 +72,10 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
 
         if(Phone==''||PassWd=='') {throw '请在Boxjs中设置登录账号与密码'}
 
-        let jsonData
-
         if(!isFirst){
             jsonData = await Query($.getjson(Tele_AutoCheck_querybody))
             $.setjson(jsonData,Tele_AutoCheck_packge_detail)
         }
-
- 
 
         if(jsonData!=undefined&&(jsonData=='err'||jsonData.headerInfos.code=='X104'||jsonData.headerInfos.code=='X201')) Tokenexpired=true
 
@@ -90,7 +86,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
 
             Login_info=$.getjson(Tele_AutoCheck_packge_detail)
 
-           if(trylogin.responseData.resultCode!="0000") throw trylogin.responseData.resultDesc
+            if(trylogin.responseData.resultCode!="0000") throw trylogin.responseData.resultDesc
             if(isFirst) $.log('当前为初次使用，尝试获取Token')
             if(Tokenexpired) $.log('当前Token已过期，尝试获取Token')
             $.log(`\n`+JSON.stringify(trylogin))
@@ -216,14 +212,14 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
 async function Login(Phone,PassWd) {//登录
 
     let Ts=`${formatTime().year}${formatTime().month}${formatTime().day}${formatTime().hours}${formatTime().minutes}00`
-    let message=`iPhone 8 P13.2.3fb9dc0800b6${Phone}${Ts}${PassWd}0$$$0.`
+    let message=`iPhone X P13.2.3${Phone}${Phone}${Ts}${PassWd}0$$$0.`
     // console.log(Ts)
     // console.log(message)
 
     let fieldData=new Object()
     fieldData.accountType=''
     fieldData.authentication= PassWd
-    fieldData.deviceUid="3fb9dc0800b64549874e6775d8ed3aef"
+    fieldData.deviceUid=`3${Phone}`
     fieldData.isChinatelecom='0'
     fieldData.loginAuthCipherAsymmertric= RSAEncrypt(message) 
     fieldData.loginType= "4",
@@ -234,7 +230,7 @@ async function Login(Phone,PassWd) {//登录
     content.attach="iPhone"
 
     let headerInfos=new Object()
-    headerInfos.clientType='#9.6.1#channel50#iPhone 8 Plus#'
+    headerInfos.clientType='#9.6.1#channel50#iPhone X Plus#'
     headerInfos.code='userLoginNormal'
     headerInfos.shopId='20002'
     headerInfos.source='110003'

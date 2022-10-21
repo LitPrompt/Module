@@ -99,7 +99,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
 
         let brond = $.getdata(Tele_AutoCheck_key_brond)
         if ($.getdata(Tele_AutoCheck_key_brond) == undefined|| $.getdata(Tele_AutoCheck_key_brond) == '') {
-            brond = jsonData.responseData.data.balanceInfo.phoneBillBars[0].title
+            brond = (await ProductName(Login_info)).responseData.data.mainProductOFFInfo.productOFFName
             $.setdata(brond, Tele_AutoCheck_key_brond)
         }
 
@@ -143,10 +143,8 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         let tile_unlimitUsageTotal = ArrayQuery.unlimitusage//面板本月定向使用量
         let tile_limitUsageTotal = ArrayQuery.limitusage//面板本月通用使用量
 
-        if (thishours < 10) { tile_hour = '0' + thishours }
-        else { tile_hour = thishours }
-        if (thisminutes < 10) { tile_minute = '0' + thisminutes }
-        else { tile_minute = thisminutes }
+        if (thishours < 10) { tile_hour = '0' + thishours }else { tile_hour = thishours }
+        if (thisminutes < 10) { tile_minute = '0' + thisminutes }else { tile_minute = thisminutes }
 
         Tile_All['Tile_Today'] = ToSize(tile_unlimitTotal, 1, 0, 1) + '/' + ToSize(tile_limitTotal, 1, 0, 1)
         Tile_All['Tile_Month'] = ToSize(tile_unlimitUsageTotal, 1, 0, 1) + '/' + ToSize(tile_limitUsageTotal, 1, 0, 1)
@@ -199,11 +197,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         panel['title'] = $.getdata(Tele_AutoCheck_key_brond)
         panel['content'] = '今日免流/跳点：' + Tile_All['Tile_Today'] + `\n` + '本月免流/跳点：' + Tile_All['Tile_Month'] + `\n` + '查询时间：' + Tile_All['Tile_Time']
 
-    } catch (e) {
-        
-            $.log('错误：' + e)
-
-    }
+    } catch (e) {Notice('电信余量','错误❌原因：'+e,'');$.log('错误：' + e)}
     $.done(panel)
 
 })()
@@ -213,8 +207,6 @@ async function Login(Phone,PassWd) {//登录
 
     let Ts=`${formatTime().year}${formatTime().month}${formatTime().day}${formatTime().hours}${formatTime().minutes}00`
     let message=`iPhone X P13.2.3${Phone}${Phone}${Ts}${PassWd}0$$$0.`
-    // console.log(Ts)
-    // console.log(message)
 
     let fieldData=new Object()
     fieldData.accountType=''
@@ -285,6 +277,41 @@ async function Query(Login_info) {//余量原始数据
         resolve(JSON.parse(data)) 
         else resolve('err')
         })
+    })
+}
+
+async function ProductName(Login_info) {//余量原始数据
+    let Ts=`${formatTime().year}${formatTime().month}${formatTime().day}${formatTime().hours}${formatTime().minutes}00`
+    if(Login_info==''||Login_info==undefined||Login_info.responseData.resultCode!='0000') querybody=''
+    else{
+    let fieldData=new Object()
+    fieldData.queryFlag='0'
+    fieldData.accessAuth='1'
+    fieldData.account=TransPhone(Login_info.responseData.data.loginSuccessResult.phoneNbr)
+    let content=new Object()
+    content.fieldData=fieldData
+    content.attach="test"
+
+    let headerInfos=new Object()
+    headerInfos.clientType='#9.6.1#channel50#iPhone X Plus#'
+    headerInfos.timestamp=Ts
+    headerInfos.code='userFluxPackage'
+    headerInfos.shopId='20002'
+    headerInfos.source='110003'
+    headerInfos.sourcePassword='Sid98s'
+    headerInfos.token=Login_info.responseData.data.loginSuccessResult.token
+    headerInfos.userLoginName=Login_info.responseData.data.loginSuccessResult.phoneNbr
+
+    querybody=new Object()
+    querybody.content=content
+    querybody.headerInfos=headerInfos
+    }
+    return new Promise((resolve, reject) => {
+        $.post({
+            url: 'https://appfuwu.189.cn:9021/query/userFluxPackage',
+            headers: headers,
+            body: JSON.stringify(querybody) // 请求体
+        }, function (error, response, data) { resolve(JSON.parse(data)) })
     })
 }
 

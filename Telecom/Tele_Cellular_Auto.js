@@ -82,8 +82,6 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         if(isFirst||Tokenexpired||jsonData.status=='400'||jsonData.status=='415') {
 
             let trylogin=await Login(Phone,PassWd) //尝试使用账号密码登录
-            $.setjson(trylogin,Tele_AutoCheck_packge_detail)
-
             if(trylogin.responseData.resultCode!="0000") throw trylogin.responseData.resultDesc
             if(isFirst) $.log('当前为初次使用，尝试获取Token')
             if(Tokenexpired) $.log('当前Token已过期，尝试获取Token')

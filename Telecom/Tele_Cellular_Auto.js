@@ -84,8 +84,6 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
             let trylogin=await Login(Phone,PassWd) //尝试使用账号密码登录
             $.setjson(trylogin,Tele_AutoCheck_packge_detail)
 
-            Login_info=$.getjson(Tele_AutoCheck_packge_detail)
-
             if(trylogin.responseData.resultCode!="0000") throw trylogin.responseData.resultDesc
             if(isFirst) $.log('当前为初次使用，尝试获取Token')
             if(Tokenexpired) $.log('当前Token已过期，尝试获取Token')
@@ -99,7 +97,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
 
         let brond = $.getdata(Tele_AutoCheck_key_brond)
         if ($.getdata(Tele_AutoCheck_key_brond) == undefined|| $.getdata(Tele_AutoCheck_key_brond) == '') {
-            brond = (await ProductName(Login_info)).responseData.data.mainProductOFFInfo.productOFFName
+            brond = (await ProductName($.getjson(Tele_AutoCheck_packge_detail))).responseData.data.mainProductOFFInfo.productOFFName
             $.setdata(brond, Tele_AutoCheck_key_brond)
         }
 

@@ -216,14 +216,14 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
 async function Login(Phone,PassWd) {//登录
 
     let Ts=`${formatTime().year}${formatTime().month}${formatTime().day}${formatTime().hours}${formatTime().minutes}00`
-    let message=`iPhone 8 P13.2.3fb9dc0809b6${Phone}${Ts}${PassWd}0$$$0.`
+    let message=`iPhone 8 P13.2.3fb9dc0800b6${Phone}${Ts}${PassWd}0$$$0.`
     // console.log(Ts)
     // console.log(message)
 
     let fieldData=new Object()
     fieldData.accountType=''
     fieldData.authentication= PassWd
-    fieldData.deviceUid="3fb9dc0809b64549874e6775d8ed3aef"
+    fieldData.deviceUid="3fb9dc0800b64549874e6775d8ed3aef"
     fieldData.isChinatelecom='0'
     fieldData.loginAuthCipherAsymmertric= RSAEncrypt(message) 
     fieldData.loginType= "4",

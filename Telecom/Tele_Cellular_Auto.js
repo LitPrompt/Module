@@ -103,7 +103,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
 
         let brond = $.getdata(Tele_AutoCheck_key_brond)
         if ($.getdata(Tele_AutoCheck_key_brond) == undefined|| $.getdata(Tele_AutoCheck_key_brond) == '') {
-            brond = jsonData.responseData.data.balanceInfo.phoneBillBars[1].title
+            brond = jsonData.responseData.data.balanceInfo.phoneBillBars[0].title
             $.setdata(brond, Tele_AutoCheck_key_brond)
         }
 

@@ -96,8 +96,8 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         let ArrayQuery = Query_All(jsonData)
 
         let brond = $.getdata(Tele_AutoCheck_key_brond)
-        if ($.getdata(Tele_AutoCheck_key_brond) == undefined|| $.getdata(Tele_AutoCheck_key_brond) == '') {
-            brond = (await ProductName($.getjson(Tele_AutoCheck_packge_detail))).responseData.data.mainProductOFFInfo.productOFFName
+        if (brond== undefined|| brond == '') {
+            brond = (await ProductName($.getjson(Tele_AutoCheck_querybody))).responseData.data.mainProductOFFInfo.productOFFName
             $.setdata(brond, Tele_AutoCheck_key_brond)
         }
 

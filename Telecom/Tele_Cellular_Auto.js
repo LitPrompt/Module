@@ -88,7 +88,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
             $.log(`\n`+JSON.stringify(trylogin))
 			$.setjson(trylogin,Tele_AutoCheck_querybody)
         	jsonData = await Query(trylogin)
-
+            $.setjson(jsonData,Tele_AutoCheck_packge_detail)
         }
        
         let ArrayQuery = Query_All(jsonData)

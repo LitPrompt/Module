@@ -5,6 +5,7 @@ var navigator=navigator||{};var window=window||{};ASN1={};Hex={};Base64S={};var 
 const Tele_AutoCheck_key_brond=`Tele_AutoCheck.key_brond`
 const Tele_AutoCheck_LoginName=`Tele_AutoCheck.LoginName`
 const Tele_AutoCheck_LoginPw=`Tele_AutoCheck.LoginPw`
+const Tele_AutoCheck_SetVal=`Tele_AutoCheck.SetVal`
 const Tele_AutoCheck_hourstimeStore=`Tele_AutoCheck.hourstimeStore`
 const Tele_AutoCheck_minutestimeStore=`Tele_AutoCheck.minutestimeStore`
 const Tele_AutoCheck_limitStore=`Tele_AutoCheck.limitStore`
@@ -314,8 +315,8 @@ async function ProductName(Login_info) {//余量原始数据
 
 
 function Query_All(jsonData) {//原始量
-	let SetLimit=$.getdata('Tele_AutoCheck_SetLimit') 
-    if(SetLimit==undefined) $.setdata('','Tele_AutoCheck_SetLimit')
+	let SetVal=$.getdata(Tele_AutoCheck_SetVal)
+    if(SetVal==undefined||SetVal=='') {$.setdata('',Tele_AutoCheck_SetVal)} else SetVal=SetVal*1048576
 
     UnlimitInfo = jsonData.responseData.data.flowInfo.specialAmount
     LimitInfo = jsonData.responseData.data.flowInfo.commonFlow
@@ -328,13 +329,15 @@ function Query_All(jsonData) {//原始量
     limitusagetotal = Number(LimitInfo.used)
     limitratabletotal = limitbalancetotal + limitusagetotal
 
-    if(SetLimit!=''&&SetLimit-limitratabletotal<0) {
-        limitusagetotal=SetLimit-limitbalancetotal
-
-        unlimitusagetotal=unlimitusagetotal+limitratabletotal-SetLimit
-        limitratabletotal=SetLimit
-
-        unlimitratabletotal=limitratabletotal-SetLimit+unlimitbalancetotal+unlimitusagetotal
+    if(SetVal!=''&&SetVal-limitratabletotal<0) {
+        limitusagetotal=SetVal-limitbalancetotal
+        unlimitusagetotal=unlimitusagetotal+limitratabletotal-SetVal
+        limitratabletotal=SetVal
+        unlimitratabletotal=limitratabletotal-SetVal+unlimitbalancetotal+unlimitusagetotal
+    }
+    if(SetVal!=''&&SetVal-limitratabletotal>0){
+        limitbalancetotal=SetVal-limitusagetotal
+        limitratabletotal=SetVal
     }
     let queryinfo = { unlimitall: unlimitratabletotal, unlimitleft: unlimitbalancetotal, unlimitusage: unlimitusagetotal, limitall: limitratabletotal, limitleft: limitbalancetotal, limitusage: limitusagetotal }
     return queryinfo

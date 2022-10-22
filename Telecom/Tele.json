@@ -270,7 +270,7 @@
           "autoGrow": true,
           "rows": 1,
           "type": "number",
-          "desc": "如果数据有问题，请输入<通用>总量，单位GB"
+          "desc": "如果数据有问题，请输入 通用 总量，单位GB"
         },
         {
           "id": "Tele_AutoCheck.packge_detail",

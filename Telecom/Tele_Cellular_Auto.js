@@ -36,7 +36,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         let Days = formatTime().day
         let lasthours = $.getdata(Tele_AutoCheck_hourstimeStore)
         let lastminutes = $.getdata(Tele_AutoCheck_minutestimeStore)
-        let minutesused, Login_info, Tokenexpired,jsonData
+        let minutesused, Tokenexpired,jsonData,ArrayQuery
         let isFirst=false
 
         if (lasthours == undefined && lastminutes == undefined) isFirst = true
@@ -90,8 +90,9 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         	jsonData = await Query(trylogin)
             $.setjson(jsonData,Tele_AutoCheck_packge_detail)
         }
-       
-        let ArrayQuery = Query_All(jsonData)
+       do{
+           ArrayQuery = Query_All(jsonData)
+       }while(jsonData.responseData.data.flowInfo.specialAmount==null);
 
         let brond = $.getdata(Tele_AutoCheck_key_brond)
         if (brond== undefined|| brond == '') {
@@ -176,8 +177,8 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         } else if (Timer_Notice == "false") {
 
             $.log(`\n` + '当前为定时通知，时间间隔为 ' + interval + ' 分钟')
-            if (isFirst == true) $.log('首次使用：通知已发送！')
-            if (minutesused > interval || isFirst == true) {
+            if (isFirst) $.log('首次使用：通知已发送！')
+            if (minutesused > interval || isFirst) {
 
                 $.setdata($.toStr(ArrayQuery.limitusage), Tele_AutoCheck_limitStore)
                 $.setdata($.toStr(ArrayQuery.unlimitusage),Tele_AutoCheck_unlimitStore)
@@ -313,7 +314,6 @@ async function ProductName(Login_info) {//余量原始数据
 
 
 function Query_All(jsonData) {//原始量
-
     UnlimitInfo = jsonData.responseData.data.flowInfo.specialAmount
     LimitInfo = jsonData.responseData.data.flowInfo.commonFlow
 

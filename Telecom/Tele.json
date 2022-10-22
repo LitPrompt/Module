@@ -211,7 +211,7 @@
           "name": "定时通知时间间隔",
           "val": 5,
           "type": "number",
-          "desc": "默认间隔为0分钟，开启定时通知后每次通知的间隔"
+          "desc": "默认间隔为5分钟，最好设置为5的倍数"
         },
         {
           "id": "Tele_AutoCheck.threshold",
@@ -226,7 +226,7 @@
           "id": "Tele_AutoCheck.notice_body",
           "name": "通知格式",
           "val": "免/跳/总免/剩余",
-          "placeholder": "以空格分开",
+          "placeholder": "以/分开",
           "autoGrow": true,
           "rows": 1,
           "type": "text",

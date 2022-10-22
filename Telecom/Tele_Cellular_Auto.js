@@ -314,6 +314,9 @@ async function ProductName(Login_info) {//余量原始数据
 
 
 function Query_All(jsonData) {//原始量
+	let SetLimit=$.getdata('Tele_AutoCheck_SetLimit') 
+    if(SetLimit==undefined) $.setdata('','Tele_AutoCheck_SetLimit')
+
     UnlimitInfo = jsonData.responseData.data.flowInfo.specialAmount
     LimitInfo = jsonData.responseData.data.flowInfo.commonFlow
 
@@ -325,6 +328,14 @@ function Query_All(jsonData) {//原始量
     limitusagetotal = Number(LimitInfo.used)
     limitratabletotal = limitbalancetotal + limitusagetotal
 
+    if(SetLimit!=''&&SetLimit-limitratabletotal<0) {
+        limitusagetotal=SetLimit-limitbalancetotal
+
+        unlimitusagetotal=unlimitusagetotal+limitratabletotal-SetLimit
+        limitratabletotal=SetLimit
+
+        unlimitratabletotal=limitratabletotal-SetLimit+unlimitbalancetotal+unlimitusagetotal
+    }
     let queryinfo = { unlimitall: unlimitratabletotal, unlimitleft: unlimitbalancetotal, unlimitusage: unlimitusagetotal, limitall: limitratabletotal, limitleft: limitbalancetotal, limitusage: limitusagetotal }
     return queryinfo
 }

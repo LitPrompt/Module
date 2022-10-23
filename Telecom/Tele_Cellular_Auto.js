@@ -270,7 +270,8 @@ async function Query(Login_info) {//余量原始数据
             url: 'https://appfuwu.189.cn:9021/query/qryImportantData',
             headers: headers,
             body: JSON.stringify(querybody) // 请求体
-        }, function (error, response, data) { 
+        }, function (error, response, data) {
+            if($.isShadowrocket()) resolve(JSON.parse(data)) 
         if(response.status==200)
         resolve(JSON.parse(data)) 
         else resolve('err')

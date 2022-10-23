@@ -118,7 +118,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
                 $.setdata($.toStr(0), Tele_AutoCheck_unlimitStore)
                 title = "数据修正"
                 body = '修正后：'
-                body1 = '通用使用：'+ToSize(limitThis,0,0,1)+'定向使用：'+ToSize(unlimitThis,0,0,1)
+                body1 = '通用使用：'+ToSize(limitThis,0,0,1)+' 定向使用：'+ToSize(unlimitThis,0,0,1)
                 Notice(title, body, body1)
             }
         }

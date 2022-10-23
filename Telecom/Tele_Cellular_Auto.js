@@ -111,14 +111,14 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         let unlimitChange = unlimitThis - unlimitLast
 
         try {
-            if (unlimitLast == '' || unlimitThis - unlimitLast < 0 || limitLast == '') throw 'err'
+            if (unlimitLast == '' || unlimitThis - unlimitLast < 0 || limitLast == ''||limitThis-limitLast<0) throw 'err'
         } catch (e) {
             if (e == 'err') {
                 $.setdata($.toStr(0), Tele_AutoCheck_limitStore)
                 $.setdata($.toStr(0), Tele_AutoCheck_unlimitStore)
-                title = "当前为初次查询或上次查询有误"
-                body = '已将上次查询归0'
-                body1 = '下次通知可能会有误，不用在意'
+                title = "数据修正"
+                body = '修正后：'
+                body1 = '通用使用：'+ToSize(limitThis,0,0,1)+'定向使用：'+ToSize(unlimitThis,0,0,1)
                 Notice(title, body, body1)
             }
         }

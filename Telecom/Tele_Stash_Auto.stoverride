@@ -7,7 +7,7 @@ cron:
       cron: '*/5 * * * *' # at every 5th minute
       timeout: 10 # optional
 tiles:
-  - name: Telecom
+  - name: Telecom_Auto
     title: 今日免流信息
     content: ''
     backgroundColor: "#0099FF"

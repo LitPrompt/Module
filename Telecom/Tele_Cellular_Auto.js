@@ -74,7 +74,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         if(Phone==''||PassWd=='') {throw '请在Boxjs中设置登录账号与密码'}
 
         if(!isFirst){
-            do{jsonData = await Query($.getjson(Tele_AutoCheck_querybody))}while(jsonData.responseData!=null&&jsonData.responseData.data.flowInfo==null);
+            do{jsonData = await Query($.getjson(Tele_AutoCheck_querybody))}while(jsonData!='err'&&jsonData.responseData!=null&&jsonData.responseData.data.flowInfo==null);
             $.setjson(jsonData,Tele_AutoCheck_packge_detail)
         }
 
@@ -88,7 +88,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
             if(Tokenexpired) $.log('当前Token已过期，尝试获取Token')
             $.log(`\n`+JSON.stringify(trylogin))
 			$.setjson(trylogin,Tele_AutoCheck_querybody)
-            do{jsonData = await Query(trylogin)}while(jsonData.responseData!=null&&jsonData.responseData.data.flowInfo==null);
+            do{jsonData = await Query(trylogin)}while(jsonData!='err'&&jsonData.responseData!=null&&jsonData.responseData.data.flowInfo==null);
 
             $.setjson(jsonData,Tele_AutoCheck_packge_detail)
         }
@@ -270,9 +270,11 @@ async function Query(Login_info) {//余量原始数据
             headers: headers,
             body: JSON.stringify(querybody) // 请求体
         }, function (error, response, data) {
-            if($.isShadowrocket()) resolve(JSON.parse(data)) 
+          let jsonData=JSON.parse(data)
+            if($.isShadowrocket()&&jsonData.hasOwnProperty('timestamp')) resolve('err')
+else resolve(jsonData)
         if(response.status==200)
-        resolve(JSON.parse(data)) 
+        resolve(jsonData) 
         else resolve('err')
         })
     })

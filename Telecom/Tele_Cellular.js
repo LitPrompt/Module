@@ -154,7 +154,7 @@ const $ = new Env(`电信余量`)
 				$.setdata($.toStr(ArrayQuery.unlimitusage),"unlimitStore")
 				$.setdata($.toStr(thishours),"hourstimeStore")
 				$.setdata($.toStr(thisminutes),"minutestimeStore") 
-				title=brond+'  耗时:'+minutesused+'分钟'
+				title=brond+'  耗时:'+formatMinutes(minutesused)
 				body=notice_body[0]+ToSize(unlimitChange,2,1,1)+' '+notice_body[1]+ToSize(limitChange,2,1,1)
 				body1=notice_body[2]+ToSize(ArrayQuery.unlimitusage,2,1,1)+' '+notice_body[3]+ToSize(ArrayQuery.limitleft,2,1,1)
 				Notice(title,body,body1)
@@ -170,7 +170,7 @@ const $ = new Env(`电信余量`)
 				$.setdata($.toStr(ArrayQuery.unlimitusage),"unlimitStore")
 				$.setdata($.toStr(thishours),"hourstimeStore")
 				$.setdata($.toStr(thisminutes),"minutestimeStore") 
-				title=brond+'  耗时:'+minutesused+'分钟'
+				title=brond+'  耗时:'+formatMinutes(minutesused)
 				body=notice_body[0]+ToSize(unlimitChange,2,1,1)+' '+notice_body[1]+ToSize(limitChange,2,1,1)
 				body1=notice_body[2]+ToSize(ArrayQuery.unlimitusage,2,1,1)+' '+notice_body[3]+ToSize(ArrayQuery.limitleft,2,1,1)
 				Notice(title,body,body1)
@@ -351,6 +351,24 @@ function ToSize(kbyte,s,l,t) {//字节转换s保留位数l是否空格t是否单
 	}
 }
 
+function formatMinutes(value) {
+  let minute = parseInt(value)
+  let hour = 0
+  let day = 0
+  if (minute > 60) {
+    hour = parseInt(minute / 60)
+    minute = parseInt(minute % 60)
+    if (hour > 23) {
+      day = parseInt(hour / 24)
+      hour = parseInt(hour % 24)
+    }
+  }
+
+  let result = parseInt(minute) + '分钟'
+  if (hour > 0) result = parseInt(hour) + '小时'
+  if (day > 0) result = parseInt(day) + '天'
+  return result
+}
 
 function formatTime() {
     let dateObj = new Date()//获取时间

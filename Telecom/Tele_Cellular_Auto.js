@@ -287,12 +287,12 @@ async function Query(Login_info) {//余量原始数据
             headers: headers,
             body: JSON.stringify(querybody) // 请求体
         }, function (error, response, data) {
-          let jsonData=JSON.parse(data)
+            let jsonData=JSON.parse(data)
             if($.isShadowrocket()&&jsonData.hasOwnProperty('timestamp')) resolve('err')
-else resolve(jsonData)
-        if(response.status==200)
-        resolve(jsonData) 
-        else resolve('err')
+            else if($.isShadowrocket()&&!jsonData.hasOwnProperty('timestamp')) resolve(jsonData)
+
+            if(response.status!=200) resolve('err') 
+            else resolve(jsonData)
         })
     })
 }

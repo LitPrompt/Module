@@ -106,7 +106,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         let limitChange = limitThis - limitLast
         let unlimitChange = unlimitThis - unlimitLast
 
-        if (limitLast==''||limitLast==''||limitChange< 0 ||unlimitChange<0)
+        if (limitChange< 0 ||unlimitChange<0)
         {
             $.setdata($.toStr(0), Tele_AutoCheck_limitStore)
             $.setdata($.toStr(0), Tele_AutoCheck_unlimitStore)

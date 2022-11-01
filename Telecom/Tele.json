@@ -207,21 +207,21 @@
           "desc": "开启后将在流量变化时通知流量信息"
         },    
         {
-          "id": "Tele_AutoCheck.timeinterval",
-          "name": "定时通知时间间隔",
-          "val": 5,
-          "type": "number",
-          "desc": "默认间隔为5分钟，最好设置为5的倍数"
-        },
-        {
           "id": "Tele_AutoCheck.threshold",
-          "name": "通知提醒阈值(定时通知时阈值不起作用)",
+          "name": "通知提醒阈值(上述开关在关闭时选项无作用)",
           "val": 0,
           "autoGrow": true,
           "rows": 1,
           "type": "number",
           "desc": "默认阈值为0，单位为kb，即有变化就通知"
         },
+        {
+          "id": "Tele_AutoCheck.limit_choose",
+          "name": "是否仅通用变化通知",
+          "val": false,
+          "type": "boolean",
+          "desc": "默认通用和定向，任意一个超过阈值即会通知"
+        }, 
         {
           "id": "Tele_AutoCheck.notice_body",
           "name": "通知格式",

@@ -74,7 +74,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         if(Phone==''||PassWd=='') {throw '请在Boxjs中设置登录账号与密码'}
 
         if(!isFirst){
-            do{jsonData = await Query($.getjson(Tele_AutoCheck_querybody))}while(jsonData!='err'&&jsonData.responseData!=null&&(jsonData.responseData.data.flowInfo.commonFlow==null||jsonData.responseData.data.flowInfo.specialAmount==null));
+            do{jsonData = await Query($.getjson(Tele_AutoCheck_querybody))}while(jsonData!='err'&&jsonData.responseData!=null&&jsonData.responseData.data.flowInfo.commonFlow==null);
             $.setjson(jsonData,Tele_AutoCheck_packge_detail)
         }
 
@@ -88,7 +88,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
             if(Tokenexpired) $.log('当前Token已过期，尝试获取Token')
             $.log(`\n`+JSON.stringify(trylogin))
 			$.setjson(trylogin,Tele_AutoCheck_querybody)
-            do{jsonData = await Query(trylogin)}while(jsonData!='err'&&jsonData.responseData!=null&&(jsonData.responseData.data.flowInfo.commonFlow==null||jsonData.responseData.data.flowInfo.specialAmount==null));
+            do{jsonData = await Query(trylogin)}while(jsonData!='err'&&jsonData.responseData!=null&&jsonData.responseData.data.flowInfo.commonFlow==null);
 
             $.setjson(jsonData,Tele_AutoCheck_packge_detail)
         }

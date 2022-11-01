@@ -99,8 +99,8 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
 
         let limitThis = ArrayQuery.limitusage//通用使用量
         let unlimitThis = ArrayQuery.unlimitusage//定向使用量
-        let limitLast = $.getdata(Tele_AutoCheck_limitStore) //将上次查询到的值读出来
-        let unlimitLast = $.getdata(Tele_AutoCheck_unlimitStore) //将上次查询到的值读出来
+        let limitLast = Number($.getdata(Tele_AutoCheck_limitStore)) //将上次查询到的值读出来
+        let unlimitLast = Number($.getdata(Tele_AutoCheck_unlimitStore)) //将上次查询到的值读出来
         if (limitLast == undefined) limitLast = limitThis
         if (unlimitLast == undefined) unlimitLast = unlimitThis
         let limitChange = limitThis - limitLast
@@ -110,6 +110,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         {
             $.setdata($.toStr(0), Tele_AutoCheck_limitStore)
             $.setdata($.toStr(0), Tele_AutoCheck_unlimitStore)
+            limitChange=0;unlimitChange=0;
             title = "数据修正"
             body = '修正后：'
             body1 = '通用使用：'+ToSize(limitThis,0,0,1)+' 定向使用：'+ToSize(unlimitThis,0,0,1)

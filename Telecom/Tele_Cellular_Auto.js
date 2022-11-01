@@ -99,14 +99,14 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
 
         let limitThis = ArrayQuery.limitusage//通用使用量
         let unlimitThis = ArrayQuery.unlimitusage//定向使用量
-        let limitLast = Number($.getdata(Tele_AutoCheck_limitStore)) //将上次查询到的值读出来
-        let unlimitLast = Number($.getdata(Tele_AutoCheck_unlimitStore)) //将上次查询到的值读出来
-        if (limitLast == undefined) limitLast = limitThis
-        if (unlimitLast == undefined) unlimitLast = unlimitThis
+        let limitLast = $.getdata(Tele_AutoCheck_limitStore) //将上次查询到的值读出来
+        let unlimitLast = $.getdata(Tele_AutoCheck_unlimitStore) //将上次查询到的值读出来
+        if (limitLast == undefined) limitLast = limitThis;else limitLast=Number(limitLast)
+        if (unlimitLast == undefined) unlimitLast = unlimitThis;else unlimitLast=Number(unlimitLast)
         let limitChange = limitThis - limitLast
         let unlimitChange = unlimitThis - unlimitLast
 
-        if (unlimitLast == '' || unlimitThis - unlimitLast < 0 || limitLast == ''||limitThis-limitLast<0)
+        if (limitLast==''||limitLast==''||limitChange< 0 ||unlimitChange<0)
         {
             $.setdata($.toStr(0), Tele_AutoCheck_limitStore)
             $.setdata($.toStr(0), Tele_AutoCheck_unlimitStore)

@@ -45,10 +45,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         if (lastminutes == undefined) lastminutes = thisminutes
         let hoursused = thishours - lasthours
         let interval = $.getdata(Tele_AutoCheck_timeinterval)
-        if (interval == undefined) {
-            $.setdata($.toStr(5), Tele_AutoCheck_timeinterval)
-            interval = '5'
-        }
+        if (interval == undefined) {$.setdata($.toStr(5), Tele_AutoCheck_timeinterval);interval = '5'}
 
         if (hoursused >= 0) { minutesused = (thisminutes - lastminutes) + hoursused * 60 } //上次查询的时间大于等于当前查询的时间
         else if (hoursused < 0 && lasthours <= 23) { minutesused = (60 - lastminutes) + (23 - lasthours + thishours) * 60 + thisminutes }
@@ -89,7 +86,6 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
             $.log(`\n`+JSON.stringify(trylogin))
 			$.setjson(trylogin,Tele_AutoCheck_querybody)
             do{jsonData = await Query(trylogin)}while(jsonData!='err'&&jsonData.responseData!=null&&jsonData.responseData.data.flowInfo.commonFlow==null);
-
             $.setjson(jsonData,Tele_AutoCheck_packge_detail)
         }
 
@@ -110,17 +106,14 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         let limitChange = limitThis - limitLast
         let unlimitChange = unlimitThis - unlimitLast
 
-        try {
-            if (unlimitLast == '' || unlimitThis - unlimitLast < 0 || limitLast == ''||limitThis-limitLast<0) throw 'err'
-        } catch (e) {
-            if (e == 'err') {
-                $.setdata($.toStr(0), Tele_AutoCheck_limitStore)
-                $.setdata($.toStr(0), Tele_AutoCheck_unlimitStore)
-                title = "数据修正"
-                body = '修正后：'
-                body1 = '通用使用：'+ToSize(limitThis,0,0,1)+' 定向使用：'+ToSize(unlimitThis,0,0,1)
-                Notice(title, body, body1)
-            }
+        if (unlimitLast == '' || unlimitThis - unlimitLast < 0 || limitLast == ''||limitThis-limitLast<0)
+        {
+            $.setdata($.toStr(0), Tele_AutoCheck_limitStore)
+            $.setdata($.toStr(0), Tele_AutoCheck_unlimitStore)
+            title = "数据修正"
+            body = '修正后：'
+            body1 = '通用使用：'+ToSize(limitThis,0,0,1)+' 定向使用：'+ToSize(unlimitThis,0,0,1)
+            Notice(title, body, body1)
         }
 
         //***********

@@ -15,7 +15,6 @@ const Tele_AutoCheck_bark_key=`Tele_AutoCheck.bark_key`
 const Tele_AutoCheck_bark_add=`Tele_AutoCheck.bark_add`
 const Tele_AutoCheck_packge_detail=`Tele_AutoCheck.packge_detail`
 const Tele_AutoCheck_querybody=`Tele_AutoCheck.querybody`
-const Tele_AutoCheck_notice_switch=`Tele_AutoCheck.notice_switch`
 const Tele_AutoCheck_limit_choose=`Tele_AutoCheck.limit_choose`
 const Tele_AutoCheck_threshold=`Tele_AutoCheck.threshold`
 const Tele_AutoCheck_notice_body=`Tele_AutoCheck.notice_body`
@@ -49,12 +48,10 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         else if (hoursused < 0 && lasthours <= 23) { minutesused = (60 - lastminutes) + (23 - lasthours + thishours) * 60 + thisminutes }
         //**********
 
-        let Timer_Notice = $.getdata(Tele_AutoCheck_notice_switch);
-        if (Timer_Notice == undefined) {$.setdata($.toStr(false), Tele_AutoCheck_notice_switch);Timer_Notice = 'false'}
 
         let Tele_value = $.getdata(Tele_AutoCheck_threshold) //读取阈值
 
-        if (Tele_value == undefined) { $.setdata($.toStr(0), Tele_AutoCheck_threshold); Tele_value = '0' }
+        if (Tele_value == undefined) { $.setdata('', Tele_AutoCheck_threshold); Tele_value = '' }
         
         let Tile_All = { Tile_Today: '', Tile_Month: '', Tile_Time: '' }
 
@@ -146,18 +143,28 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
             notice_body = $.getdata(Tele_AutoCheck_notice_body).split('/')
         } else { notice_body = $.getdata(Tele_AutoCheck_notice_body).split('/') }
 
-
-        $.log(`\n` + '流量卡名：' + brond + `\n` + '[1]' + brond + '通用：已用' + ToSize(ArrayQuery.limitusage, 2, 0, 1) +' 剩余：' + ToSize(ArrayQuery.limitleft, 2, 0, 1) +`\n` + '[2]' + brond + '定向：已用' + ToSize(ArrayQuery.unlimitusage, 2, 0, 1) +' 剩余：' + ToSize(ArrayQuery.unlimitleft, 2, 0, 1)+ `\n\n`+ ' 流量变化阈值：' + ToSize(Tele_value, 1, 1, 1))
+        $.log(`\n` + '流量卡名：' + brond + `\n` + '[1]' + brond + '通用：已用' + ToSize(ArrayQuery.limitusage, 2, 0, 1) +' 剩余：' + ToSize(ArrayQuery.limitleft, 2, 0, 1) +`\n` + '[2]' + brond + '定向：已用' + ToSize(ArrayQuery.unlimitusage, 2, 0, 1) +' 剩余：' + ToSize(ArrayQuery.unlimitleft, 2, 0, 1)+ `\n`)
         $.log("上次通用使用：" + ToSize(limitLast, 2, 0, 1) + " 当前通用使用：" + ToSize(limitThis, 2, 0, 1))
         $.log("上次定向使用：" + ToSize(unlimitLast, 2, 0, 1) + " 当前定向使用：" + ToSize(unlimitThis, 2, 0, 1))
-        $.log("通用变化量：" + ToSize(limitChange, 2, 0, 1) + " 定向变化量：" + ToSize(unlimitChange, 2, 0, 1))
-        let Change=$.getdata(Tele_AutoCheck_limit_choose)
-        let val=false
-        if(Change=='true'&&limitChange >= Tele_value) val=true
-        if(Change=='false'&&(unlimitChange>=Tele_value||limitChange>=Tele_value)) val=true
-
-        if (Timer_Notice == "true") {
-            $.log(`\n` + '当前为变化通知，变化阈值为：' + ToSize(Tele_value, 1, 0, 1))
+        $.log("通用变化量：" + ToSize(limitChange, 2, 0, 1) + " 定向变化量：" + ToSize(unlimitChange, 2, 0, 1)+`\n`)
+        
+        if(Tele_value==''){
+            $.log(`\n` + '当前为定时通知 间隔时间请去Cron中修改' )
+            if (isFirst) $.log('首次使用：通知已发送！')
+            $.setdata($.toStr(ArrayQuery.limitusage), Tele_AutoCheck_limitStore)
+            $.setdata($.toStr(ArrayQuery.unlimitusage),Tele_AutoCheck_unlimitStore)
+            $.setdata($.toStr(thishours), Tele_AutoCheck_hourstimeStore)
+            $.setdata($.toStr(thisminutes), Tele_AutoCheck_minutestimeStore)
+            title = brond + '  耗时:' + formatMinutes(minutesused)
+            body = notice_body[0] + ToSize(unlimitChange, 2, 1, 1) + ' ' + notice_body[1] + ToSize(limitChange, 2, 1, 1)
+            body1 = notice_body[2] + ToSize(ArrayQuery.unlimitusage, 2, 1, 1) + ' ' + notice_body[3] + ToSize(ArrayQuery.limitleft, 2, 1, 1)
+            Notice(title, body, body1)
+        }else{
+            $.log(`\n` + '当前为变化通知，变化阈值为：' + ToSize(Tele_value, 3, 0, 1))
+            let Change=$.getdata(Tele_AutoCheck_limit_choose) //判断是仅通用，还是任意值变化
+            let val=false
+            if(Change=='true'&&limitChange >= Tele_value) val=true
+            if(Change=='false'&&(unlimitChange>=Tele_value||limitChange>=Tele_value)) val=true
             if (val) {
                 $.setdata($.toStr(ArrayQuery.limitusage), Tele_AutoCheck_limitStore)
                 $.setdata($.toStr(ArrayQuery.unlimitusage), Tele_AutoCheck_unlimitStore)
@@ -168,20 +175,6 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
                 body1 = notice_body[2] + ToSize(ArrayQuery.unlimitusage, 2, 1, 1) + ' ' + notice_body[3] + ToSize(ArrayQuery.limitleft, 2, 1, 1)
                 Notice(title, body, body1)
             }
-
-        } else if (isFirst||Timer_Notice == "false") {
-            $.log(`\n` + '当前为定时通知 间隔时间请去Cron中修改' )
-            if (isFirst) $.log('首次使用：通知已发送！')
-
-                $.setdata($.toStr(ArrayQuery.limitusage), Tele_AutoCheck_limitStore)
-                $.setdata($.toStr(ArrayQuery.unlimitusage),Tele_AutoCheck_unlimitStore)
-                $.setdata($.toStr(thishours), Tele_AutoCheck_hourstimeStore)
-                $.setdata($.toStr(thisminutes), Tele_AutoCheck_minutestimeStore)
-                title = brond + '  耗时:' + formatMinutes(minutesused)
-                body = notice_body[0] + ToSize(unlimitChange, 2, 1, 1) + ' ' + notice_body[1] + ToSize(limitChange, 2, 1, 1)
-                body1 = notice_body[2] + ToSize(ArrayQuery.unlimitusage, 2, 1, 1) + ' ' + notice_body[3] + ToSize(ArrayQuery.limitleft, 2, 1, 1)
-                Notice(title, body, body1)
-            
         }
 
         panel['title'] = $.getdata(Tele_AutoCheck_key_brond)

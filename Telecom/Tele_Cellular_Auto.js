@@ -162,6 +162,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         }else{
             $.log(`\n` + '当前为变化通知，变化阈值为：' + ToSize(Tele_value, 3, 0, 1))
             let Change=$.getdata(Tele_AutoCheck_limit_choose) //判断是仅通用，还是任意值变化
+            if(Change==undefined) {$.setdata('false',Tele_AutoCheck_limit_choose);Change='false'}
             let val=false
             if(Change=='true'&&limitChange >= Tele_value) val=true
             if(Change=='false'&&(unlimitChange>=Tele_value||limitChange>=Tele_value)) val=true

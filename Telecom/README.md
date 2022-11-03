@@ -2,15 +2,15 @@
 可以关注我的[电报频道](https://t.me/CatStudyCase)小更新会在里面，反馈可直接联系我
 
 ```
-目前支持 STASH QX 小火箭 等平台的流量跳点通知
+目前支持 STASH QX 小火箭 LOON Surge等平台的流量跳点通知
 
-自动版可以自己定期登录
+有Node环境可以直接跑，自动版可以自己定期登录
 
 手动版需要定期进去公众号或者App获取Token
 ```
 ---
 
-### STASH使用方法
+## STASH使用方法
 
 进入STASH覆写库安装请求体获取脚本以及余量脚本
 
@@ -25,7 +25,8 @@
 
 同时需要[BoxJS](https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.stash.stoverride)进行后续配置[一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fraw.githubusercontent.com%2FQGCliveDavis%2FModule%2Fmain%2FTelecom%2FTele.json)
 
-### 小火箭使用方法
+
+## ShadowRocket使用方法
 点击小火箭-配置-模块后安装
 
 #### 自动版
@@ -38,22 +39,41 @@
 
 需要[BoxJS](https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.surge.sgmodule)进行后续配置[一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fraw.githubusercontent.com%2FQGCliveDavis%2FModule%2Fmain%2FTelecom%2FTele.json)
 
-### QX(圈叉)使用方法
+
+## QX(圈叉)使用方法
 
 #### 自动版与手动版都在仓库中
 
-在QX右下角三条横线(构造请求)中，任务仓库添加如下任务(是加号左边第三个)
+仓库添加方法：在QX右下角三条横线(构造请求)中，任务仓库添加如下任务(加号左边第三个)
 
 电信余量:
->https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_QX_LocalTask.conf
+> https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_QX_LocalTask.conf
 
 获取Body安装方法:(手动版需要安装自动获取Body脚本：长按重写-右上角-粘贴如下链接(开启解析器))
 > https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_QX.conf
 
 需要[BoxJS](https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.surge.sgmodule)进行后续配置[一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fraw.githubusercontent.com%2FQGCliveDavis%2FModule%2Fmain%2FTelecom%2FTele.json)
 
-**若无法获取Body请检查Mitm开关与域名是否添加**
+### Loon
 
+> 仅供参考 以该 app 最新配置为准 自行配置
+
+```
+[Script]
+enable = true
+cron "*/5 * * * *" script-path=https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Cellular_Auto.js
+```
+需要[BoxJS](https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.surge.sgmodule)进行后续配置[一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fraw.githubusercontent.com%2FQGCliveDavis%2FModule%2Fmain%2FTelecom%2FTele.json)
+
+## Surge
+
+```
+[Script]
+电信余量 = type=cron,cronexp=*/5 * * * *,timeout=30,script-path=https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Cellular_Auto.js
+```
+需要[BoxJS](https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.surge.sgmodule)进行后续配置[一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fraw.githubusercontent.com%2FQGCliveDavis%2FModule%2Fmain%2FTelecom%2FTele.json)
+
+**若无法获取Body请检查Mitm开关与域名是否添加**
 
 # BoxJs后续配置(自动版)
 1. 输入营业厅账号与密码

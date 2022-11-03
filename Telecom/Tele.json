@@ -202,7 +202,7 @@
         {
           "id": "Tele_AutoCheck.threshold",
           "name": "通知提醒阈值",
-          "val": 0,
+          "val": ,
           "autoGrow": true,
           "rows": 1,
           "type": "number",

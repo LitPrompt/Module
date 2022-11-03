@@ -48,20 +48,17 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         else if (hoursused < 0 && lasthours <= 23) { minutesused = (60 - lastminutes) + (23 - lasthours + thishours) * 60 + thisminutes }
         //**********
 
-
-        let Tele_value = $.getdata(Tele_AutoCheck_threshold) //读取阈值
-
-        if (Tele_value == undefined) { $.setdata('', Tele_AutoCheck_threshold); Tele_value = '' }
-        
         let Tile_All = { Tile_Today: '', Tile_Month: '', Tile_Time: '' }
 
 
         let Phone = $.getdata(Tele_AutoCheck_LoginName)
         let PassWd = $.getdata(Tele_AutoCheck_LoginPw)
-
+        let Tele_value = $.getdata(Tele_AutoCheck_threshold) //读取阈值
+        
         if(Phone==undefined) {Phone='';$.setdata('',Tele_AutoCheck_LoginName)}
         if(PassWd==undefined) {PassWd='';$.setdata('',Tele_AutoCheck_LoginPw)}
-
+        if(Tele_value == undefined) { Tele_value = '' ;$.setdata('', Tele_AutoCheck_threshold)}
+        
 
         if(Phone==''||PassWd=='') {throw '请在Boxjs中设置登录账号与密码'}
 

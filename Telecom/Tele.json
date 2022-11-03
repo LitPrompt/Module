@@ -161,6 +161,7 @@
         "Tele_AutoCheck.LoginPw",
         "Tele_AutoCheck.hourstimeStore",
         "Tele_AutoCheck.minutestimeStore",
+        "Tele_AutoCheck.threshold",
         "Tele_AutoCheck.limitStore",
         "Tele_AutoCheck.unlimitStore",
         "Tele_AutoCheck.bark_icon",

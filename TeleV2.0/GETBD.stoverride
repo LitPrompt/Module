@@ -14,5 +14,5 @@ http:
 
 script-providers:
   Telecom_BD:
-    url: https://raw.githubusercontent.com/QGCliveDavis/Module/main/TeleV2.0/BD1000.js
+    url: https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/GetBd.js
     interval: 86400

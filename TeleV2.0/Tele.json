@@ -161,6 +161,7 @@
         "Tele_AutoCheck.LoginPw",
         "Tele_AutoCheck.hourstimeStore",
         "Tele_AutoCheck.minutestimeStore",
+        "Tele_AutoCheck.threshold",
         "Tele_AutoCheck.limitStore",
         "Tele_AutoCheck.unlimitStore",
         "Tele_AutoCheck.bark_icon",
@@ -188,7 +189,7 @@
           "autoGrow": true,
           "rows": 1,
           "desc": "输入电信登录密码"
-        }, 
+        },
         {
           "id": "Tele_AutoCheck.key_brond",
           "name": "流量卡名",
@@ -198,30 +199,23 @@
           "autoGrow": true,
           "rows": 1,
           "desc": ""
-        }, 
-        {
-          "id": "Tele_AutoCheck.notice_switch",
-          "name": "是否禁用定时通知",
-          "val": false,
-          "type": "boolean",
-          "desc": "开启后将在流量变化时通知流量信息"
-        },    
-        {
-          "id": "Tele_AutoCheck.timeinterval",
-          "name": "定时通知时间间隔",
-          "val": 5,
-          "type": "number",
-          "desc": "默认间隔为5分钟，最好设置为5的倍数"
         },
         {
           "id": "Tele_AutoCheck.threshold",
-          "name": "通知提醒阈值(定时通知时阈值不起作用)",
-          "val": 0,
+          "name": "通知提醒阈值",
+          "val": "",
           "autoGrow": true,
           "rows": 1,
           "type": "number",
-          "desc": "默认阈值为0，单位为kb，即有变化就通知"
+          "desc": "默认阈值为空。需要变化通知请填入数值，单位为KB"
         },
+        {
+          "id": "Tele_AutoCheck.limit_choose",
+          "name": "是否仅通用变化通知",
+          "val": false,
+          "type": "boolean",
+          "desc": "默认通用和定向，任意一个超过阈值即会通知"
+        }, 
         {
           "id": "Tele_AutoCheck.notice_body",
           "name": "通知格式",
@@ -289,7 +283,7 @@
           "placeholder": "",
           "autoGrow": true,
           "rows": 1,
-          "type": "textarea",
+          "type": "text",
 		 "desc": ""
       	}
     ],

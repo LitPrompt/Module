@@ -15,10 +15,10 @@ const effective = $request.url.indexOf("1942065")
 async function GetBody() {
 
     if ($request.headers&&effective) {
-      $.write($request.headers, "Tele_HD")
+      $.write(JSON.stringify($request.headers), "Tele_HD")
       title='图书馆'
       body='请求头写入成功'
-      body1=$request.headers
+      body1=JSON.stringify($request.headers)
       $.notice(title,body,body1)
       console.log(body1)
     }else{

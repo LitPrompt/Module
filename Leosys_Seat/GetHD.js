@@ -8,13 +8,13 @@ hostname=czapp.bestpay.com.cn
 * */
 
 const $ = new Env('利昂请求头获取');
-const effective = $request.url.indexOf("searchSeats")
+const effective = ($request.url).indexOf("searchSeats")
 
 !(async () => {await GetBody();})().catch((e) => {$.log(e)}).finally(() => {$.done({});});
 
 async function GetBody() {
 
-    if ($request.headers&&effective) {
+    if (effective) {
       $.write(JSON.stringify($request.headers), "Tele_HD")
       title='图书馆'
       body='请求头写入成功'

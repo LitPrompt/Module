@@ -14,7 +14,7 @@ const effective = ($request.url).indexOf("searchSeats")
 
 async function GetBody() {
 
-    if (effective) {
+    if (effective!=-1) {
       $.write(JSON.stringify($request.headers), "Tele_HD")
       title='图书馆'
       body='请求头写入成功'

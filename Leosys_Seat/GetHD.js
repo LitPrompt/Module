@@ -8,7 +8,7 @@ hostname=czapp.bestpay.com.cn
 * */
 
 const $ = new Env('利昂请求头获取');
-const effective = $request.url.indexOf("1942065")
+const effective = $request.url.indexOf("seachSeats")
 
 !(async () => {await GetBody();})().catch((e) => {$.log(e)}).finally(() => {$.done({});});
 
@@ -20,11 +20,8 @@ async function GetBody() {
       body='请求头写入成功'
       body1=JSON.stringify($request.headers)
       $.notice(title,body,body1)
-      console.log(body1)
-    }else{
-      console.log('请求头'+JSON.stringify($request.headers)+`\n`+'请求Url：'+JSON.stringify($request.url)+effective+`\n`)
+      console.log('请求头：'+body1+`\n`+'请求Url：'+JSON.stringify($request.url)+`\n`)
     }
-
 }
 
 function Env(name) {

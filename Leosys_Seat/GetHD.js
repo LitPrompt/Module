@@ -18,9 +18,9 @@ async function GetBody() {
       $.write(JSON.stringify($request.headers), "Tele_HD")
       title='图书馆'
       body='请求头写入成功'
-      body1=JSON.stringify($request.headers)
+      body1=JSON.stringify($request.url)+`\n`+JSON.stringify($request.headers)
       $.notice(title,body,body1)
-      console.log('请求头：'+body1+`\n`+'请求Url：'+JSON.stringify($request.url)+`\n`)
+      console.log('请求头：'+body1+`\n`+'请求Url：'+JSON.stringify($request.url)+`\n\n`)
     }
 }
 

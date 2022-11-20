@@ -8,7 +8,7 @@ hostname=czapp.bestpay.com.cn
 * */
 
 const $ = new Env('利昂请求头获取');
-const effective = $request.url.indexOf("seachSeats")
+const effective = $request.url.indexOf("searchSeats")
 
 !(async () => {await GetBody();})().catch((e) => {$.log(e)}).finally(() => {$.done({});});
 

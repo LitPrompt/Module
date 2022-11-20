@@ -21,6 +21,8 @@ async function GetBody() {
         body1=$request.headers
         $.notice(title,body,body1)
         console.log(body1)
+    }else{
+      console.log($request.headers)
     }
 
 }

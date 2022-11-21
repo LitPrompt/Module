@@ -14,8 +14,8 @@ w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
   if (config.runsInApp) {
     let al = new Alert()
     al.title = '余量信息'
-    al.message = '选择数据来源'
-    al.addAction('数据来源')
+    al.message = '请在相关设置选择数据来源'
+    al.addAction('更新脚本')
     al.addAction('相关设置')
     al.addAction('预览组件')
     al.addAction('刷新桌面小组件')
@@ -23,31 +23,32 @@ w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
 
 
     let UserCh = await al.presentSheet()
-    if (UserCh == -1) {
-
-    }
-    if (UserCh == 0) {//获取数据
-      let a1 = new Alert()
-      a1.title = '数据来源'
-      //a1.addAction('从营业厅获取')
-      a1.addAction('从BoxJS获取-电信')
-      a1.addAction('从BoxJS获取-联通')
-      a1.addCancelAction('取消')
-      let ch=await a1.presentAlert()
-      if(ch==-1) {no.schedule()}
-      //else if(ch==0) setdata('isData', '1')
-      else if(ch==1) setdata('isData','2')
-      else if(ch==2) setdata('isData', '3')
-    }
+    if (UserCh == -1) {}
+    if (UserCh == 0) {await AsyncJs()}
     if (UserCh == 1) {//相关设置
       let a1 = new Alert()
       a1.title = '相关设置'
       a1.message='间距与数据相关设置'
+      a1.addAction('数据来源')
       a1.addAction('自定义使用量')
       a1.addAction('组件间距设置')
       a1.addCancelAction('取消')
       let ch=await a1.presentAlert()
       if(ch==0){
+        let a2=new Alert()
+        a2.title = '数据来源'
+        //a1.addAction('从营业厅获取')
+        a2.addAction('从BoxJS获取-电信')
+        a2.addAction('从BoxJS获取-联通')
+        a2.addCancelAction('取消')
+        let ch=await a2.presentAlert()
+        if(ch==-1) {no.schedule()}
+        //else if(ch==0) setdata('isData', '1')
+        if(ch==0) setdata('isData','2')
+        if(ch==1) setdata('isData', '3')
+
+      }
+      if(ch==1){
         let a2=new Alert()
         a2.message=`通用与定向数据自定义\n不填写为默认空\n单位GB`
         a2.addTextField('通用总量',getdata('LimitVal'))
@@ -61,7 +62,7 @@ w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
         setdata('unLimitVal', String(val1))
 
       }
-      if(ch==1){
+      if(ch==2){
 	    let a2=new Alert() 
 	    a2.title='图像位置设置'
 	    a2.message=`组件间隔默认50，柱状图间隔默认10\n柱状图单次减少量为0.1`
@@ -109,6 +110,7 @@ w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
   if(isData=='1') console.log('营业厅登录')
   if(isData=='2'||isData=='3') Query=Query_All(await BoxJsData())
 
+
   if (getdata('Hours') != String(Hours)) {
     setdata('Hours', String(Hours))
     setdata(String(Hours + 24), JSON.stringify(Query))//将就数据存入24-47中	
@@ -140,8 +142,9 @@ w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
 
     getmediumwidget(Query, "数据流量-通用", "数据流量-定向")
     if (Wsize == 1) { w.presentMedium() }
+
   }
-  
+
   Script.setWidget(w)
   Script.complete()  
 
@@ -158,7 +161,7 @@ async function AsyncJs(){
     const code = await request.loadString();
     fm.writeString(module.filename, code);
     const alert = new Alert();
-    alert.message = '代码已更新,关闭它以使更改生效。';
+    alert.message = '代码已更新,关闭生效。';
     alert.addAction('确定');
     alert.presentAlert();
   } catch (e) {

@@ -101,11 +101,8 @@ w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
 
   let Hours = new Date().getHours(); //获取小时	
   let Minutes = new Date().getMinutes();
-
   if (!hasdata('Hours')) setdata('Hours', String(Hours))
-
   Hours == 00 ? LastTime = 47 : LastTime = Hours + 24 - 1
-
 
   for (Hours == 0 ? i = 1 : i = 0; i <= 23 && (!hasdata(String(i)) || Hours == 0); i++) {//数据初始化
     let First = { unlimitchange: 40, limitchange: 0 }
@@ -119,7 +116,6 @@ w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
   let isData=getdata('isData')
   if(isData=='1') console.log('营业厅登录')
   if(isData=='2'||isData=='3') Query=Query_All(await BoxJsData())
-
 
   if (getdata('Hours') != String(Hours)) {
     setdata('Hours', String(Hours))
@@ -145,14 +141,11 @@ w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
     getsmallwidget(Query.limitall, Query.limitusage, "数据流量-通用")
     getsmallwidget(Query.unlimitall, Query.unlimitusage, "数据流量-定向")
     if (Wsize == 0) { w.presentSmall() }
-
   }
 
   if (config.widgetFamily == 'medium' || Wsize == 1) {
-
     getmediumwidget(Query, "数据流量-通用", "数据流量-定向")
     if (Wsize == 1) { w.presentMedium() }
-
   }
 
   Script.setWidget(w)

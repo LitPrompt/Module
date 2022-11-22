@@ -33,6 +33,7 @@ const headers = { "Accept": "application/json", "Content-Type": "application/jso
       a1.addAction('数据来源')
       a1.addAction('自定义使用量')
       a1.addAction('组件间距设置')
+      a1.addAction('字体大小设置')
       a1.addAction('清除缓存')
       a1.addCancelAction('取消')
       let ch=await a1.presentAlert()
@@ -79,13 +80,26 @@ const headers = { "Accept": "application/json", "Content-Type": "application/jso
         setdata('KSize', String(KSize))
       }
       if(ch==3){
+        let a2=new Alert() 
+	      a2.title='字体大小设置'
+	      a2.message=``
+	      a2.addTextField('组件间隔',getdata('Space'))
+	      a2.addTextField('柱状图间隔',getdata('KSize'))
+	      a2.addAction('确认')
+	      a2.addCancelAction('取消')
+          await a2.presentAlert()
+          let Space = a2.textFieldValue(0)
+          let KSize = a2.textFieldValue(1)
+          setdata('Space', String(Space))
+          setdata('KSize', String(KSize))
+      }
+      if(ch==4){
 	    let a2=new Alert() 
 	    a2.message=`清除上版本缓存，当组件存在问题时可清理`
          a2.addAction('确认')
          a2.addCancelAction('取消')
         let ch=await a2.presentAlert()
         if(ch==0){for(i=0;i<48;++i)rmdata(String(i))}
-
       }
     }
     if (UserCh == 2) {

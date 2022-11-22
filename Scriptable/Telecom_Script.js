@@ -530,6 +530,23 @@ function hasdata(Key) { return Keychain.contains(Key) }
 function rmdata(Key) { Keychain.remove(Key)
   return true
 }
+function TransPhone(Number){
+    let result=''
+    let ArrPhone=Number.toString().split('')
+       for (let i = 0; i < 11; i++) {
+     result=`${result}`+String.fromCharCode(ArrPhone[i].charCodeAt()+2&65535)
+       }
+    return result
+}
+
+function RSAEncrypt(message) {
+      var encrypt = new JSEncrypt()
+      var pKey =
+        'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDBkLT15ThVgz6/NOl6s8GNPofdWzWbCkWnkaAm7O2LjkM1H7dMvzkiqdxU02jamGRHLX/ZNMCXHnPcW/sDhiFCBN18qFvy8g6VYb9QtroI09e176s+ZCtiv7hbin2cCTj99iUpnEloZm19lwHyo69u5UMiPMpq0/XKBO8lYhN/gwIDAQAB'
+      encrypt.setPublicKey(pKey)
+      var encrypted = encrypt.encrypt(message)
+      return encrypted
+}
 
 function Query_All(jsonData) {//原始量
 

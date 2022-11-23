@@ -562,6 +562,7 @@ function Query_All(jsonData) {//原始量
 
   if(getdata('isData')=='2'){
   if (SetVal != '') SetVal *= 1048576
+  if(SetVal1 != '') SetVal1*=1048579
   UnlimitInfo = jsonData.responseData.data.flowInfo.specialAmount
   LimitInfo = jsonData.responseData.data.flowInfo.commonFlow
 
@@ -583,7 +584,8 @@ function Query_All(jsonData) {//原始量
     limitbalancetotal = SetVal - limitusagetotal
     limitratabletotal = SetVal
   }
-
+  if(SetVal1 !='') unlimitusagetotal=SetVal1
+  
   PhoneBill= jsonData.responseData.data.balanceInfo.indexBalanceDataInfo.balance
   DataBill= jsonData.responseData.data.voiceInfo.voiceDataInfo.balance
   }

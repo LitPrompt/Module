@@ -584,7 +584,7 @@ function Query_All(jsonData) {//原始量
     limitbalancetotal = SetVal - limitusagetotal
     limitratabletotal = SetVal
   }
-  if(SetVal1 !='') unlimitusagetotal=SetVal1
+  if(SetVal1 !='') unlimitratabletotal=SetVal1
   
   PhoneBill= jsonData.responseData.data.balanceInfo.indexBalanceDataInfo.balance
   DataBill= jsonData.responseData.data.voiceInfo.voiceDataInfo.balance

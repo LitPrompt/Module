@@ -204,7 +204,7 @@ function formatMinutes(value) {
 async function Login(Phone,PassWd) {//登录
 
     let Ts=`${formatTime().year}${formatTime().month}${formatTime().day}${formatTime().hours}${formatTime().minutes}00`
-    let message=`iPhone X P13.2.3${Phone}${Phone}${Ts}${PassWd}0$$$0.`
+    let message=`iPhone 14 13.2.3${Phone}${Phone}${Ts}${PassWd}0$$$0.`
 
     let fieldData=new Object()
     fieldData.accountType=''
@@ -220,7 +220,7 @@ async function Login(Phone,PassWd) {//登录
     content.attach="iPhone"
 
     let headerInfos=new Object()
-    headerInfos.clientType='#9.6.1#channel50#iPhone X Plus#'
+    headerInfos.clientType='#9.6.1#channel50#iPhone 14 Pro#'
     headerInfos.code='userLoginNormal'
     headerInfos.shopId='20002'
     headerInfos.source='110003'
@@ -236,7 +236,7 @@ async function Login(Phone,PassWd) {//登录
             url: 'https://appgologin.189.cn:9031/login/client/userLoginNormal',
             headers: headers,
             body: JSON.stringify(login_body)// 请求体
-        }, function (error, response, data) { resolve(JSON.parse(data)) })
+        }, function (error, response, data) { resolve(JSON.parse(data))})
     })
 }
 

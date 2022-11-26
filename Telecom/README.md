@@ -7,6 +7,7 @@
 有Node环境可以直接跑，自动版可以自己定期登录
 
 手动版需要定期进去公众号或者App获取Token
+
 ```
 ---
 
@@ -15,7 +16,7 @@
 进入STASH覆写库安装请求体获取脚本以及余量脚本
 
 #### 自动版：
-在STASH中安装这个覆写：
+在STASH中安装这个覆写（官方覆写库中已经上线）：
 
 >[https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Stash_Auto.stoverride](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Stash_Auto.stoverride)
 
@@ -93,6 +94,8 @@ BoxJs中请求体(Body)获取方法：
 2. 对于筛选流量包，如果剩余数据与定向不正确，则说明表达式可能筛选了其他的包，请输入更精准的包名
 3. 如果你之前使用的是自动选包，更换手动选包后跳点与免流信息在初次查询可能有错误，不用在意
 4. 如果你是自动版，择无需正则选包
+5. 同时间只可以有一个设备在线，营业厅在线的时候推荐关闭脚本，否则会被脚本挤下去
+6. 本脚本以iPhone 14作为登录设备，所以异地登录设备是14时不要担心
 
 # 修改定时任务
 

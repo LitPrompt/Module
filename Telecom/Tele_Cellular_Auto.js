@@ -139,8 +139,9 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
             notice_body = $.setdata("免/跳/总免/剩余", Tele_AutoCheck_notice_body)
             notice_body = $.getdata(Tele_AutoCheck_notice_body).split('/')
         } else { notice_body = $.getdata(Tele_AutoCheck_notice_body).split('/') }
+        
+        $.log('详细信息：'+$.toStr(AllInfo(jsonData).Phone.Bar)+`\n\n`+ '流量卡名：' + brond + `\n`+'账户余额：'+AllInfo(jsonData).Phone.Left+` `+'实时话费：'+AllInfo(jsonData).Phone.Used+`\n`+AllInfo(jsonData).Flow.Detail+`\n`+'国内语音/'+AllInfo(jsonData).Voice.Total+' 使用'+AllInfo(jsonData).Voice.Used+` 剩余`+AllInfo(jsonData).Voice.Used+`\n`+AllInfo(jsonData).Storage.Detail+`\n`+'流量总共使用：'+AllInfo(jsonData).Flow.AllUsed+`\n`+'云盘总共使用：'+AllInfo(jsonData).Storage.AllUsed+`\n`+AllInfo(jsonData).Integral+`\n`)
 
-        $.log(`\n` + '流量卡名：' + brond + `\n` + '[1]' + brond + '通用：已用' + ToSize(ArrayQuery.limitusage, 2, 0, 1) +' 剩余：' + ToSize(ArrayQuery.limitleft, 2, 0, 1) +`\n` + '[2]' + brond + '定向：已用' + ToSize(ArrayQuery.unlimitusage, 2, 0, 1) +' 剩余：' + ToSize(ArrayQuery.unlimitleft, 2, 0, 1)+ `\n`)
         $.log("上次通用使用：" + ToSize(limitLast, 2, 0, 1) + " 当前通用使用：" + ToSize(limitThis, 2, 0, 1))
         $.log("上次定向使用：" + ToSize(unlimitLast, 2, 0, 1) + " 当前定向使用：" + ToSize(unlimitThis, 2, 0, 1))
         $.log("通用变化量：" + ToSize(limitChange, 2, 0, 1) + " 定向变化量：" + ToSize(unlimitChange, 2, 0, 1))
@@ -326,26 +327,26 @@ function AllInfo(jsondata){
 	}
 	let FlowInfo={
 		Detail:All.flowInfo.flowList[0].title+All.flowInfo.flowList[0].rightTitleEnd
-		+`\n`+All.flowInfo.flowList[0].leftTitle+All.flowInfo.flowList[0].leftTitleHh
-		+`\n`+All.flowInfo.flowList[0].rightTitle+All.flowInfo.flowList[0].rightTitleHh
+		+' '+All.flowInfo.flowList[0].leftTitle+All.flowInfo.flowList[0].leftTitleHh
+		+' '+All.flowInfo.flowList[0].rightTitle+All.flowInfo.flowList[0].rightTitleHh
 		+`\n`+All.flowInfo.flowList[1].title+All.flowInfo.flowList[1].rightTitleEnd
-		+`\n`+All.flowInfo.flowList[1].leftTitle+All.flowInfo.flowList[1].leftTitleHh
-		+`\n`+All.flowInfo.flowList[1].rightTitle+All.flowInfo.flowList[1].rightTitleHh,
+		+` `+All.flowInfo.flowList[1].leftTitle+All.flowInfo.flowList[1].leftTitleHh
+		+` `+All.flowInfo.flowList[1].rightTitle+All.flowInfo.flowList[1].rightTitleHh,
 		AllUsed:All.flowInfo.flowRegion.subTitleHh
 	}
 	let VoiceInfo={
-		Used:All.voiceInfo.voiceDataInfo.used,
-		Left:All.voiceInfo.voiceDataInfo.balance,
-		Total:All.voiceInfo.voiceDataInfo.total
+		Used:All.voiceInfo.voiceDataInfo.used+'分钟',
+		Left:All.voiceInfo.voiceDataInfo.balance+'分钟',
+		Total:All.voiceInfo.voiceDataInfo.total+'分钟'
 	}
-	let IntegralInfo=All.integralInfo.title+All.integralInfo.integral
+	let IntegralInfo=All.integralInfo.title+'：'+All.integralInfo.integral+' 分'
 	let StorageInfo={	
 		Detail:All.storageInfo.flowList[0].title+All.storageInfo.flowList[0].rightTitleEnd
-		+`\n`+All.storageInfo.flowList[0].leftTitle+All.storageInfo.flowList[0].leftTitleHh
-		+`\n`+All.storageInfo.flowList[0].rightTitle+All.storageInfo.flowList[0].rightTitleHh
+		+` `+All.storageInfo.flowList[0].leftTitle+All.storageInfo.flowList[0].leftTitleHh
+		+` `+All.storageInfo.flowList[0].rightTitle+All.storageInfo.flowList[0].rightTitleHh
 		+`\n`+All.storageInfo.flowList[1].title+All.storageInfo.flowList[1].rightTitleEnd
-		+`\n`+All.storageInfo.flowList[1].leftTitle+All.storageInfo.flowList[1].leftTitleHh
-		+`\n`+All.storageInfo.flowList[1].rightTitle+All.storageInfo.flowList[1].rightTitleHh,
+		+` `+All.storageInfo.flowList[1].leftTitle+All.storageInfo.flowList[1].leftTitleHh
+		+` `+All.storageInfo.flowList[1].rightTitle+All.storageInfo.flowList[1].rightTitleHh,
 		AllUsed:All.storageInfo.flowRegion.subTitleHh
 	}
 	return All_Info={Phone:BalanceInfo,Flow:FlowInfo,Voice:VoiceInfo,Integral:IntegralInfo,Storage:StorageInfo}

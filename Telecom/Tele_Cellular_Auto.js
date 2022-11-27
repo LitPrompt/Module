@@ -178,7 +178,10 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         panel['title'] = $.getdata(Tele_AutoCheck_key_brond)
         panel['content'] = '今日免流/跳点：' + Tile_All['Tile_Today'] + `\n` + '本月免流/跳点：' + Tile_All['Tile_Month'] + `\n` + '查询时间：' + Tile_All['Tile_Time']
 
-    } catch (e) {Notice('电信余量','错误❌原因：'+e,'');$.log('错误：' + e)}
+    } catch (e) {
+        //Notice('电信余量','错误❌原因：'+e,'');
+        $.log('错误：' + e)
+    }
     $.done(panel)
 
 })()

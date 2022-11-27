@@ -316,6 +316,40 @@ async function ProductName(Login_info) {//余量原始数据
     })
 }
 
+function AllInfo(jsondata){
+	typeof jsondata!='object'?jsondata=$.toObj(jsondata):{}
+	let All=jsondata.responseData.data
+	let BalanceInfo={	
+		Used:All.balanceInfo.phoneBillRegion.subTitleHh,
+		Left:All.balanceInfo.indexBalanceDataInfo.balance+'元',
+		Bar:All.balanceInfo.phoneBillBars
+	}
+	let FlowInfo={
+		Detail:All.flowInfo.flowList[0].title+All.flowInfo.flowList[0].rightTitleEnd
+		+`\n`+All.flowInfo.flowList[0].leftTitle+All.flowInfo.flowList[0].leftTitleHh
+		+`\n`+All.flowInfo.flowList[0].rightTitle+All.flowInfo.flowList[0].rightTitleHh
+		+`\n`+All.flowInfo.flowList[1].title+All.flowInfo.flowList[1].rightTitleEnd
+		+`\n`+All.flowInfo.flowList[1].leftTitle+All.flowInfo.flowList[1].leftTitleHh
+		+`\n`+All.flowInfo.flowList[1].rightTitle+All.flowInfo.flowList[1].rightTitleHh,
+		AllUsed:All.flowInfo.flowRegion.subTitleHh
+	}
+	let VoiceInfo={
+		Used:All.voiceInfo.voiceDataInfo.used,
+		Left:All.voiceInfo.voiceDataInfo.balance,
+		Total:All.voiceInfo.voiceDataInfo.total
+	}
+	let IntegralInfo=All.integralInfo.title+All.integralInfo.integral
+	let StorageInfo={	
+		Detail:All.storageInfo.flowList[0].title+All.storageInfo.flowList[0].rightTitleEnd
+		+`\n`+All.storageInfo.flowList[0].leftTitle+All.storageInfo.flowList[0].leftTitleHh
+		+`\n`+All.storageInfo.flowList[0].rightTitle+All.storageInfo.flowList[0].rightTitleHh
+		+`\n`+All.storageInfo.flowList[1].title+All.storageInfo.flowList[1].rightTitleEnd
+		+`\n`+All.storageInfo.flowList[1].leftTitle+All.storageInfo.flowList[1].leftTitleHh
+		+`\n`+All.storageInfo.flowList[1].rightTitle+All.storageInfo.flowList[1].rightTitleHh,
+		AllUsed:All.storageInfo.flowRegion.subTitleHh
+	}
+	return All_Info={Phone:BalanceInfo,Flow:FlowInfo,Voice:VoiceInfo,Integral:IntegralInfo,Storage:StorageInfo}
+}
 
 function Query_All(jsonData) {//原始量
 	let SetVal=$.getdata(Tele_AutoCheck_SetVal)

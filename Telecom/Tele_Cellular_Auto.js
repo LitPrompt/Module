@@ -341,11 +341,11 @@ function AllInfo(jsondata){
 	let IntegralInfo=All.integralInfo.title+'：'+All.integralInfo.integral+' 分'
 	let StorageInfo={	
 		Detail:All.storageInfo.flowList[0].title+All.storageInfo.flowList[0].rightTitleEnd
-		+` `+All.storageInfo.flowList[0].leftTitle+All.storageInfo.flowList[0].leftTitleHh
-		+` `+All.storageInfo.flowList[0].rightTitle+All.storageInfo.flowList[0].rightTitleHh
+		+` `+All.storageInfo.flowList[0].leftTitle+'：'+All.storageInfo.flowList[0].leftTitleHh
+		+` `+All.storageInfo.flowList[0].rightTitle+'：'+All.storageInfo.flowList[0].rightTitleHh
 		+`\n`+All.storageInfo.flowList[1].title+All.storageInfo.flowList[1].rightTitleEnd
-		+` `+All.storageInfo.flowList[1].leftTitle+All.storageInfo.flowList[1].leftTitleHh
-		+` `+All.storageInfo.flowList[1].rightTitle+All.storageInfo.flowList[1].rightTitleHh,
+		+` `+All.storageInfo.flowList[1].leftTitle+'：'+All.storageInfo.flowList[1].leftTitleHh
+		+` `+All.storageInfo.flowList[1].rightTitle+'：'+All.storageInfo.flowList[1].rightTitleHh,
 		AllUsed:All.storageInfo.flowRegion.subTitleHh
 	}
 	return All_Info={Phone:BalanceInfo,Flow:FlowInfo,Voice:VoiceInfo,Integral:IntegralInfo,Storage:StorageInfo}

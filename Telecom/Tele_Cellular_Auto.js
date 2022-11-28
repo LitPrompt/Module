@@ -323,6 +323,8 @@ function AllInfo(jsondata){
 	typeof jsondata!='object'?jsondata=$.toObj(jsondata):{}
 	let All=jsondata.responseData.data
     let BalanceInfo={}
+    let IntegralInfo=''
+    All.integralInfo.title==null?IntegralInfo='无数据':IntegralInfo=All.integralInfo.title+'：'+All.integralInfo.integral+' 分'
     if(All.balanceInfo.indexBalanceDataInfo==null){
         BalanceInfo={
             Used:'无数据',
@@ -350,7 +352,7 @@ function AllInfo(jsondata){
 		Left:All.voiceInfo.voiceDataInfo.balance+'分钟',
 		Total:All.voiceInfo.voiceDataInfo.total+'分钟'
 	}
-	let IntegralInfo=All.integralInfo.title+'：'+All.integralInfo.integral+' 分'
+
 	let StorageInfo={	
 		Detail:All.storageInfo.flowList[0].title+All.storageInfo.flowList[0].rightTitleEnd
 		+` `+All.storageInfo.flowList[0].leftTitle+'：'+All.storageInfo.flowList[0].leftTitleHh

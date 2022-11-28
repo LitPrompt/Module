@@ -322,7 +322,6 @@ async function ProductName(Login_info) {//余量原始数据
 function AllInfo(jsondata){
 	typeof jsondata!='object'?jsondata=$.toObj(jsondata):{}
 	let All=jsondata.responseData.data
-    console.log($.toStr(All.balanceInfo))
     let BalanceInfo={}
     if(All.balanceInfo.indexBalanceDataInfo==null){
         BalanceInfo={

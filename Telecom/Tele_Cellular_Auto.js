@@ -322,11 +322,21 @@ async function ProductName(Login_info) {//余量原始数据
 function AllInfo(jsondata){
 	typeof jsondata!='object'?jsondata=$.toObj(jsondata):{}
 	let All=jsondata.responseData.data
-	let BalanceInfo={	
-		Used:All.balanceInfo.phoneBillRegion.subTitleHh,
-		Left:All.balanceInfo.indexBalanceDataInfo.balance+'元',
-		Bar:All.balanceInfo.phoneBillBars
-	}
+    console.log($.toStr(All.balanceInfo))
+    let BalanceInfo={}
+    if(All.balanceInfo.indexBalanceDataInfo==null){
+        BalanceInfo={
+            Used:'无数据',
+            Left:'无数据',
+            Bar:All.balanceInfo.phoneBillBars
+        }
+    }else{
+	    BalanceInfo={	
+		    Used:All.balanceInfo.phoneBillRegion.subTitleHh,
+		    Left:All.balanceInfo.indexBalanceDataInfo.balance+'元',
+		    Bar:All.balanceInfo.phoneBillBars
+	    }
+    }
 	let FlowInfo={
 		Detail:All.flowInfo.flowList[0].title+All.flowInfo.flowList[0].rightTitleEnd
 		+' '+All.flowInfo.flowList[0].leftTitle+'：'+All.flowInfo.flowList[0].leftTitleHh

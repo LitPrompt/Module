@@ -324,6 +324,7 @@ function AllInfo(jsondata){
 	let All=jsondata.responseData.data
     let BalanceInfo={}
     let IntegralInfo=''
+    let StorageInfo={}
     All.integralInfo.title==null?IntegralInfo='无数据':IntegralInfo=All.integralInfo.title+'：'+All.integralInfo.integral+' 分'
     if(All.balanceInfo.indexBalanceDataInfo==null){
         BalanceInfo={
@@ -338,7 +339,8 @@ function AllInfo(jsondata){
 		    Bar:All.balanceInfo.phoneBillBars
 	    }
     }
-	let FlowInfo={
+
+    let FlowInfo={
 		Detail:All.flowInfo.flowList[0].title+All.flowInfo.flowList[0].rightTitleEnd
 		+' '+All.flowInfo.flowList[0].leftTitle+'：'+All.flowInfo.flowList[0].leftTitleHh
 		+' '+All.flowInfo.flowList[0].rightTitle+'：'+All.flowInfo.flowList[0].rightTitleHh
@@ -352,16 +354,18 @@ function AllInfo(jsondata){
 		Left:All.voiceInfo.voiceDataInfo.balance+'分钟',
 		Total:All.voiceInfo.voiceDataInfo.total+'分钟'
 	}
-
-	let StorageInfo={	
-		Detail:All.storageInfo.flowList[0].title+All.storageInfo.flowList[0].rightTitleEnd
-		+` `+All.storageInfo.flowList[0].leftTitle+'：'+All.storageInfo.flowList[0].leftTitleHh
-		+` `+All.storageInfo.flowList[0].rightTitle+'：'+All.storageInfo.flowList[0].rightTitleHh
-		+`\n`+All.storageInfo.flowList[1].title+All.storageInfo.flowList[1].rightTitleEnd
-		+` `+All.storageInfo.flowList[1].leftTitle+'：'+All.storageInfo.flowList[1].leftTitleHh
-		+` `+All.storageInfo.flowList[1].rightTitle+'：'+All.storageInfo.flowList[1].rightTitleHh,
-		AllUsed:All.storageInfo.flowRegion.subTitleHh
-	}
+    if(All.storageInfo.flowList[0]==null) StorageInfo={Detail:'无数据',AllUsed:All.storageInfo.flowRegion.subTitleHh}
+    else {
+        StorageInfo={	
+    		Detail:All.storageInfo.flowList[0].title+All.storageInfo.flowList[0].rightTitleEnd
+    		+` `+All.storageInfo.flowList[0].leftTitle+'：'+All.storageInfo.flowList[0].leftTitleHh
+    		+` `+All.storageInfo.flowList[0].rightTitle+'：'+All.storageInfo.flowList[0].rightTitleHh
+    		+`\n`+All.storageInfo.flowList[1].title+All.storageInfo.flowList[1].rightTitleEnd
+    		+` `+All.storageInfo.flowList[1].leftTitle+'：'+All.storageInfo.flowList[1].leftTitleHh
+    		+` `+All.storageInfo.flowList[1].rightTitle+'：'+All.storageInfo.flowList[1].rightTitleHh,
+    		AllUsed:All.storageInfo.flowRegion.subTitleHh
+    	}
+    }
 	return All_Info={Phone:BalanceInfo,Flow:FlowInfo,Voice:VoiceInfo,Integral:IntegralInfo,Storage:StorageInfo}
 }
 

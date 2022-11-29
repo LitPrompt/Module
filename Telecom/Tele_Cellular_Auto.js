@@ -476,7 +476,7 @@ function Notice(title, body, body1) {
         if ((effective != -1) && bark_other) { bark_other = `&${bark_other}` }
         else if ((effective == -1) && bark_other) { bark_other = `?${bark_other}` }
         else { bark_other = '' }
-        let url = `${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}${encodeURIComponent(bark_other)}`
+        let url = `${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}${bark_other}`
 
         $.post({ url })
     } else { $.msg(title, body, body1) }

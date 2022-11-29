@@ -63,7 +63,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         if(Phone==''||PassWd=='') {throw '请在Boxjs中设置登录账号与密码'}
 
         if(!isFirst){
-            do{jsonData = await Query($.getjson(Tele_AutoCheck_querybody))}while(jsonData!='err'&&jsonData.responseData!=null&&jsonData.responseData.data.flowInfo.commonFlow.balance==null);
+            do{jsonData = await Query($.getjson(Tele_AutoCheck_querybody))}while(jsonData!='err'&&jsonData.responseData!=null&&jsonData.responseData.data.flowInfo.commonFlow==null);
             $.setjson(jsonData,Tele_AutoCheck_packge_detail)
         }
 
@@ -77,7 +77,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
             if(Tokenexpired) $.log('当前Token已过期，尝试获取Token')
             $.log(`\n`+JSON.stringify(trylogin))
 			$.setjson(trylogin,Tele_AutoCheck_querybody)
-            do{jsonData = await Query(trylogin)}while(jsonData!='err'&&jsonData.responseData!=null&&jsonData.responseData.data.flowInfo.commonFlow.balance==null);
+            do{jsonData = await Query(trylogin)}while(jsonData!='err'&&jsonData.responseData!=null&&jsonData.responseData.data.flowInfo.commonFlow==null);
             $.setjson(jsonData,Tele_AutoCheck_packge_detail)
         }
 
@@ -144,7 +144,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         $.log("上次通用使用：" + ToSize(limitLast, 2, 0, 1) + " 当前通用使用：" + ToSize(limitThis, 2, 0, 1))
         $.log("上次定向使用：" + ToSize(unlimitLast, 2, 0, 1) + " 当前定向使用：" + ToSize(unlimitThis, 2, 0, 1))
         $.log("通用变化量：" + ToSize(limitChange, 2, 0, 1) + " 定向变化量：" + ToSize(unlimitChange, 2, 0, 1))
-        
+
         if(Tele_value==''){
             $.log(`\n` + '当前为定时通知 间隔时间请去Cron中修改' )
             if (isFirst) $.log('首次使用：通知已发送！')
@@ -326,20 +326,13 @@ function AllInfo(jsondata){
     let IntegralInfo=''
     let StorageInfo={}
     All.integralInfo.title==null?IntegralInfo='无数据':IntegralInfo=All.integralInfo.title+'：'+All.integralInfo.integral+' 分'
-    if(All.balanceInfo.indexBalanceDataInfo==null){
-        BalanceInfo={
-            Used:'无数据',
-            Left:'无数据',
-            Bar:All.balanceInfo.phoneBillBars
-        }
-    }else{
-	    BalanceInfo={	
-		    Used:All.balanceInfo.phoneBillRegion.subTitleHh,
-		    Left:All.balanceInfo.indexBalanceDataInfo.balance+'元',
-		    Bar:All.balanceInfo.phoneBillBars
-	    }
-    }
-
+    if(All.balanceInfo.indexBalanceDataInfo==null)BalanceInfo={Used:'无数据',Left:'无数据',Bar:All.balanceInfo.phoneBillBars}
+    else BalanceInfo={	
+		Used:All.balanceInfo.phoneBillRegion.subTitleHh,
+		Left:All.balanceInfo.indexBalanceDataInfo.balance+'元',
+		Bar:All.balanceInfo.phoneBillBars
+	}
+    
     let FlowInfo={
 		Detail:All.flowInfo.flowList[0].title+All.flowInfo.flowList[0].rightTitleEnd
 		+' '+All.flowInfo.flowList[0].leftTitle+'：'+All.flowInfo.flowList[0].leftTitleHh
@@ -354,18 +347,18 @@ function AllInfo(jsondata){
 		Left:All.voiceInfo.voiceDataInfo.balance+'分钟',
 		Total:All.voiceInfo.voiceDataInfo.total+'分钟'
 	}
-    if(All.storageInfo.flowList[0]==null) StorageInfo={Detail:`个人云盘空间：无数据\n家庭共享空间：无数据`,AllUsed:All.storageInfo.flowRegion.subTitleHh}
-    else {
-        StorageInfo={	
-    		Detail:All.storageInfo.flowList[0].title+All.storageInfo.flowList[0].rightTitleEnd
-    		+` `+All.storageInfo.flowList[0].leftTitle+'：'+All.storageInfo.flowList[0].leftTitleHh
-    		+` `+All.storageInfo.flowList[0].rightTitle+'：'+All.storageInfo.flowList[0].rightTitleHh
-    		+`\n`+All.storageInfo.flowList[1].title+All.storageInfo.flowList[1].rightTitleEnd
-    		+` `+All.storageInfo.flowList[1].leftTitle+'：'+All.storageInfo.flowList[1].leftTitleHh
-    		+` `+All.storageInfo.flowList[1].rightTitle+'：'+All.storageInfo.flowList[1].rightTitleHh,
-    		AllUsed:All.storageInfo.flowRegion.subTitleHh
-    	}
+ 
+    if(All.storageInfo.flowList[0]==null||All.storageInfo.flowList[1]==null) StorageInfo={Detail:`个人云盘空间：无数据\n家庭共享空间：无数据`,AllUsed:All.storageInfo.flowRegion.subTitleHh}
+    else StorageInfo={
+    	Detail:All.storageInfo.flowList[0].title+All.storageInfo.flowList[0].rightTitleEnd
+    	+` `+All.storageInfo.flowList[0].leftTitle+'：'+All.storageInfo.flowList[0].leftTitleHh
+    	+` `+All.storageInfo.flowList[0].rightTitle+'：'+All.storageInfo.flowList[0].rightTitleHh
+    	+`\n`+All.storageInfo.flowList[1].title+All.storageInfo.flowList[1].rightTitleEnd
+    	+` `+All.storageInfo.flowList[1].leftTitle+'：'+All.storageInfo.flowList[1].leftTitleHh
+    	+` `+All.storageInfo.flowList[1].rightTitle+'：'+All.storageInfo.flowList[1].rightTitleHh,
+    	AllUsed:All.storageInfo.flowRegion.subTitleHh
     }
+    
 	return All_Info={Phone:BalanceInfo,Flow:FlowInfo,Voice:VoiceInfo,Integral:IntegralInfo,Storage:StorageInfo}
 }
 

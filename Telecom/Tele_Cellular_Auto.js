@@ -54,10 +54,11 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         let Phone = $.getdata(Tele_AutoCheck_LoginName)
         let PassWd = $.getdata(Tele_AutoCheck_LoginPw)
         let Tele_value = $.getdata(Tele_AutoCheck_threshold) //读取阈值
-        
         if(Phone==undefined) {Phone='';$.setdata('',Tele_AutoCheck_LoginName)}
         if(PassWd==undefined) {PassWd='';$.setdata('',Tele_AutoCheck_LoginPw)}
         if(Tele_value == undefined) { Tele_value = '' ;$.setdata('', Tele_AutoCheck_threshold)}
+        if(!(Number(Tele_value%1)===0)) throw '阈值设置错误❌，单位为KB且为整数！'
+    
         
 
         if(Phone==''||PassWd=='') {throw '请在Boxjs中设置登录账号与密码'}
@@ -104,8 +105,8 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
             $.setdata($.toStr(0), Tele_AutoCheck_unlimitStore)
             limitChange=0;unlimitChange=0;
             title = "数据修正"
-            body = '修正后：'
-            body1 = '通用使用：'+ToSize(limitThis,0,0,1)+' 定向使用：'+ToSize(unlimitThis,0,0,1)
+            body = '修正后：通用使用：'+ToSize(limitThis,0,0,1)+' 定向使用：'+ToSize(unlimitThis,0,0,1)
+            body1 = ''
             Notice(title, body, body1)
         }
 
@@ -134,16 +135,19 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         Tile_All['Tile_Month'] = ToSize(tile_unlimitUsageTotal, 1, 0, 1) + '/' + ToSize(tile_limitUsageTotal, 1, 0, 1)
         Tile_All['Tile_Time'] = tile_hour + ':' + tile_minute
 
-        let notice_body = $.getdata(Tele_AutoCheck_notice_body);
-        if (notice_body == undefined) {
-            notice_body = $.setdata("免/跳/总免/剩余", Tele_AutoCheck_notice_body)
-            notice_body = $.getdata(Tele_AutoCheck_notice_body).split('/')
-        } else { notice_body = $.getdata(Tele_AutoCheck_notice_body).split('/') }
         
         $.log('详细信息：'+$.toStr(AllInfo(jsonData).Phone.Bar)+`\n\n`+ '流量卡名：' + brond + `\n`+'账户余额：'+AllInfo(jsonData).Phone.Left+` `+'实时话费：'+AllInfo(jsonData).Phone.Used+`\n`+AllInfo(jsonData).Flow.Detail+`\n`+'国内语音/'+AllInfo(jsonData).Voice.Total+' 使用：'+AllInfo(jsonData).Voice.Used+` 剩余：`+AllInfo(jsonData).Voice.Left+`\n`+AllInfo(jsonData).Storage.Detail+`\n`+'流量总共使用：'+AllInfo(jsonData).Flow.AllUsed+`\n`+'云盘总共使用：'+AllInfo(jsonData).Storage.AllUsed+`\n`+AllInfo(jsonData).Integral+`\n`)
         $.log("上次通用使用：" + ToSize(limitLast, 2, 0, 1) + " 当前通用使用：" + ToSize(limitThis, 2, 0, 1))
         $.log("上次定向使用：" + ToSize(unlimitLast, 2, 0, 1) + " 当前定向使用：" + ToSize(unlimitThis, 2, 0, 1))
         $.log("通用变化量：" + ToSize(limitChange, 2, 0, 1) + " 定向变化量：" + ToSize(unlimitChange, 2, 0, 1))
+
+        let notice_body = $.getdata(Tele_AutoCheck_notice_body);
+        if (notice_body == undefined) {$.setdata("免/跳/总免/剩余", Tele_AutoCheck_notice_body);notice_body = $.getdata(Tele_AutoCheck_notice_body).split('/')} 
+        else notice_body = $.getdata(Tele_AutoCheck_notice_body).split('/')
+
+        title = brond + '  耗时:' + formatMinutes(minutesused)
+        body = notice_body[0] + ToSize(unlimitChange, 2, 1, 1) + ' ' + notice_body[1] + ToSize(limitChange, 2, 1, 1)
+        body1 = notice_body[2] + ToSize(ArrayQuery.unlimitusage, 2, 1, 1) + ' ' + notice_body[3] + ToSize(ArrayQuery.limitleft, 2, 1, 1)
 
         if(Tele_value==''){
             $.log(`\n` + '当前为定时通知 间隔时间请去Cron中修改' )
@@ -152,9 +156,6 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
             $.setdata($.toStr(ArrayQuery.unlimitusage),Tele_AutoCheck_unlimitStore)
             $.setdata($.toStr(thishours), Tele_AutoCheck_hourstimeStore)
             $.setdata($.toStr(thisminutes), Tele_AutoCheck_minutestimeStore)
-            title = brond + '  耗时:' + formatMinutes(minutesused)
-            body = notice_body[0] + ToSize(unlimitChange, 2, 1, 1) + ' ' + notice_body[1] + ToSize(limitChange, 2, 1, 1)
-            body1 = notice_body[2] + ToSize(ArrayQuery.unlimitusage, 2, 1, 1) + ' ' + notice_body[3] + ToSize(ArrayQuery.limitleft, 2, 1, 1)
             Notice(title, body, body1)
         }else{
             $.log(`\n` + '当前为变化通知，变化阈值为：' + ToSize(Tele_value, 3, 0, 1))
@@ -168,9 +169,6 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
                 $.setdata($.toStr(ArrayQuery.unlimitusage), Tele_AutoCheck_unlimitStore)
                 $.setdata($.toStr(thishours), Tele_AutoCheck_hourstimeStore)
                 $.setdata($.toStr(thisminutes), Tele_AutoCheck_minutestimeStore)
-                title = brond + '  耗时:' + formatMinutes(minutesused)
-                body = notice_body[0] + ToSize(unlimitChange, 2, 1, 1) + ' ' + notice_body[1] + ToSize(limitChange, 2, 1, 1)
-                body1 = notice_body[2] + ToSize(ArrayQuery.unlimitusage, 2, 1, 1) + ' ' + notice_body[3] + ToSize(ArrayQuery.limitleft, 2, 1, 1)
                 Notice(title, body, body1)
             }
         }

@@ -354,7 +354,7 @@ function AllInfo(jsondata){
 		Left:All.voiceInfo.voiceDataInfo.balance+'分钟',
 		Total:All.voiceInfo.voiceDataInfo.total+'分钟'
 	}
-    if(All.storageInfo.flowList[0]==null) StorageInfo={Detail:'无数据',AllUsed:All.storageInfo.flowRegion.subTitleHh}
+    if(All.storageInfo.flowList[0]==null) StorageInfo={Detail:`个人云盘空间：无数据\n家庭共享空间：无数据`,AllUsed:All.storageInfo.flowRegion.subTitleHh}
     else {
         StorageInfo={	
     		Detail:All.storageInfo.flowList[0].title+All.storageInfo.flowList[0].rightTitleEnd

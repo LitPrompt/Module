@@ -154,7 +154,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
             $.setdata($.toStr(thisminutes), Tele_AutoCheck_minutestimeStore)
             title = brond + '  耗时:' + formatMinutes(minutesused)
             body = notice_body[0] + ToSize(unlimitChange, 2, 1, 1) + ' ' + notice_body[1] + ToSize(limitChange, 2, 1, 1)
-            body1 = notice_body[2] + ToSize(ArrayQuery.unlimitusage, 2, 1, 1) + ' ' + notice_body[3] + ToSize(ArrayQuery.limitleft, 2, 1, 1)+`\n\n`+ '流量卡名：' + brond + `\n`+'账户余额：'+AllInfo(jsonData).Phone.Left+` `+'实时话费：'+AllInfo(jsonData).Phone.Used+`\n`+AllInfo(jsonData).Flow.Detail+`\n`+'国内语音/'+AllInfo(jsonData).Voice.Total+' 使用：'+AllInfo(jsonData).Voice.Used+` 剩余：`+AllInfo(jsonData).Voice.Used+`\n`+AllInfo(jsonData).Storage.Detail+`\n`+'流量总共使用：'+AllInfo(jsonData).Flow.AllUsed+`\n`+'云盘总共使用：'+AllInfo(jsonData).Storage.AllUsed+`\n`+AllInfo(jsonData).Integral
+            body1 = notice_body[2] + ToSize(ArrayQuery.unlimitusage, 2, 1, 1) + ' ' + notice_body[3] + ToSize(ArrayQuery.limitleft, 2, 1, 1)+`\n\n`+ '流量卡名：' + brond + `\n`+'账户余额：'+AllInfo(jsonData).Phone.Left+` `+'实时话费：'+AllInfo(jsonData).Phone.Used+`\n`+AllInfo(jsonData).Flow.Detail+`\n`+'国内语音/'+AllInfo(jsonData).Voice.Total+' 使用：'+AllInfo(jsonData).Voice.Used+` 剩余：`+AllInfo(jsonData).Voice.Left+`\n`+AllInfo(jsonData).Storage.Detail+`\n`+'流量总共使用：'+AllInfo(jsonData).Flow.AllUsed+`\n`+'云盘总共使用：'+AllInfo(jsonData).Storage.AllUsed+`\n`+AllInfo(jsonData).Integral
             Notice(title, body, body1)
         }else{
             $.log(`\n` + '当前为变化通知，变化阈值为：' + ToSize(Tele_value, 3, 0, 1))
@@ -170,7 +170,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
                 $.setdata($.toStr(thisminutes), Tele_AutoCheck_minutestimeStore)
                 title = brond + '  耗时:' + formatMinutes(minutesused)
                 body = notice_body[0] + ToSize(unlimitChange, 2, 1, 1) + ' ' + notice_body[1] + ToSize(limitChange, 2, 1, 1)
-                body1 = notice_body[2] + ToSize(ArrayQuery.unlimitusage, 2, 1, 1) + ' ' + notice_body[3] + ToSize(ArrayQuery.limitleft, 2, 1, 1)+`\n\n`+ '流量卡名：' + brond + `\n`+'账户余额：'+AllInfo(jsonData).Phone.Left+` `+'实时话费：'+AllInfo(jsonData).Phone.Used+`\n`+AllInfo(jsonData).Flow.Detail+`\n`+'国内语音/'+AllInfo(jsonData).Voice.Total+' 使用：'+AllInfo(jsonData).Voice.Used+` 剩余：`+AllInfo(jsonData).Voice.Used+`\n`+AllInfo(jsonData).Storage.Detail+`\n`+'流量总共使用：'+AllInfo(jsonData).Flow.AllUsed+`\n`+'云盘总共使用：'+AllInfo(jsonData).Storage.AllUsed+`\n`+AllInfo(jsonData).Integral
+                body1 = notice_body[2] + ToSize(ArrayQuery.unlimitusage, 2, 1, 1) + ' ' + notice_body[3] + ToSize(ArrayQuery.limitleft, 2, 1, 1)+`\n\n`+ '流量卡名：' + brond + `\n`+'账户余额：'+AllInfo(jsonData).Phone.Left+` `+'实时话费：'+AllInfo(jsonData).Phone.Used+`\n`+AllInfo(jsonData).Flow.Detail+`\n`+'国内语音/'+AllInfo(jsonData).Voice.Total+' 使用：'+AllInfo(jsonData).Voice.Used+` 剩余：`+AllInfo(jsonData).Voice.Left+`\n`+AllInfo(jsonData).Storage.Detail+`\n`+'流量总共使用：'+AllInfo(jsonData).Flow.AllUsed+`\n`+'云盘总共使用：'+AllInfo(jsonData).Storage.AllUsed+`\n`+AllInfo(jsonData).Integral
                 Notice(title, body, body1)
             }
         }

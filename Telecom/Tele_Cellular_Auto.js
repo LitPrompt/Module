@@ -471,14 +471,7 @@ async function Notice(title, body, body1) {
         let url = `${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}${bark_other}`
 
         $.post({ url })
-    } else { 
-        if($.isNode()){
-            const QLMsg=require('./sendNotify.js')
-            await QLMsg.sendNotify(title,body+`\n`+body1)
-        }
-        $.msg(title, body, body1) 
-        
-        }
+    } else { if($.isNode()){const QLMsg=require('./sendNotify.js');await QLMsg.sendNotify(title,body+`\n`+body1)};$.msg(title, body, body1) }
 
 }
 

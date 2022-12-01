@@ -323,7 +323,7 @@ function AllInfo(jsondata){
     let BalanceInfo={}
     let IntegralInfo=''
     let StorageInfo={}
-    All.integralInfo.title==null?IntegralInfo='无数据':IntegralInfo=All.integralInfo.title+'：'+All.integralInfo.integral+' 分'
+    All.integralInfo==null?IntegralInfo='无数据':IntegralInfo=All.integralInfo.title+'：'+All.integralInfo.integral+' 分'
     if(All.balanceInfo.indexBalanceDataInfo==null)BalanceInfo={Used:'无数据',Left:'无数据',Bar:All.balanceInfo.phoneBillBars}
     else BalanceInfo={	
 		Used:All.balanceInfo.phoneBillRegion.subTitleHh,

@@ -389,32 +389,6 @@ function Query_All(jsonData) {//原始量
     return queryinfo
 }
 
-function Notice(title, body, body1) {
-    let bark_title = title
-    let bark_body = body
-    let bark_body1 = body1
-    let bark_key = $.getdata(Tele_AutoCheck_bark_key)
-    let icon_url = $.getdata(Tele_AutoCheck_bark_icon)
-    if (bark_key) {
-        let bark_icon
-        if (icon_url) { bark_icon = `?icon=${icon_url}` }
-        else { bark_icon = '' }
-
-        let bark_other = $.getdata(Tele_AutoCheck_bark_add)
-        let effective = bark_icon.indexOf("?icon")
-        if ((effective != -1) && bark_other) { bark_other = `&${bark_other}` }
-        else if ((effective == -1) && bark_other) { bark_other = `?${bark_other}` }
-        else { bark_other = '' }
-        let url = `${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}${bark_other}`
-
-        $.post({ url })
-    } else { 
-        $.msg(title, body, body1) }
-
-}
-
-
-
 function ToSize(kbyte, s, l, t) {//字节转换s保留位数l是否空格t是否单位
     let kbytes, i
     if (kbyte < 1024) { kbytes = kbyte / 1024 }

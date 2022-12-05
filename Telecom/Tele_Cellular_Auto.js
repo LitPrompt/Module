@@ -87,6 +87,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         let brond = $.getdata(Tele_AutoCheck_key_brond)
         if (brond== undefined|| brond == '') {
             brond = (await ProductName($.getjson(Tele_AutoCheck_querybody))).responseData.data.mainProductOFFInfo.productOFFName
+            brond==''?brond='未获取到数据，请自行设置名称':brond=brond
             $.setdata(brond, Tele_AutoCheck_key_brond)
         }
 
@@ -177,7 +178,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         panel['content'] = '今日免流/跳点：' + Tile_All['Tile_Today'] + `\n` + '本月免流/跳点：' + Tile_All['Tile_Month'] + `\n` + '查询时间：' + Tile_All['Tile_Time']
 
     } catch (e) {
-        //Notice('电信余量','错误❌原因：'+e,'');
+        Notice('电信余量','错误❌原因：'+e,'');
         $.log('错误：' + e)
     }
     $.done(panel)
@@ -313,31 +314,41 @@ async function ProductName(Login_info) {//余量原始数据
             url: 'https://appfuwu.189.cn:9021/query/userFluxPackage',
             headers: headers,
             body: JSON.stringify(querybody) // 请求体
-        }, function (error, response, data) { resolve(JSON.parse(data)) })
+        }, function (error, response, data) { 
+            // console.log(JSON.parse(data).responseData.data)
+            resolve(JSON.parse(data)) 
+        })
     })
 }
 
 function AllInfo(jsondata){
 	typeof jsondata!='object'?jsondata=$.toObj(jsondata):{}
 	let All=jsondata.responseData.data
-    let BalanceInfo={}
     let IntegralInfo=''
+    let PreDetail=''
     let StorageInfo={}
-    All.integralInfo==null?IntegralInfo='剩余积分：无数据':IntegralInfo=All.integralInfo.title+'：'+All.integralInfo.integral+' 分'
+    let BalanceInfo={}
+
+    All.integralInfo==null||All.integralInfo.integral==''?IntegralInfo='剩余积分：无数据':IntegralInfo=All.integralInfo.title+'：'+All.integralInfo.integral+' 分'
+
     if(All.balanceInfo.indexBalanceDataInfo==null)BalanceInfo={Used:'无数据',Left:'无数据',Bar:All.balanceInfo.phoneBillBars}
     else BalanceInfo={	
 		Used:All.balanceInfo.phoneBillRegion.subTitleHh,
 		Left:All.balanceInfo.indexBalanceDataInfo.balance+'元',
 		Bar:All.balanceInfo.phoneBillBars
 	}
-    
-    let FlowInfo={
-		Detail:All.flowInfo.flowList[0].title+All.flowInfo.flowList[0].rightTitleEnd
+
+    if(!All.flowInfo.flowList[1]){
+        PreDetail=All.flowInfo.flowList[0].title+All.flowInfo.flowList[0].rightTitleEnd
 		+' '+All.flowInfo.flowList[0].leftTitle+'：'+All.flowInfo.flowList[0].leftTitleHh
 		+' '+All.flowInfo.flowList[0].rightTitle+'：'+All.flowInfo.flowList[0].rightTitleHh
-		+`\n`+All.flowInfo.flowList[1].title+All.flowInfo.flowList[1].rightTitleEnd
+    }else{
+        PreDetail+=+`\n`+All.flowInfo.flowList[1].title+All.flowInfo.flowList[1].rightTitleEnd
 		+` `+All.flowInfo.flowList[1].leftTitle+'：'+All.flowInfo.flowList[1].leftTitleHh
-		+` `+All.flowInfo.flowList[1].rightTitle+'：'+All.flowInfo.flowList[1].rightTitleHh,
+		+` `+All.flowInfo.flowList[1].rightTitle+'：'+All.flowInfo.flowList[1].rightTitleHh
+    }
+    let FlowInfo={
+		Detail:PreDetail,
 		AllUsed:All.flowInfo.flowRegion.subTitleHh
 	}
 	let VoiceInfo={
@@ -367,9 +378,11 @@ function Query_All(jsonData) {//原始量
     UnlimitInfo = jsonData.responseData.data.flowInfo.specialAmount
     LimitInfo = jsonData.responseData.data.flowInfo.commonFlow
 
-    unlimitbalancetotal = Number(UnlimitInfo.balance)
-    unlimitusagetotal = Number(UnlimitInfo.used)
-    unlimitratabletotal = unlimitbalancetotal + unlimitusagetotal
+    if(UnlimitInfo!=null){
+        unlimitbalancetotal = Number(UnlimitInfo.balance)
+        unlimitusagetotal = Number(UnlimitInfo.used)
+        unlimitratabletotal = unlimitbalancetotal + unlimitusagetotal
+    }else{unlimitbalancetotal = 0;unlimitusagetotal = 0;unlimitratabletotal = 0}
 
     limitbalancetotal = Number(LimitInfo.balance)
     limitusagetotal = Number(LimitInfo.used)

@@ -50,7 +50,6 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
 
         let Tile_All = { Tile_Today: '', Tile_Month: '', Tile_Time: '' }
 
-
         let Phone = $.getdata(Tele_AutoCheck_LoginName)
         let PassWd = $.getdata(Tele_AutoCheck_LoginPw)
         let Tele_value = $.getdata(Tele_AutoCheck_threshold) //读取阈值
@@ -59,14 +58,14 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         if(Tele_value == undefined) { Tele_value = '' ;$.setdata('', Tele_AutoCheck_threshold)}
         if(!(Number(Tele_value%1)===0)) throw '阈值设置错误❌，单位为KB且为整数！'
     
-        
+        if(Phone==''||PassWd=='') throw '请在Boxjs中设置登录账号与密码'
 
-        if(Phone==''||PassWd=='') {throw '请在Boxjs中设置登录账号与密码'}
-
-        if(!isFirst){
-            do{jsonData = await Query($.getjson(Tele_AutoCheck_querybody))}while(jsonData!='err'&&jsonData.responseData!=null&&jsonData.responseData.data.flowInfo.commonFlow==null);
-            $.setjson(jsonData,Tele_AutoCheck_packge_detail)
+        if(!isFirst&&$.getjson(Tele_AutoCheck_querybody).responseData.data.loginSuccessResult.phoneNbr!=Number(Phone)){
+            Tokenexpired=true
+            $.setdata('',Tele_AutoCheck_key_brond)
         }
+
+        if(!isFirst) jsonData = await Query($.getjson(Tele_AutoCheck_querybody));
 
         if(jsonData!=undefined&&(jsonData=='err'||jsonData.headerInfos.code=='X104'||jsonData.headerInfos.code=='X201')) Tokenexpired=true
 
@@ -75,13 +74,12 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
             let trylogin=await Login(Phone,PassWd) //尝试使用账号密码登录
             if(trylogin.responseData.resultCode!="0000") throw trylogin.responseData.resultDesc
             if(isFirst) $.log('当前为初次使用，尝试获取Token')
-            if(Tokenexpired) $.log('当前Token已过期，尝试获取Token')
+            if(Tokenexpired) $.log('当前Token已过期或切换账号，尝试重新获取Token')
             $.log(`\n`+JSON.stringify(trylogin))
 			$.setjson(trylogin,Tele_AutoCheck_querybody)
-            do{jsonData = await Query(trylogin)}while(jsonData!='err'&&jsonData.responseData!=null&&jsonData.responseData.data.flowInfo.commonFlow==null);
-            $.setjson(jsonData,Tele_AutoCheck_packge_detail)
+            jsonData = await Query(trylogin);
         }
-
+  
         ArrayQuery = Query_All(jsonData)
 
         let brond = $.getdata(Tele_AutoCheck_key_brond)
@@ -136,7 +134,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         Tile_All['Tile_Month'] = ToSize(tile_unlimitUsageTotal, 1, 0, 1) + '/' + ToSize(tile_limitUsageTotal, 1, 0, 1)
         Tile_All['Tile_Time'] = tile_hour + ':' + tile_minute
 
-        
+
         $.log('详细信息：'+$.toStr(AllInfo(jsonData).Phone.Bar)+`\n\n`+ '流量卡名：' + brond + `\n`+'账户余额：'+AllInfo(jsonData).Phone.Left+` `+'实时话费：'+AllInfo(jsonData).Phone.Used+`\n`+AllInfo(jsonData).Flow.Detail+`\n`+'国内语音/'+AllInfo(jsonData).Voice.Total+' 使用：'+AllInfo(jsonData).Voice.Used+` 剩余：`+AllInfo(jsonData).Voice.Left+`\n`+AllInfo(jsonData).Storage.Detail+`\n`+'流量总共使用：'+AllInfo(jsonData).Flow.AllUsed+`\n`+'云盘总共使用：'+AllInfo(jsonData).Storage.AllUsed+`\n`+AllInfo(jsonData).Integral+`\n`)
         $.log("上次通用使用：" + ToSize(limitLast, 2, 0, 1) + " 当前通用使用：" + ToSize(limitThis, 2, 0, 1))
         $.log("上次定向使用：" + ToSize(unlimitLast, 2, 0, 1) + " 当前定向使用：" + ToSize(unlimitThis, 2, 0, 1))
@@ -174,7 +172,9 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
             }
         }
 
-        panel['title'] = $.getdata(Tele_AutoCheck_key_brond)
+        $.setjson(jsonData,Tele_AutoCheck_packge_detail)
+
+        panel['title'] = brond
         panel['content'] = '今日免流/跳点：' + Tile_All['Tile_Today'] + `\n` + '本月免流/跳点：' + Tile_All['Tile_Month'] + `\n` + '查询时间：' + Tile_All['Tile_Time']
 
     } catch (e) {
@@ -203,6 +203,7 @@ function formatMinutes(value) {
   if (day > 0) result = parseInt(day) + '天'
   return result
 }
+
 async function Login(Phone,PassWd) {//登录
 
     let Ts=`${formatTime().year}${formatTime().month}${formatTime().day}${formatTime().hours}${formatTime().minutes}00`
@@ -338,19 +339,20 @@ function AllInfo(jsondata){
 		Bar:All.balanceInfo.phoneBillBars
 	}
 
-    if(!All.flowInfo.flowList[1]){
-        PreDetail=All.flowInfo.flowList[0].title+All.flowInfo.flowList[0].rightTitleEnd
+
+    PreDetail=All.flowInfo.flowList[0].title+All.flowInfo.flowList[0].rightTitleEnd
 		+' '+All.flowInfo.flowList[0].leftTitle+'：'+All.flowInfo.flowList[0].leftTitleHh
 		+' '+All.flowInfo.flowList[0].rightTitle+'：'+All.flowInfo.flowList[0].rightTitleHh
-    }else{
-        PreDetail+=+`\n`+All.flowInfo.flowList[1].title+All.flowInfo.flowList[1].rightTitleEnd
+    All.flowInfo.flowList[1]!=null?
+        PreDetail+=`\n`+All.flowInfo.flowList[1].title+All.flowInfo.flowList[1].rightTitleEnd
 		+` `+All.flowInfo.flowList[1].leftTitle+'：'+All.flowInfo.flowList[1].leftTitleHh
-		+` `+All.flowInfo.flowList[1].rightTitle+'：'+All.flowInfo.flowList[1].rightTitleHh
-    }
+		+` `+All.flowInfo.flowList[1].rightTitle+'：'+All.flowInfo.flowList[1].rightTitleHh:{}
+    
     let FlowInfo={
 		Detail:PreDetail,
 		AllUsed:All.flowInfo.flowRegion.subTitleHh
 	}
+
 	let VoiceInfo={
 		Used:All.voiceInfo.voiceDataInfo.used+'分钟',
 		Left:All.voiceInfo.voiceDataInfo.balance+'分钟',
@@ -372,6 +374,7 @@ function AllInfo(jsondata){
 }
 
 function Query_All(jsonData) {//原始量
+    // console.log(jsonData.responseData.data)
 	let SetVal=$.getdata(Tele_AutoCheck_SetVal)
     if(SetVal==undefined||SetVal=='') {$.setdata('',Tele_AutoCheck_SetVal)} else SetVal=SetVal*1048576
 
@@ -384,9 +387,11 @@ function Query_All(jsonData) {//原始量
         unlimitratabletotal = unlimitbalancetotal + unlimitusagetotal
     }else{unlimitbalancetotal = 0;unlimitusagetotal = 0;unlimitratabletotal = 0}
 
+    if(LimitInfo!=null){
     limitbalancetotal = Number(LimitInfo.balance)
     limitusagetotal = Number(LimitInfo.used)
     limitratabletotal = limitbalancetotal + limitusagetotal
+    }else{limitbalancetotal = 0;limitusagetotal = 0;limitratabletotal = 0}
 
     if(SetVal!=''&&SetVal-limitratabletotal<0) {
         limitusagetotal=SetVal-limitbalancetotal
@@ -459,7 +464,7 @@ async function Notice(title, body, body1) {
 
         $.post({ url })
     } else { if($.isNode()){const QLMsg=require('./sendNotify.js');await QLMsg.sendNotify(title,body+`\n`+body1)};$.msg(title, body, body1) }
-
+    console.log(title, body, body1)
 }
 
 function TransPhone(Number){

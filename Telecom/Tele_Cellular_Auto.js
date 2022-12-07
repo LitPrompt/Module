@@ -60,7 +60,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
     
         if(Phone==''||PassWd=='') throw '请在Boxjs中设置登录账号与密码'
 
-        if(!isFirst&&$.getjson(Tele_AutoCheck_querybody).responseData.data.loginSuccessResult.phoneNbr!=Number(Phone)){
+        if(!isFirst&&$.getdata(Tele_AutoCheck_querybody)!=''&&$.getjson(Tele_AutoCheck_querybody).responseData.data.loginSuccessResult.phoneNbr!=Number(Phone)){
             Tokenexpired=true
             $.setdata('',Tele_AutoCheck_key_brond)
         }

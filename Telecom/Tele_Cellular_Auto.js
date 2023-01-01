@@ -473,14 +473,15 @@ async function Notice(title, body, body1) {
     } else { 
         $.msg(title, body, body1)
         console.log(title, body, body1)
-        if($.isNode()){
-            try{
-                notify = require('./sendNotify')
-                if (notify && notify.sendNotify) {
-                  await notify.sendNotify(title,body+`\n`+body1)
-                }
-            }catch(e){console.log(e)}
-        }
+    }
+    
+    if($.isNode()){
+        try{
+            notify = require('./sendNotify')
+            if (notify && notify.sendNotify) {
+              await notify.sendNotify(title,body+`\n`+body1)
+            }
+        }catch(e){console.log(e)}
     }
 }
 

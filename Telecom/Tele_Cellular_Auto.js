@@ -84,18 +84,22 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
 
         let brond = $.getdata(Tele_AutoCheck_key_brond)
         if (brond== undefined|| brond == '') {
-            brond = (await ProductName($.getjson(Tele_AutoCheck_querybody))).responseData.data.mainProductOFFInfo.productOFFName
-            brond==''?brond='未获取到数据，请自行设置名称':brond=brond
+            brond = (await ProductName($.getjson(Tele_AutoCheck_querybody))).responseData.data
+            brond!=null&&brond.mainProductOFFInfo.productOFFName!=''?brond=brond.mainProductOFFInfo.productOFFName:brond='未获取到数据，请自行设置名称'
             $.setdata(brond, Tele_AutoCheck_key_brond)
         }
 
+  
         let limitThis = ArrayQuery.limitusage//通用使用量
         let unlimitThis = ArrayQuery.unlimitusage//定向使用量
+
         let limitLast = $.getdata(Tele_AutoCheck_limitStore) //将上次查询到的值读出来
+
         let unlimitLast = $.getdata(Tele_AutoCheck_unlimitStore) //将上次查询到的值读出来
         if (limitLast == undefined) limitLast = limitThis;else limitLast=Number(limitLast)
         if (unlimitLast == undefined) unlimitLast = unlimitThis;else unlimitLast=Number(unlimitLast)
         let limitChange = limitThis - limitLast
+
         let unlimitChange = unlimitThis - unlimitLast
 
         if (limitChange< 0 ||unlimitChange<0)
@@ -332,31 +336,35 @@ function AllInfo(jsondata){
 
     All.integralInfo==null||All.integralInfo.integral==''?IntegralInfo='剩余积分：无数据':IntegralInfo=All.integralInfo.title+'：'+All.integralInfo.integral+' 分'
 
-    if(All.balanceInfo.indexBalanceDataInfo==null)BalanceInfo={Used:'无数据',Left:'无数据',Bar:All.balanceInfo.phoneBillBars}
+    if(All.balanceInfo==null||All.balanceInfo.indexBalanceDataInfo==null)BalanceInfo={Used:'无数据',Left:'无数据',Bar:All.balanceInfo.phoneBillBars}
     else BalanceInfo={	
 		Used:All.balanceInfo.phoneBillRegion.subTitleHh,
 		Left:All.balanceInfo.indexBalanceDataInfo.balance+'元',
 		Bar:All.balanceInfo.phoneBillBars
 	}
 
-
-    PreDetail=All.flowInfo.flowList[0].title+All.flowInfo.flowList[0].rightTitleEnd
+    if(All.flowInfo!=null){
+        PreDetail=All.flowInfo.flowList[0].title+All.flowInfo.flowList[0].rightTitleEnd
 		+' '+All.flowInfo.flowList[0].leftTitle+'：'+All.flowInfo.flowList[0].leftTitleHh
 		+' '+All.flowInfo.flowList[0].rightTitle+'：'+All.flowInfo.flowList[0].rightTitleHh
     All.flowInfo.flowList[1]!=null?
         PreDetail+=`\n`+All.flowInfo.flowList[1].title+All.flowInfo.flowList[1].rightTitleEnd
 		+` `+All.flowInfo.flowList[1].leftTitle+'：'+All.flowInfo.flowList[1].leftTitleHh
 		+` `+All.flowInfo.flowList[1].rightTitle+'：'+All.flowInfo.flowList[1].rightTitleHh:{}
+    }else{
+        PreDetail='营业厅未返回数据，正常现象！'
+    }
+
     
     let FlowInfo={
 		Detail:PreDetail,
-		AllUsed:All.flowInfo.flowRegion.subTitleHh
+		AllUsed:All.flowInfo!=null?All.flowInfo.flowRegion.subTitleHh:'无数据'
 	}
 
 	let VoiceInfo={
-		Used:All.voiceInfo.voiceDataInfo.used+'分钟',
-		Left:All.voiceInfo.voiceDataInfo.balance+'分钟',
-		Total:All.voiceInfo.voiceDataInfo.total+'分钟'
+		Used:All.voiceInfo!=null?All.voiceInfo.voiceDataInfo.used+'分钟':'无数据',
+		Left:All.voiceInfo!=null?All.voiceInfo.voiceDataInfo.balance+'分钟':'无数据',
+		Total:All.voiceInfo!=null?All.voiceInfo.voiceDataInfo.total+'分钟':'无数据'
 	}
  
     if(All.storageInfo.flowList[0]==null||All.storageInfo.flowList[1]==null) StorageInfo={Detail:`个人云盘空间：无数据\n家庭共享空间：无数据`,AllUsed:All.storageInfo.flowRegion.subTitleHh}
@@ -376,20 +384,18 @@ function AllInfo(jsondata){
 function Query_All(jsonData) {//原始量
     // console.log(jsonData.responseData.data)
 	let SetVal=$.getdata(Tele_AutoCheck_SetVal)
+    let All=jsonData.responseData.data.flowInfo
     if(SetVal==undefined||SetVal=='') {$.setdata('',Tele_AutoCheck_SetVal)} else SetVal=SetVal*1048576
 
-    UnlimitInfo = jsonData.responseData.data.flowInfo.specialAmount
-    LimitInfo = jsonData.responseData.data.flowInfo.commonFlow
-
-    if(UnlimitInfo!=null){
-        unlimitbalancetotal = Number(UnlimitInfo.balance)
-        unlimitusagetotal = Number(UnlimitInfo.used)
+    if(All!=null&&All.specialAmount!=null){
+        unlimitbalancetotal = Number(All.specialAmount.balance)
+        unlimitusagetotal = Number(All.specialAmount.used)
         unlimitratabletotal = unlimitbalancetotal + unlimitusagetotal
     }else{unlimitbalancetotal = 0;unlimitusagetotal = 0;unlimitratabletotal = 0}
 
-    if(LimitInfo!=null){
-    limitbalancetotal = Number(LimitInfo.balance)
-    limitusagetotal = Number(LimitInfo.used)
+    if(All!=null&&All.commonFlow!=null){
+    limitbalancetotal = Number(All.commonFlow.balance)
+    limitusagetotal = Number(All.commonFlow.used)
     limitratabletotal = limitbalancetotal + limitusagetotal
     }else{limitbalancetotal = 0;limitusagetotal = 0;limitratabletotal = 0}
 
@@ -463,7 +469,18 @@ async function Notice(title, body, body1) {
         let url = `${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}${bark_other}`
 
         $.post({ url })
-    } else { if($.isNode()){const QLMsg=require('./sendNotify.js');await QLMsg.sendNotify(title,body+`\n`+body1)};$.msg(title, body, body1) }
+    } else { 
+        if($.isNode()){
+            try{
+                notify = require('./sendNotify')
+                if (notify && notify.sendNotify) {
+                  await notify.sendNotify(title,body+`\n`+body1)
+                }
+            }catch(e){
+                console.log(e)
+            }
+        }
+    $.msg(title, body, body1) }
     console.log(title, body, body1)
 }
 

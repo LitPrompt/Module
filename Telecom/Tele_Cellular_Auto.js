@@ -456,9 +456,6 @@ async function Notice(title, body, body1) {
     let bark_body1 = body1
     let bark_key = $.getdata(Tele_AutoCheck_bark_key)
     let icon_url = $.getdata(Tele_AutoCheck_bark_icon)
-    
-    $.msg(title, body, body1)
-    console.log(title, body, body1)
 
     if (bark_key) {
         let bark_icon
@@ -474,6 +471,8 @@ async function Notice(title, body, body1) {
 
         $.post({ url })
     } else { 
+        $.msg(title, body, body1)
+        console.log(title, body, body1)
         if($.isNode()){
             try{
                 notify = require('./sendNotify')

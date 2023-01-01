@@ -456,6 +456,10 @@ async function Notice(title, body, body1) {
     let bark_body1 = body1
     let bark_key = $.getdata(Tele_AutoCheck_bark_key)
     let icon_url = $.getdata(Tele_AutoCheck_bark_icon)
+    
+    $.msg(title, body, body1)
+    console.log(title, body, body1)
+
     if (bark_key) {
         let bark_icon
         if (icon_url) { bark_icon = `?icon=${icon_url}` }
@@ -476,12 +480,9 @@ async function Notice(title, body, body1) {
                 if (notify && notify.sendNotify) {
                   await notify.sendNotify(title,body+`\n`+body1)
                 }
-            }catch(e){
-                console.log(e)
-            }
+            }catch(e){console.log(e)}
         }
-    $.msg(title, body, body1) }
-    console.log(title, body, body1)
+    }
 }
 
 function TransPhone(Number){

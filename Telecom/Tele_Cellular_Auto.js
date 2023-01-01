@@ -468,11 +468,10 @@ async function Notice(title, body, body1) {
         else if ((effective == -1) && bark_other) { bark_other = `?${bark_other}` }
         else { bark_other = '' }
         let url = `${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}${bark_other}`
-
+        console.log("==============\ud83d\udce3Bark通知\ud83d\udce3=============="+`\n`+title+`\n`+body+`\n`+body1)
         $.post({ url })
     } else { 
         $.msg(title, body, body1)
-        console.log(title, body, body1)
     }
     
     if($.isNode()){

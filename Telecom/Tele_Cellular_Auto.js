@@ -93,9 +93,11 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         let limitThis = ArrayQuery.limitusage//通用使用量
         let unlimitThis = ArrayQuery.unlimitusage//定向使用量
 
-        let limitLast = $.getdata(Tele_AutoCheck_limitStore) //将上次查询到的值读出来
+        let limitLast = Number($.getdata(Tele_AutoCheck_limitStore)) //将上次查询到的值读出来
+        let unlimitLast = Number($.getdata(Tele_AutoCheck_unlimitStore)) //将上次查询到的值读出来
 
-        let unlimitLast = $.getdata(Tele_AutoCheck_unlimitStore) //将上次查询到的值读出来
+        // console.log('limitLast'+limitLast+`\n`+'unlimitLast'+unlimitLast)
+
         if (limitLast == undefined) limitLast = limitThis;else limitLast=Number(limitLast)
         if (unlimitLast == undefined) unlimitLast = unlimitThis;else unlimitLast=Number(unlimitLast)
         let limitChange = limitThis - limitLast
@@ -156,7 +158,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
             $.log(`\n` + '当前为定时通知 间隔时间请去Cron中修改' )
             if (isFirst) $.log('首次使用：通知已发送！')
             $.setdata($.toStr(ArrayQuery.limitusage), Tele_AutoCheck_limitStore)
-            $.setdata($.toStr(ArrayQuery.unlimitusage),Tele_AutoCheck_unlimitStore)
+            $.setdata($.toStr(ArrayQuery.unlimitusage), Tele_AutoCheck_unlimitStore)
             $.setdata($.toStr(thishours), Tele_AutoCheck_hourstimeStore)
             $.setdata($.toStr(thisminutes), Tele_AutoCheck_minutestimeStore)
             Notice(title, body, body1)
@@ -175,6 +177,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
                 Notice(title, body, body1)
             }
         }
+        if (ArrayQuery.limitleft<0||ArrayQuery.unlimitleft<0) $.log('营业厅未返回数据'+`\n`+'将使用已有通用与定向数据计算余量')
 
         $.setjson(jsonData,Tele_AutoCheck_packge_detail)
 
@@ -387,17 +390,17 @@ function Query_All(jsonData) {//原始量
     let All=jsonData.responseData.data.flowInfo
     if(SetVal==undefined||SetVal=='') {$.setdata('',Tele_AutoCheck_SetVal)} else SetVal=SetVal*1048576
 
-    if(All!=null&&All.specialAmount!=null){
+    if(All!=null&&All.specialAmount!=null){//定向数据判断
         unlimitbalancetotal = Number(All.specialAmount.balance)
         unlimitusagetotal = Number(All.specialAmount.used)
         unlimitratabletotal = unlimitbalancetotal + unlimitusagetotal
-    }else{unlimitbalancetotal = 0;unlimitusagetotal = 0;unlimitratabletotal = 0}
+    }else{unlimitbalancetotal = -1;unlimitusagetotal = Number($.getdata(Tele_AutoCheck_unlimitStore));unlimitratabletotal = 0}
 
-    if(All!=null&&All.commonFlow!=null){
+    if(All!=null&&All.commonFlow!=null){//通用数据判断
     limitbalancetotal = Number(All.commonFlow.balance)
     limitusagetotal = Number(All.commonFlow.used)
     limitratabletotal = limitbalancetotal + limitusagetotal
-    }else{limitbalancetotal = 0;limitusagetotal = 0;limitratabletotal = 0}
+    }else{limitbalancetotal = -1;limitusagetotal = Number($.getdata(Tele_AutoCheck_limitStore));limitratabletotal = 0}
 
     if(SetVal!=''&&SetVal-limitratabletotal<0) {
         limitusagetotal=SetVal-limitbalancetotal

@@ -220,11 +220,11 @@
           "id": "Tele_AutoCheck.notice_body",
           "name": "通知格式",
           "val": "[套] /[时]-[免] /[跳]\n[定用] /[通剩]",
-          "placeholder": "以/分开数据,以-分开标题与通知体,以/n换行",
+          "placeholder": "",
           "autoGrow": true,
           "rows": 1,
           "type": "textarea",
-          "desc": "如上表示标题显示套餐名与时间，通知体显示免,跳，换行显示定向与通用使用量"
+          "desc": "以/分开数据,以-分开标题与通知体,回车换行"
         },
         {
           "id": "Tele_AutoCheck.bark_icon",

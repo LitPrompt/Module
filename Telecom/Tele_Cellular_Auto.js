@@ -174,7 +174,6 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         // var body1=''
         for(var i in notice_body[0].split('/')) title += notice_body[0].split('/')[i]//遍历标题行
         for(var i in notice_body[1].split('/')) body += notice_body[1].split('/')[i]//遍历body行
-        // for(var i in notice_body[2].split('/')) body1 += notice_body[2].split('/')[i]
 
         // title = brond + '  耗时:' + formatMinutes(minutesused)
         // body = notice_body[0] + ToSize(unlimitChange, 2, 1, 1) + ' ' + notice_body[1] + ToSize(limitChange, 2, 1, 1)
@@ -187,7 +186,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
             $.setdata($.toStr(ArrayQuery.unlimitusage), Tele_AutoCheck_unlimitStore)
             $.setdata($.toStr(thishours), Tele_AutoCheck_hourstimeStore)
             $.setdata($.toStr(thisminutes), Tele_AutoCheck_minutestimeStore)
-            Notice(renderTpl(title,NoticeTplData), renderTpl(body,NoticeTplData),'')
+            Notice(renderTpl(title,NoticeTplData), '',renderTpl(body,NoticeTplData))
         }else{
             $.log(`\n` + '当前为变化通知，变化阈值为：' + ToSize(Tele_value, 3, 0, 1))
             let Change=$.getdata(Tele_AutoCheck_limit_choose) //判断是仅通用，还是任意值变化
@@ -200,7 +199,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
                 $.setdata($.toStr(ArrayQuery.unlimitusage), Tele_AutoCheck_unlimitStore)
                 $.setdata($.toStr(thishours), Tele_AutoCheck_hourstimeStore)
                 $.setdata($.toStr(thisminutes), Tele_AutoCheck_minutestimeStore)
-                Notice(renderTpl(title,NoticeTplData), renderTpl(body,NoticeTplData),'')
+                Notice(renderTpl(title,NoticeTplData), '',renderTpl(body,NoticeTplData))
             }
         }
         if (ArrayQuery.limitleft<0||ArrayQuery.unlimitleft<0) $.log('营业厅未返回数据'+`\n`+'将使用已有通用与定向数据计算余量')
@@ -512,8 +511,8 @@ async function Notice(title, body, body1) {
         if ((effective != -1) && bark_other) { bark_other = `&${bark_other}` }
         else if ((effective == -1) && bark_other) { bark_other = `?${bark_other}` }
         else { bark_other = '' }
-        let url = `${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent('\n')}${encodeURIComponent(bark_body1)}${bark_icon}${bark_other}`
-        console.log("==============\ud83d\udce3Bark通知\ud83d\udce3=============="+`\n`+title+`\n`+body+`\n`+body1)
+        let url = `${bark_key}${encodeURIComponent(bark_title)}/${encodeURIComponent(bark_body)}${encodeURIComponent(bark_body1)}${bark_icon}${bark_other}`
+        console.log("==============\ud83d\udce3Bark通知\ud83d\udce3=============="+`\n`+title+`\n`+body+body1)
         $.post({ url })
     } else { 
         $.msg(title, body, body1)

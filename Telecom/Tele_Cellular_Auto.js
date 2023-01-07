@@ -220,17 +220,17 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
 function renderTpl(tpl, data) {
     return tpl
       .replace('[套]', data.Title)//套餐名
-      .replace('[时]', '耗时：'+data.Time)//两次查询间隔时间
-      .replace('[跳]', '跳：'+data.TimeLimit)//两次查询内跳点
-      .replace('[免]', '免：'+data.TimeUnlimt)//两次查询内免流
-      .replace('[今跳]', '今跳：'+data.TodayLimitUse)//今日跳点
-      .replace('[今免]', '今免：'+data.TodayUnlimitUse)//今日免流
-      .replace('[通用]', '通用：'+data.AllLimitUse)//单周期总共通用
-      .replace('[通剩]', '剩余：'+data.AllLimitLeft)//
-      .replace('[通总]', '通总：'+data.AllLimit)//
-      .replace('[定用]', '总免：'+data.AllUnlimitUse)//单周期总共免流
-      .replace('[定剩]', '定剩：'+data.AllUnlimitLeft)//
-      .replace('[定总]', '定总：'+data.AllUnlimit)//
+      .replace('[时]', '耗时:'+data.Time)//两次查询间隔时间
+      .replace('[跳]', '跳'+data.TimeLimit)//两次查询内跳点
+      .replace('[免]', '免'+data.TimeUnlimt)//两次查询内免流
+      .replace('[今跳]', '日跳'+data.TodayLimitUse)//今日跳点
+      .replace('[今免]', '日免'+data.TodayUnlimitUse)//今日免流
+      .replace('[通用]', '通用'+data.AllLimitUse)//单周期总共通用
+      .replace('[通剩]', '剩余'+data.AllLimitLeft)//
+      .replace('[通总]', '通总'+data.AllLimit)//
+      .replace('[定用]', '总免'+data.AllUnlimitUse)//单周期总共免流
+      .replace('[定剩]', '定剩'+data.AllUnlimitLeft)//
+      .replace('[定总]', '定总'+data.AllUnlimit)//
       .replace(/  +/g, ' ')
 }
 

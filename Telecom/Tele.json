@@ -163,6 +163,7 @@
         "Tele_AutoCheck.minutestimeStore",
         "Tele_AutoCheck.threshold",
         "Tele_AutoCheck.limitStore",
+        "Tele_AutoCheck.notice_body",
         "Tele_AutoCheck.unlimitStore",
         "Tele_AutoCheck.bark_icon",
         "Tele_AutoCheck.bark_key",

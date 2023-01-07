@@ -226,10 +226,10 @@ function renderTpl(tpl, data) {
       .replace('[今跳]', '日跳'+data.TodayLimitUse)//今日跳点
       .replace('[今免]', '日免'+data.TodayUnlimitUse)//今日免流
       .replace('[通用]', '通用'+data.AllLimitUse)//单周期总共通用
-      .replace('[通剩]', '剩余'+data.AllLimitLeft)//
+      .replace('[通剩]', '通余'+data.AllLimitLeft)//
       .replace('[通总]', '通总'+data.AllLimit)//
       .replace('[定用]', '总免'+data.AllUnlimitUse)//单周期总共免流
-      .replace('[定剩]', '定剩'+data.AllUnlimitLeft)//
+      .replace('[定剩]', '定余'+data.AllUnlimitLeft)//
       .replace('[定总]', '定总'+data.AllUnlimit)//
       .replace(/  +/g, ' ')
 }

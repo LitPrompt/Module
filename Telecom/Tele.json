@@ -224,7 +224,7 @@
           "autoGrow": true,
           "rows": 1,
           "type": "text",
-          "desc": "如上表示标题显示套餐名与时间，通知体显示免,跳,定向与通用使用量"
+          "desc": "如上表示标题显示套餐名与时间，通知体显示免,跳，换行显示定向与通用使用量"
         },
         {
           "id": "Tele_AutoCheck.bark_icon",

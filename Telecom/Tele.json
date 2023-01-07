@@ -223,7 +223,7 @@
           "placeholder": "以/分开数据,以-分开标题与通知体,以/n换行",
           "autoGrow": true,
           "rows": 1,
-          "type": "text",
+          "type": "textarea",
           "desc": "如上表示标题显示套餐名与时间，通知体显示免,跳，换行显示定向与通用使用量"
         },
         {

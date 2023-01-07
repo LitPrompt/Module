@@ -88,6 +88,11 @@ BoxJs中请求体(Body)获取方法：
 ![BoxjsScreenshots](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Screenshots/Boxjsminiprc.jpg)
 ![BoxjsScreenshots](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Screenshots/Boxjsyzf.jpg)
 
+# 自定义通知数据
+1. [套]=>套餐名 [时]=>两次查询间隔时间 [跳]=>周期内跳点 [免]=>周期内免流 [今跳]=>今日跳点 [今免]=>今日免流 
+2. [通用]=>周期总共使用通用流量 [通剩]=>周期内剩余通用流量 [通总]=>通用总流量
+3. [定用]=>周期总共使用定向流量 [定剩]=>周期内剩余定向流量 [定总]=>定向总流量
+
 ***注意事项：***
 1. 初次使用流量免流与跳点可能错误
 2. 对于筛选流量包，如果剩余数据与定向不正确，则说明表达式可能筛选了其他的包，请输入更精准的包名

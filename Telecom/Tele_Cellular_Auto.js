@@ -93,13 +93,12 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         let limitThis = ArrayQuery.limitusage//通用使用量
         let unlimitThis = ArrayQuery.unlimitusage//定向使用量
 
-        let limitLast = Number($.getdata(Tele_AutoCheck_limitStore)) //将上次查询到的值读出来
-        let unlimitLast = Number($.getdata(Tele_AutoCheck_unlimitStore)) //将上次查询到的值读出来
+        let limitLast = $.getdata(Tele_AutoCheck_limitStore) //将上次查询到的值读出来
+        let unlimitLast = $.getdata(Tele_AutoCheck_unlimitStore) //将上次查询到的值读出来
 
         // console.log('limitLast'+limitLast+`\n`+'unlimitLast'+unlimitLast)
 
-        if (limitLast == undefined) limitLast = limitThis;else limitLast=Number(limitLast)
-        if (unlimitLast == undefined) unlimitLast = unlimitThis;else unlimitLast=Number(unlimitLast)
+        if (isFirst) limitLast = limitThis,unlimitLast = unlimitThis;else limitLast=Number(limitLast),unlimitLast=Number(unlimitLast)
         let limitChange = limitThis - limitLast
 
         let unlimitChange = unlimitThis - unlimitLast
@@ -147,12 +146,39 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         $.log("通用变化量：" + ToSize(limitChange, 2, 0, 1) + " 定向变化量：" + ToSize(unlimitChange, 2, 0, 1))
 
         let notice_body = $.getdata(Tele_AutoCheck_notice_body);
-        if (notice_body == undefined) {$.setdata("免/跳/总免/剩余", Tele_AutoCheck_notice_body);notice_body = $.getdata(Tele_AutoCheck_notice_body).split('/')} 
-        else notice_body = $.getdata(Tele_AutoCheck_notice_body).split('/')
+        if (notice_body == undefined) {
+            $.setdata("[套] /[时]-[免] /[跳]\n[定用] /[通剩]", Tele_AutoCheck_notice_body);
+            notice_body = $.getdata(Tele_AutoCheck_notice_body).split('-')
+        } 
+        else notice_body = $.getdata(Tele_AutoCheck_notice_body).split('-')
 
-        title = brond + '  耗时:' + formatMinutes(minutesused)
-        body = notice_body[0] + ToSize(unlimitChange, 2, 1, 1) + ' ' + notice_body[1] + ToSize(limitChange, 2, 1, 1)
-        body1 = notice_body[2] + ToSize(ArrayQuery.unlimitusage, 2, 1, 1) + ' ' + notice_body[3] + ToSize(ArrayQuery.limitleft, 2, 1, 1)
+
+        //通知体：
+
+        let NoticeTplData={
+            Title:brond,// '[套]'
+            Time:formatMinutes(minutesused),// '[时]'
+            TimeLimit:ToSize(limitChange, 2, 1, 1),// '[跳]'
+            TimeUnlimt:ToSize(unlimitChange, 2, 1, 1),// '[免]'
+            TodayLimitUse:ToSize(tile_limitTotal, 1, 0, 1),// '[今跳]'
+            TodayUnlimitUse:ToSize(tile_unlimitTotal, 1, 0, 1),// '[今免]'
+            AllLimitUse:ToSize(ArrayQuery.limitusage, 2, 1, 1),// '[通用]'
+            AllLimitLeft:ToSize(ArrayQuery.limitusage, 2, 1, 1),// '[通剩]'
+            AllLimit:ToSize(ArrayQuery.limitusage, 2, 1, 1),// '[通总]'
+            AllUnlimitUse:ToSize(ArrayQuery.unlimitusage, 2, 1, 1),// '[定用]'
+            AllUnlimitLeft:ToSize(ArrayQuery.unlimitusage, 2, 1, 1),// '[定剩]'
+            AllUnlimit:ToSize(ArrayQuery.unlimitusage, 2, 1, 1),// '[定总]'
+        }
+        var title=''
+        var body=''
+        // var body1=''
+        for(var i in notice_body[0].split('/')) title += notice_body[0].split('/')[i]//遍历标题行
+        for(var i in notice_body[1].split('/')) body += notice_body[1].split('/')[i]//遍历body行
+        // for(var i in notice_body[2].split('/')) body1 += notice_body[2].split('/')[i]
+
+        // title = brond + '  耗时:' + formatMinutes(minutesused)
+        // body = notice_body[0] + ToSize(unlimitChange, 2, 1, 1) + ' ' + notice_body[1] + ToSize(limitChange, 2, 1, 1)
+        // body1 = notice_body[2] + ToSize(ArrayQuery.unlimitusage, 2, 1, 1) + ' ' + notice_body[3] + ToSize(ArrayQuery.limitleft, 2, 1, 1)
 
         if(Tele_value==''){
             $.log(`\n` + '当前为定时通知 间隔时间请去Cron中修改' )
@@ -161,7 +187,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
             $.setdata($.toStr(ArrayQuery.unlimitusage), Tele_AutoCheck_unlimitStore)
             $.setdata($.toStr(thishours), Tele_AutoCheck_hourstimeStore)
             $.setdata($.toStr(thisminutes), Tele_AutoCheck_minutestimeStore)
-            Notice(title, body, body1)
+            Notice(renderTpl(title,NoticeTplData), renderTpl(body,NoticeTplData),'')
         }else{
             $.log(`\n` + '当前为变化通知，变化阈值为：' + ToSize(Tele_value, 3, 0, 1))
             let Change=$.getdata(Tele_AutoCheck_limit_choose) //判断是仅通用，还是任意值变化
@@ -174,7 +200,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
                 $.setdata($.toStr(ArrayQuery.unlimitusage), Tele_AutoCheck_unlimitStore)
                 $.setdata($.toStr(thishours), Tele_AutoCheck_hourstimeStore)
                 $.setdata($.toStr(thisminutes), Tele_AutoCheck_minutestimeStore)
-                Notice(title, body, body1)
+                Notice(renderTpl(title,NoticeTplData), renderTpl(body,NoticeTplData),'')
             }
         }
         if (ArrayQuery.limitleft<0||ArrayQuery.unlimitleft<0) $.log('营业厅未返回数据'+`\n`+'将使用已有通用与定向数据计算余量')
@@ -191,6 +217,23 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
     $.done(panel)
 
 })()
+
+function renderTpl(tpl, data) {
+    return tpl
+      .replace('[套]', data.Title)//套餐名
+      .replace('[时]', '耗时：'+data.Time)//两次查询间隔时间
+      .replace('[跳]', '跳：'+data.TimeLimit)//两次查询内跳点
+      .replace('[免]', '免：'+data.TimeUnlimt)//两次查询内免流
+      .replace('[今跳]', '今跳：'+data.TodayLimitUse)//今日跳点
+      .replace('[今免]', '今免：'+data.TodayUnlimitUse)//今日免流
+      .replace('[通用]', '通用：'+data.AllLimitUse)//单周期总共通用
+      .replace('[通剩]', '剩余：'+data.AllLimitLeft)//
+      .replace('[通总]', '通总：'+data.AllLimit)//
+      .replace('[定用]', '总免：'+data.AllUnlimitUse)//单周期总共免流
+      .replace('[定剩]', '定剩：'+data.AllUnlimitLeft)//
+      .replace('[定总]', '定总：'+data.AllUnlimit)//
+      .replace(/  +/g, ' ')
+}
 
 function formatMinutes(value) {
   let minute = parseInt(value)
@@ -436,7 +479,6 @@ function ToSize(kbyte, s, l, t) {//字节转换s保留位数l是否空格t是否
     }
 }
 
-
 function formatTime() {
     let dateObj = new Date()//获取时间
     let Minutes = dateObj.getMinutes();//获取分钟
@@ -481,7 +523,7 @@ async function Notice(title, body, body1) {
         try{
             notify = require('./sendNotify')
             if (notify && notify.sendNotify) {
-              await notify.sendNotify(title,body+`\n`+body1)
+              await notify.sendNotify(title,body+body1)
             }
         }catch(e){console.log(e)}
     }

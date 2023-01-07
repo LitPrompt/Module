@@ -219,12 +219,12 @@
         {
           "id": "Tele_AutoCheck.notice_body",
           "name": "通知格式",
-          "val": "免/跳/总免/剩余",
-          "placeholder": "以/分开",
+          "val": "[套] /[时]-[免] /[跳]\n[定用] /[通剩]",
+          "placeholder": "以/分开数据,以-分开标题与通知体,以/n换行",
           "autoGrow": true,
           "rows": 1,
           "type": "text",
-          "desc": "通知部分依次从左往右 从上往下"
+          "desc": "如上表示标题显示套餐名与时间，通知体显示免,跳,定向与通用使用量"
         },
         {
           "id": "Tele_AutoCheck.bark_icon",

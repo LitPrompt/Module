@@ -121,7 +121,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         if (tile_date == '') { $.setdata($.toStr(Days), Tele_AutoCheck_day) }//初次
         let tile_unlimittoday = $.getdata(Tele_AutoCheck_unlimittoday)
         let tile_limittoday = $.getdata(Tele_AutoCheck_limittoday)
-        if ((thishours == 0 && thisminutes == 0) || (tile_unlimittoday == '' || tile_limittoday == '') || tile_date != $.toStr(Days))//面板更新时间
+        if (Tokenexpired||(thishours == 0 && thisminutes == 0) || (tile_unlimittoday == '' || tile_limittoday == '') || tile_date != $.toStr(Days))//面板更新时间
         {
             $.setdata($.toStr(Days), Tele_AutoCheck_day)
             $.setdata($.toStr(ArrayQuery.unlimitusage), Tele_AutoCheck_unlimittoday)

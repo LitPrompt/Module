@@ -147,7 +147,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
 
         let notice_body = $.getdata(Tele_AutoCheck_notice_body);
         if (notice_body == undefined) {
-            $.setdata("[套] /[时]-[免] /[跳]\n[定用] /[通剩]", Tele_AutoCheck_notice_body);
+            $.setdata("[套] /耗时：[时]-免[免] /跳[跳]\n定向[定用] /剩余[通剩]", Tele_AutoCheck_notice_body);
             notice_body = $.getdata(Tele_AutoCheck_notice_body).split('-')
         } 
         else notice_body = $.getdata(Tele_AutoCheck_notice_body).split('-')

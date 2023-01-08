@@ -220,7 +220,7 @@
         {
           "id": "Tele_AutoCheck.notice_body",
           "name": "通知格式",
-          "val": "[套] /[时]-[免] /[跳]\n[定用] /[通剩]",
+          "val": "[套] /耗时：[时]-免[免] /跳[跳]\n定向[定用] /剩余[通剩]",
           "placeholder": "",
           "autoGrow": true,
           "rows": 1,

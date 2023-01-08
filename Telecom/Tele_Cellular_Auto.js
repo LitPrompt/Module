@@ -124,8 +124,8 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         if (Tokenexpired||(thishours == 0 && thisminutes == 0) || (tile_unlimittoday == '' || tile_limittoday == '') || tile_date != $.toStr(Days))//面板更新时间
         {
             $.setdata($.toStr(Days), Tele_AutoCheck_day)
-            $.setdata($.toStr(ArrayQuery.unlimitusage), Tele_AutoCheck_unlimittoday)
-            $.setdata($.toStr(ArrayQuery.limitusage), Tele_AutoCheck_limittoday)
+            $.setdata($.toStr(ArrayQuery.unlimitusage), Tele_AutoCheck_unlimittoday);tile_unlimittoday=ArrayQuery.unlimitusage
+            $.setdata($.toStr(ArrayQuery.limitusage), Tele_AutoCheck_limittoday);tile_limittoday=ArrayQuery.limitusage
         }
         let tile_unlimitTotal = ArrayQuery.unlimitusage - tile_unlimittoday//面板今日定向用量
         let tile_limitTotal = ArrayQuery.limitusage - tile_limittoday//面板今天通用用量

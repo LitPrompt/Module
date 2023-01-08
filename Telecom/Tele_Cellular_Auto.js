@@ -164,7 +164,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
             TodayUnlimitUse:ToSize(tile_unlimitTotal, 1, 0, 1),// '[今免]'
             AllLimitUse:ToSize(ArrayQuery.limitusage, 2, 1, 1),// '[通用]'
             AllLimitLeft:ToSize(ArrayQuery.limitleft, 2, 1, 1),// '[通剩]'
-            AllLimit:ToSize(ArrayQuery.unlimitall, 2, 1, 1),// '[通总]'
+            AllLimit:ToSize(ArrayQuery.limitall, 2, 1, 1),// '[通总]'
             AllUnlimitUse:ToSize(ArrayQuery.unlimitusage, 2, 1, 1),// '[定用]'
             AllUnlimitLeft:ToSize(ArrayQuery.unlimitleft, 2, 1, 1),// '[定剩]'
             AllUnlimit:ToSize(ArrayQuery.unlimitall, 2, 1, 1),// '[定总]'

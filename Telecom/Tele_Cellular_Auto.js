@@ -146,7 +146,7 @@ const Tele_AutoCheck_unlimittoday=`Tele_AutoCheck.unlimittoday`
         $.log("通用变化量：" + ToSize(limitChange, 2, 0, 1) + " 定向变化量：" + ToSize(unlimitChange, 2, 0, 1))
 
         let notice_body = $.getdata(Tele_AutoCheck_notice_body);
-        if (notice_body == undefined) {
+        if (notice_body == undefined||notice_body=='') {
             $.setdata("[套] /耗时：[时]-免[免] /跳[跳]\n定向[定用] /剩余[通剩]", Tele_AutoCheck_notice_body);
             notice_body = "[套] /耗时：[时]-免[免] /跳[跳]\n定向[定用] /剩余[通剩]".split('-')
         } 

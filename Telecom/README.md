@@ -130,6 +130,14 @@ STASH覆写库中默认为5分钟查询一次
 ### QX
 在配置中修改Cron定时任务即可
 
+### 青龙设置
+拉取js脚本后：(两种数据设置方式，下面二选一)
+1. 单独运行一次脚本即可在同目录生成box.dat文件，编辑文件设置数据
+2. 在js中使用以下语句设置账号密码，自己替换“手机号“与“服务密码”
+```
+$.setdata('手机号', 'Tele_AutoCheck.LoginName');
+$.setdata('服务密码', 'Tele_AutoCheck.LoginPw');
+```
 
 # Bark部分参数设置
 ### Bark的Key(使用Bark通知时需要填写)

@@ -511,17 +511,30 @@ function ToSize(kbyte, s, l, t) {//字节转换s保留位数l是否空格t是否
 
 async function BoxJsData() {
   console.log('BoxJS获取数据')
-  let url = 'http://boxjs.com/query/boxdata'
+  let url
+   if(getdata('isData')==2){
+      url = 'http://boxjs.com/query/data/Tele_AutoCheck.packge_detail'
+   }
+    if(getdata('isData')=='3'){
+      url = 'http://boxjs.com/query/data/@xream.10010v4.vars'
+    }
+  console.log(url)
+
   let data = null
   try {
     let req = new Request(url)
     data = await (req.loadJSON())
     if(getdata('isData')==2){
-      jsonData = JSON.parse(data['datas']['Tele_AutoCheck.packge_detail'])}
+      jsonData = JSON.parse(data.val)}
+      
     if(getdata('isData')=='3'){
-      jsonData=JSON.parse(data['datas']['@xream.10010.detail'])
+      jsonData=JSON.parse(data.val)
+      
     }
-  } catch (e) { }
+  } catch (e) { 
+    console.error(e);
+  }
+  
   return jsonData
 }
 
@@ -556,6 +569,7 @@ function TransPhone(Number){
 
 
 function Query_All(jsonData) {//原始量
+  
 
   let SetVal = Number(getdata('LimitVal'))
   let SetVal1=Number(getdata('unLimitVal'))
@@ -591,11 +605,11 @@ function Query_All(jsonData) {//原始量
   }
   if(getdata('isData')=='3') {
     unlimitratabletotal=SetVal1*1048579
-    unlimitusagetotal=(jsonData.freeFlow)*1024
+    unlimitusagetotal=(jsonData['[所有免流.已用].raw'])*1024
     unlimitbalancetotal=unlimitratabletotal-unlimitusagetotal
 
     limitratabletotal=SetVal*1048576
-    limitusagetotal=(jsonData.sum-jsonData.freeFlow)*1024
+    limitusagetotal=(jsonData['[所有通用.已用].raw'])*1024
     limitbalancetotal=limitratabletotal-limitusagetotal
     PhoneBill=''
     DataBill=''

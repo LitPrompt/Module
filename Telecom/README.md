@@ -17,27 +17,27 @@
 #### 自动版：
 在STASH中安装这个覆写（官方覆写库中已经上线）：
 
->[https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Stash_Auto.stoverride](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Stash_Auto.stoverride)
+>[https://github.com/ChinaTelecomOperators/ChinaTelecom/releases/download/Prerelease-Alpha/Tele_Stash_Auto.stoverride](https://github.com/ChinaTelecomOperators/ChinaTelecom/releases/download/Prerelease-Alpha/Tele_Stash_Auto.stoverride)
 
 #### 手动版：
 请在STASH覆写库中安装如下两个覆写：
-![App Screenshots](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Screenshots/STASH.jpg)
+![App Screenshots](https://raw.githubusercontent.com/LitPrompt/Module/main/Telecom/Screenshots/STASH.jpg)
 
-同时需要[BoxJS](https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.stash.stoverride)进行后续配置[一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fraw.githubusercontent.com%2FQGCliveDavis%2FModule%2Fmain%2FTelecom%2FTele.json)
+同时需要[BoxJS](https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.stash.stoverride)进行后续配置[一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fgithub.com%2FChinaTelecomOperators%2FChinaTelecom%2Freleases%2Fdownload%2FPrerelease-Alpha%2FTele.json)
 
 
 ## ShadowRocket使用方法
 点击小火箭-配置-模块后安装
 
 #### 自动版
-> [https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_ShadowRocket_Auto.Module](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_ShadowRocket_Auto.Module)
+> [https://github.com/ChinaTelecomOperators/ChinaTelecom/releases/download/Prerelease-Alpha/Tele_ShadowRocket_Auto.Module](https://github.com/ChinaTelecomOperators/ChinaTelecom/releases/download/Prerelease-Alpha/Tele_ShadowRocket_Auto.Module)
 
 #### 手动版
-> [https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_ShadowRocket.Module](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_ShadowRocket.Module)
+> [https://github.com/ChinaTelecomOperators/ChinaTelecom/releases/download/Prerelease-Alpha/Tele_ShadowRocket.Module](https://github.com/ChinaTelecomOperators/ChinaTelecom/releases/download/Prerelease-Alpha/Tele_ShadowRocket.Module)
 
-![App Screenshots](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Screenshots/Shadow.jpg)
+![App Screenshots](https://raw.githubusercontent.com/LitPrompt/Module/main/Telecom/Screenshots/Shadow.jpg)
 
-需要[BoxJS](https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.surge.sgmodule)进行后续配置[一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fraw.githubusercontent.com%2FQGCliveDavis%2FModule%2Fmain%2FTelecom%2FTele.json)
+需要[BoxJS](https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.surge.sgmodule)进行后续配置[一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fgithub.com%2FChinaTelecomOperators%2FChinaTelecom%2Freleases%2Fdownload%2FPrerelease-Alpha%2FTele.json)
 
 
 ## QX(圈叉)使用方法
@@ -47,12 +47,12 @@
 仓库添加方法：在QX右下角三条横线(构造请求)中，任务仓库添加如下任务(加号左边第三个)
 
 电信余量:
-> https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_QX_LocalTask.conf
+> https://github.com/ChinaTelecomOperators/ChinaTelecom/releases/download/Prerelease-Alpha/Tele_QX_LocalTask.conf
 
 获取Body安装方法:(手动版需要安装自动获取Body脚本：长按重写-右上角-粘贴如下链接(开启解析器))
-> https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_QX.conf
+> https://github.com/ChinaTelecomOperators/ChinaTelecom/releases/download/Prerelease-Alpha/Tele_QX.conf
 
-需要[BoxJS](https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.surge.sgmodule)进行后续配置[一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fraw.githubusercontent.com%2FQGCliveDavis%2FModule%2Fmain%2FTelecom%2FTele.json)
+需要[BoxJS](https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.surge.sgmodule)进行后续配置[一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fgithub.com%2FChinaTelecomOperators%2FChinaTelecom%2Freleases%2Fdownload%2FPrerelease-Alpha%2FTele.json)
 
 ### Loon
 
@@ -61,17 +61,17 @@
 ```
 [Script]
 enable = true
-cron "*/5 * * * *" script-path=https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Cellular_Auto.js
+cron "*/5 * * * *" script-path=https://github.com/ChinaTelecomOperators/ChinaTelecom/releases/download/Prerelease-Alpha/Tele_Cellular_Auto.js
 ```
-需要[BoxJS](https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.surge.sgmodule)进行后续配置[一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fraw.githubusercontent.com%2FQGCliveDavis%2FModule%2Fmain%2FTelecom%2FTele.json)
+需要[BoxJS](https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.surge.sgmodule)进行后续配置[一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fgithub.com%2FChinaTelecomOperators%2FChinaTelecom%2Freleases%2Fdownload%2FPrerelease-Alpha%2FTele.json)
 
 ## Surge
 
 ```
 [Script]
-电信余量 = type=cron,cronexp=*/5 * * * *,timeout=30,script-path=https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Cellular_Auto.js
+电信余量 = type=cron,cronexp=*/5 * * * *,timeout=30,script-path=https://github.com/ChinaTelecomOperators/ChinaTelecom/releases/download/Prerelease-Alpha/Tele_Cellular_Auto.js
 ```
-需要[BoxJS](https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.surge.sgmodule)进行后续配置[一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fraw.githubusercontent.com%2FQGCliveDavis%2FModule%2Fmain%2FTelecom%2FTele.json)
+需要[BoxJS](https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.surge.sgmodule)进行后续配置[一键订阅BoxJs](http://boxjs.com/#/sub/add/https%3A%2F%2Fgithub.com%2FChinaTelecomOperators%2FChinaTelecom%2Freleases%2Fdownload%2FPrerelease-Alpha%2FTele.json)
 
 **若无法获取Body请检查Mitm开关与域名是否添加**
 
@@ -85,8 +85,8 @@ BoxJs中请求体(Body)获取方法：
 1. 方式一:进入翼支付，打开手机充值
 2. 方式二:微信打开中国电信5G会员，点击头像旁边的剩余流量
 3. 当提示获取到body后即可，在BoxJS中可以查看到获取到的body
-![BoxjsScreenshots](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Screenshots/Boxjsminiprc.jpg)
-![BoxjsScreenshots](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Screenshots/Boxjsyzf.jpg)
+![BoxjsScreenshots](https://raw.githubusercontent.com/LitPrompt/Module/main/Telecom/Screenshots/Boxjsminiprc.jpg)
+![BoxjsScreenshots](https://raw.githubusercontent.com/LitPrompt/Module/main/Telecom/Screenshots/Boxjsyzf.jpg)
 
 
 ***注意事项：***
@@ -119,12 +119,12 @@ BoxJs中请求体(Body)获取方法：
 STASH覆写库中默认为5分钟查询一次
 如有需要可按照如下图修改（修改后记得关闭覆写）
 
-![AppScreenshots](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Screenshots/CRON.jpg)
+![AppScreenshots](https://raw.githubusercontent.com/LitPrompt/Module/main/Telecom/Screenshots/CRON.jpg)
 
 ### 小火箭
 修改模块中Cron后面即可
 
-![App Screenshots](https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Screenshots/Shadowcron.jpg)
+![App Screenshots](https://raw.githubusercontent.com/LitPrompt/Module/main/Telecom/Screenshots/Shadowcron.jpg)
 
 
 ### QX
@@ -155,7 +155,7 @@ https://api.day.app/xxxxxxxxxxxx/附加参数
 
 此处提供一个图标
 ```
-> https://raw.githubusercontent.com/QGCliveDavis/Module/main/Asset/China_Telecom.png
+> https://raw.githubusercontent.com/LitPrompt/Module/main/Asset/China_Telecom.png
 
 ### Bark附加参数(非必须)
 |Bark附加属性|值|描述|

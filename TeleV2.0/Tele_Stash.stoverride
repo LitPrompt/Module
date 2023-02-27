@@ -16,5 +16,5 @@ tiles:
     interval: 600
 script-providers:
   Telecom:
-    url: https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/Tele_Cellular.js
+    url: https://github.com/ChinaTelecomOperators/ChinaTelecom/releases/download/Prerelease-Alpha/Tele_Cellular.js
     interval: 86400

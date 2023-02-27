@@ -516,7 +516,7 @@ async function BoxJsData() {
       url = 'http://boxjs.com/query/data/Tele_AutoCheck.packge_detail'
    }
     if(getdata('isData')=='3'){
-      url = 'http://boxjs.com/query/data/@xream.10010v4.vars'
+      url = 'http://boxjs.com/query/data/@ChinaUnicom.10010v4.vars'
     }
   console.log(url)
 

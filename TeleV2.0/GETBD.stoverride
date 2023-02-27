@@ -14,5 +14,5 @@ http:
 
 script-providers:
   Telecom_BD:
-    url: https://raw.githubusercontent.com/QGCliveDavis/Module/main/Telecom/GetBd.js
+    url: https://github.com/ChinaTelecomOperators/ChinaTelecom/releases/download/Prerelease-Alpha/GetBd.js
     interval: 86400

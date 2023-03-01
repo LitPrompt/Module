@@ -1,0 +1,19 @@
+name: 电信信息 Tile 面板
+desc: 电信信息面板
+
+cron:
+  script:
+    - name: Telecom_Panel
+      cron: '*/5 * * * *' # at every 5th minute
+      timeout: 10 # optional
+tiles:
+  - name: Telecom_Panel
+    title: '电信余量_Panel',
+    content: ``,
+    backgroundColor: "#cd4639",
+    icon: "list.bullet.rectangle",
+    interval: 600
+script-providers:
+  Telecom_Panel:
+    url: https://github.com/ChinaTelecomOperators/ChinaTelecom/releases/download/Prerelease-Alpha/Tele_Cellular_Panel.js
+    interval: 86400

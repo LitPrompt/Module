@@ -1,0 +1,18 @@
+name: 电信余量后端
+desc: 开启脚本以及mitm等开关，配合电信余量自动版，安装后访问  https://Telecom.Info/Page/Home 即可配置多账户
+
+http:
+  mitm:
+    - 'telecom.info'
+  script:
+    - match: ^(?i)https?:\/\/telecom\.info\/.*
+      name: Telecom_Backend
+      type: request
+      require-body: true
+      timeout: 120
+
+
+script-providers:
+  Telecom_Backend:
+    url:  https://github.com/ChinaTelecomOperators/ChinaTelecom/releases/download/Prerelease-Alpha/Tele_Cellular_Backend.js
+    interval: 86400

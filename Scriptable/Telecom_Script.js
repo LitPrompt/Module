@@ -1,7 +1,4 @@
-// const PhoneBillIcon = 'https://raw.githubusercontent.com/QGCliveDavis/Module/main/Asset/PhoneBill.png'
-// const PhoneIcon = 'https://raw.githubusercontent.com/QGCliveDavis/Module/main/Asset/Phone.png'
-
-const w = new ListWidget()// 
+const w = new ListWidget()
 const DynamicText = Color.dynamic(new Color('#111111'), new Color('#ffffff'))
 w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
 
@@ -49,8 +46,14 @@ w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
         a2.addCancelAction('取消')
         let ch=await a2.presentAlert()
         if(ch==-1) {}
-        if(ch==0) setdata('isData', '1')
-        if(ch==1) setdata('isData', '2')
+        if(ch==0) {
+          setdata('isData', '1')
+          Wsize=1
+        }
+        if(ch==1) {
+          setdata('isData', '2')
+          Wsize=1
+        }
 
       }
       if(ch==1){//通用与定向数据自定义
@@ -118,18 +121,11 @@ w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
     }
   }
 
-  let a = 0
-  while (a != 48) {
-    console.log(String(a) + JSON.stringify(getobjdata(String(a))))
-    a++
-  }
-
   let str='数据流量-通用'
   let str1 ='数据流量-定向'
   Query=await BoxJsData()
 
   processData(Query)
-
 
   if (config.widgetFamily == 'small' || Wsize == 0) {
     generateSmallWidget(str ,str1, w ,Query)
@@ -261,7 +257,7 @@ function Usage(haveGone, total, str) {
   context.respectScreenScale = true;
   context.opaque = false; // 设置为透明背景
 
-  context.setFont(Font.boldSystemFont(10));
+  context.setFont(Font.boldSystemFont(9));
   context.setTextColor(DynamicText);
   context.drawText(str, new Point(0, 0));
 
@@ -287,8 +283,8 @@ function Usage(haveGone, total, str) {
   context.setFillColor(new Color("#1785ff")); // 填充蓝色
   context.fillPath();
 
-  const usageText = String(ToSize(haveGone, 0, 1, 1));
-  const totalText = String(ToSize(total, 0, 0, 1)) + '(' + (haveGone / total * 100).toFixed(0) + '%)';
+  const usageText = String(ToSize(haveGone, 1, 0, 1));
+  const totalText = String(ToSize(total, 1, 1, 1)) + '(' + (haveGone / total * 100).toFixed(0) + '%)';
   context.setFont(Font.mediumMonospacedSystemFont(20));
   context.drawText(usageText, new Point(10,10));
   context.setFont(Font.mediumRoundedSystemFont(15));
@@ -375,17 +371,18 @@ function ToSize(kbyte, s, l, t) {
 
   // 格式化大小字符串
   let formattedSize = size.toFixed(s);
-  if (l === 1) {
-    formattedSize = formattedSize.padStart(s, ' ');
+  if (l > 0) {
+    formattedSize = formattedSize.padEnd(formattedSize.length + l, ' ');
   }
 
   // 添加单位
   if (t === 1) {
-    formattedSize +=units[unitIndex];
+    formattedSize += units[unitIndex];
   }
 
   return formattedSize;
 }
+
 
 async function BoxJsData() {
   console.log('BoxJS获取数据')

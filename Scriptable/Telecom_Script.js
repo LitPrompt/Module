@@ -152,7 +152,7 @@ async function AsyncJs(){
   if (fm.isFileStoredIniCloud(module.filename)) {
     fm = FileManager.iCloud();
   }
-  const url = 'http://192.168.1.232:3001';
+  const url = 'https://raw.githubusercontent.com/LitPrompt/Module/main/Scriptable/Telecom_Script.js';
   const request = new Request(url);
   try {
     const code = await request.loadString();

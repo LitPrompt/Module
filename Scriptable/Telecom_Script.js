@@ -115,7 +115,7 @@ w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
     }
     if(UserCh==3){
       let al = new Alert()
-      al.message = '清除数据完成'
+      al.message = '刷新完成'
       al.addAction('完成')
       await al.present()
     }
@@ -131,7 +131,6 @@ w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
     generateSmallWidget(str ,str1, w ,Query)
     if (Wsize == 0) { w.presentSmall() }
   }
-
   if (config.widgetFamily == 'medium' || Wsize == 1) {
 
     const rowSpacing = 10; // 设置行间距
@@ -141,8 +140,9 @@ w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
     generateMediumWidget(Query ,str ,str1 ,w ,rowSpacing ,leftPadding ,LimtUnlimitPadding)
     if (Wsize == 1) { w.presentMedium() }
   }
-
-  Script.setWidget(w)
+  if (config.runsInWidget) {
+    Script.setWidget(w)
+  }
   Script.complete()  
 
 })()

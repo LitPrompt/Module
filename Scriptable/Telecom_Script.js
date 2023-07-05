@@ -74,8 +74,8 @@ w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
 	    let a2=new Alert() 
 	    a2.title='组件间距设置'
 	    a2.message=`柱状图单次减少量为0.1`
-	    a2.addTextField('组件间隔 默认值30' , getdata('Space')||'')
-	    a2.addTextField('柱状图间隔 默认值3', getdata('KSize')||'')
+	    a2.addTextField('组件间隔 默认值50' , getdata('Space')||'')
+	    a2.addTextField('柱状图间隔 默认值2', getdata('KSize')||'')
       a2.addTextField('左边距 默认值5', getdata('Left_Padding')||'')
       a2.addDestructiveAction('全部恢复默认值')
 	    a2.addAction('确认')
@@ -135,7 +135,7 @@ w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
 
     const rowSpacing = 10; // 设置行间距
     const leftPadding = Number(getdata('Left_Padding'))|| 5; // 设置左边距
-    const LimtUnlimitPadding=  Number(getdata('Space'))|| 30; //设置第一行通用与定向间距
+    const LimtUnlimitPadding=  Number(getdata('Space'))|| 50; //设置第一行通用与定向间距
 
     generateMediumWidget(Query ,str ,str1 ,w ,rowSpacing ,leftPadding ,LimtUnlimitPadding)
     if (Wsize == 1) { w.presentMedium() }
@@ -195,13 +195,15 @@ function processData(Query) {
 }
 
 function generateSmallWidget(str ,str1, Widget ,Query){
-  let column = Widget.addStack()
-  column.layoutVertically()
-  const WidImg1 = column.addImage(Usage(Query.LimitUsage, Query.LimitAll, str));
-  WidImg1.imageSize = new Size(120, 70);
-  const WidImg2 = column.addImage(Usage(Query.UNLimitUsage, Query.UNLimitAll, str1));
-  WidImg2.imageSize = new Size(120, 70);
+  const container = Widget.addStack();
+  container.layoutVertically();
+  container.centerAlignContent();
 
+  const upStack = container.addStack();
+  generateModule(upStack,str,Query.LimitUsage, Query.LimitAll)
+  container.addSpacer(10);
+  const downStack = container.addStack();
+  generateModule(downStack,str1,Query.UNLimitUsage, Query.UNLimitAll)
 }
 
 function generateMediumWidget(Query ,str ,str1 ,Widget ,rowSpacing ,leftPadding ,LimtUnlimitPadding){
@@ -211,7 +213,7 @@ function generateMediumWidget(Query ,str ,str1 ,Widget ,rowSpacing ,leftPadding 
 
 
   let row =column.addStack();
-  row.addSpacer(leftPadding)
+  row.addSpacer(leftPadding+10)
 
   column.addSpacer(rowSpacing); // 在 row2 添加垂直间距
 
@@ -223,11 +225,17 @@ function generateMediumWidget(Query ,str ,str1 ,Widget ,rowSpacing ,leftPadding 
   let row3 = column.addStack()
   row3.addSpacer(leftPadding)
 
-  const WidImg1 = row.addImage(Usage(Query.LimitUsage, Query.LimitAll, str));
-  WidImg1.imageSize = new Size(120, 60);
-  row.addSpacer(LimtUnlimitPadding)
-  const WidImg2 = row.addImage(Usage(Query.UNLimitUsage, Query.UNLimitAll, str1));
-  WidImg2.imageSize = new Size(120, 60);
+  const container = row.addStack();
+  container.layoutHorizontally();
+  container.centerAlignContent();
+
+  const leftStack = container.addStack();
+  generateModule(leftStack,str,Query.LimitUsage, Query.LimitAll)
+
+  container.addSpacer(LimtUnlimitPadding);
+
+  const rightStack = container.addStack();
+  generateModule(rightStack,str1,Query.UNLimitUsage, Query.UNLimitAll)
 
 
   const canvasWidth = 10;
@@ -236,9 +244,40 @@ function generateMediumWidget(Query ,str ,str1 ,Widget ,rowSpacing ,leftPadding 
   for (let i = 0; i <= 23; i++) {
     const iconImg = row3.addImage(HourKline(getobjdata(String(i)).limitchange, getobjdata(String(i)).unlimitchange, i,canvasWidth ,canvasHeight))
     iconImg.imageSize = new Size(canvasWidth, canvasHeight);
-    row3.addSpacer(Number(getdata('KSize'))||3);
+    row3.addSpacer(Number(getdata('KSize'))||2);
   }
 
+
+}
+
+function generateModule(Widget,str,usage, total) {
+
+  Widget.setPadding(0, 0, 0, 25);
+
+  const column = Widget.addStack()
+  column.layoutVertically()
+
+  let titleRow= column.addStack()
+  titleRow.layoutHorizontally()
+  let title = titleRow.addText(str)
+  title.textColor = DynamicText
+  title.font = Font.boldSystemFont(9)
+
+  column.addSpacer(2)
+
+  let valRow = column.addStack()
+  // valRow.layoutHorizontally()
+  const iconImg = valRow.addImage(UsageBar(usage, total))
+  iconImg.imageSize = new Size(7, 45)
+  valRow.addSpacer(5)//图片与文字距离
+  let valRowLine = valRow.addStack()
+  valRowLine.layoutVertically()
+  const usageText = valRowLine.addText(String(ToSize(usage, 1, 1, 1)))
+  const totalText = valRowLine.addText(String(ToSize(total, 1, 0, 1)) + '(' + (usage / total * 100).toFixed(0) + '%)')
+  usageText.font = Font.mediumMonospacedSystemFont(20)
+  totalText.font = Font.mediumRoundedSystemFont(15)
+  usageText.textColor = DynamicText
+  totalText.textColor = DynamicText
 
 }
 
@@ -246,53 +285,38 @@ function generateMediumWidget(Query ,str ,str1 ,Widget ,rowSpacing ,leftPadding 
  * 
  * @param {*} total 总量
  * @param {*} haveGone 使用量
- * @param {*} str 标题
  * @returns 
  */
-function Usage(haveGone, total, str) {
+function UsageBar(haveGone, total) {
+  const canvasWidth = 7;
+  const canvasHeight = 40;
+  const barCornerRadius = {x: 8 ,y: 2 };
 
   // 创建DrawContext实例，并设置画布大小
   const context = new DrawContext();
-  context.size = new Size(110, 50)//画布宽高
+  context.size = new Size(canvasWidth, canvasHeight)//画布宽高
   context.respectScreenScale = true;
   context.opaque = false; // 设置为透明背景
 
-  context.setFont(Font.boldSystemFont(9));
-  context.setTextColor(DynamicText);
-  context.drawText(str, new Point(0, 0));
-
-  const canvasWidth = 6;
-  const canvasHeight = 35;
-  const barCornerRadius = {x: 8 ,y: 2 };
-
-  const bgColor = new Color("#4d4d4d"); // 背景色为浅灰色
-
   // 创建柱状图剩余路径
   const bgPath = new Path();
-  bgPath.addRoundedRect(new Rect(0, 15, canvasWidth, canvasHeight), barCornerRadius.x, barCornerRadius.y);
+  bgPath.addRoundedRect(new Rect(0, 0, canvasWidth, canvasHeight), barCornerRadius.x, barCornerRadius.y);
   context.addPath(bgPath);
-  context.setFillColor(bgColor);
+  context.setFillColor(new Color("#4d4d4d"));
   context.fillPath();
 
   // 创建柱状图用量路径
   const barPath = new Path();
   const barHeight = (haveGone / total) * canvasHeight;
-  const barRect = new Rect(0, canvasHeight - barHeight +15, canvasWidth, barHeight);
+  const barRect = new Rect(0, canvasHeight - barHeight , canvasWidth, barHeight);
   barPath.addRoundedRect(barRect, barCornerRadius.x, barCornerRadius.y);
   context.addPath(barPath);
   context.setFillColor(new Color("#1785ff")); // 填充蓝色
   context.fillPath();
 
-  const usageText = String(ToSize(haveGone, 1, 0, 1));
-  const totalText = String(ToSize(total, 1, 1, 1)) + '(' + (haveGone / total * 100).toFixed(0) + '%)';
-  context.setFont(Font.mediumMonospacedSystemFont(20));
-  context.drawText(usageText, new Point(10,10));
-  context.setFont(Font.mediumRoundedSystemFont(15));
-  context.drawText(totalText, new Point(10, 35));
+  const Image = context.getImage(); // 获取绘制的图像
 
-  const fontImage = context.getImage(); // 获取绘制的图像
-
-  return fontImage;
+  return Image;
 }
 
 /**

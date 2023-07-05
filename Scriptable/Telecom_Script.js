@@ -185,8 +185,8 @@ function processData(Query) {
     setdata(String(Hours + 24), JSON.stringify(Query)); //将就数据存入24-47中	
   }
 
-  let LastLimit = getobjdata(String(LastTime)).LimitUsage;
-  let LastUnlimit = getobjdata(String(LastTime)).UNLimitUsage;
+  let LastLimit = getobjdata(String(LastTime)).limitusage;
+  let LastUnlimit = getobjdata(String(LastTime)).unlimitusage;
   let Change = {
     unlimitchange: Query.UNLimitUsage - LastUnlimit,
     limitchange: Query.LimitUsage - LastLimit
@@ -242,8 +242,16 @@ function generateMediumWidget(Query ,str ,str1 ,Widget ,rowSpacing ,leftPadding 
   const canvasHeight = 40;
 
   for (let i = 0; i <= 23; i++) {
-    const iconImg = row3.addImage(HourKline(getobjdata(String(i)).limitchange, getobjdata(String(i)).unlimitchange, i,canvasWidth ,canvasHeight))
+    let columnImgStack = row3.addStack()
+    columnImgStack.layoutVertically()
+    const iconImg = columnImgStack.addImage(HourKline(getobjdata(String(i)).limitchange, getobjdata(String(i)).unlimitchange, i,canvasWidth ,canvasHeight))
     iconImg.imageSize = new Size(canvasWidth, canvasHeight);
+    // 在指定时间下方绘制时间数字
+    if (i === 0 || i === 6 || i === 12 || i === 18 || i === 23) {
+      let timeText=columnImgStack.addText(i.toString().padStart(2, '0'))
+      timeText.font = Font.mediumSystemFont(9)
+      timeText.textColor= DynamicText
+    }
     row3.addSpacer(Number(getdata('KSize'))||2);
   }
 
@@ -340,7 +348,7 @@ function HourKline(limit, unlimit, t ,width ,height) {
 
   const context = new DrawContext()//创建图形画布
   context.opaque = false; // 设置为透明背景
-  context.size = new Size(width, height+9)
+  context.size = new Size(width, height)
   context.respectScreenScale = true
 
   if (t == 0 || t == 6 || t == 12 || t == 18 || t == 23) Width = 0.4
@@ -372,13 +380,6 @@ function HourKline(limit, unlimit, t ,width ,height) {
   context.setFillColor(new Color("#8676ff")); // 设置unlimit部分的填充颜色
   context.fill(barunlimitRect);
 
-  
-  // 在指定时间下方绘制时间数字
-  if (t === 0 || t === 6 || t === 12 || t === 18 || t === 23) {
-    context.setFont(Font.mediumSystemFont(8));
-    context.setTextColor(DynamicText);
-    context.drawText(t.toString().padStart(2, '0'), new Point(0, height + 1));
-  }
   return context.getImage()
 }
 

@@ -180,6 +180,10 @@ function processData(Query) {
 
   if (getdata('Hours') != String(Hours)) {
     setdata('Hours', String(Hours));
+    let usage={
+      limitusage : Query.LimitUsage,
+      unlimitusage : Query.UNLimitUsage
+    }
     setdata(String(Hours + 24), JSON.stringify(Query)); //将就数据存入24-47中	
   }
 

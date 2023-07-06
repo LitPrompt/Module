@@ -180,11 +180,11 @@ function processData(Query) {
 
   if (getdata('Hours') != String(Hours)) {
     setdata('Hours', String(Hours));
-    let usage={
+    let Usage={
       limitusage : Query.LimitUsage,
       unlimitusage : Query.UNLimitUsage
     }
-    setdata(String(Hours + 24), JSON.stringify(Query)); //将就数据存入24-47中	
+    setdata(String(Hours + 24), JSON.stringify(Usage)); //将就数据存入24-47中	
   }
 
   let LastLimit = getobjdata(String(LastTime)).limitusage;

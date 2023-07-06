@@ -140,9 +140,7 @@ w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
     generateMediumWidget(Query ,str ,str1 ,w ,rowSpacing ,leftPadding ,LimtUnlimitPadding)
     if (Wsize == 1) { w.presentMedium() }
   }
-  if (config.runsInWidget) {
-    Script.setWidget(w)
-  }
+  Script.setWidget(w)
   Script.complete()  
 
 })()

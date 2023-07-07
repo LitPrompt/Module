@@ -3,7 +3,7 @@ const DynamicText = Color.dynamic(new Color('#111111'), new Color('#ffffff'))
 w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
 
 
-!(async () => {
+async function Run(){
   let Wsize=-1
   if(!getdata('LimitVal')) setdata('LimitVal', '')
   if(!getdata('unLimitVal')) setdata('unLimitVal', '')
@@ -140,10 +140,12 @@ w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
     generateMediumWidget(Query ,str ,str1 ,w ,rowSpacing ,leftPadding ,LimtUnlimitPadding)
     if (Wsize == 1) { w.presentMedium() }
   }
-  Script.setWidget(w)
-  Script.complete()  
 
-})()
+}
+
+await Run()
+Script.setWidget(w)
+Script.complete()  
 
 function ClearData(){
   for(i=0;i<48;++i)rmdata(String(i))

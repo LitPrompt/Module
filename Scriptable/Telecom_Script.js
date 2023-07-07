@@ -102,7 +102,7 @@ w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
          a2.addAction('确认')
          a2.addCancelAction('取消')
         let ch=await a2.presentAlert()
-        if(ch==0){for(i=0;i<48;++i)rmdata(String(i))}
+        if(ch==0){ClearData()}
       }
     }
     if (UserCh == 2) {//预览类型
@@ -144,6 +144,16 @@ w.backgroundColor = Color.dynamic(new Color('#ffffff'), new Color('#1c1c1e'))
   Script.complete()  
 
 })()
+
+function ClearData(){
+  for(i=0;i<48;++i)rmdata(String(i))
+  rmdata('LimitVal')
+  rmdata('unLimitVal')
+  rmdata('Space')
+  rmdata('KSize')
+  rmdata('Left_Padding')
+  rmdata('Hours')
+}
 
 async function AsyncJs(){
   let fm = FileManager.local();
@@ -262,7 +272,7 @@ function generateMediumWidget(Query ,str ,str1 ,Widget ,rowSpacing ,leftPadding 
 
 function generateModule(Widget,str,usage, total) {
 
-  Widget.setPadding(0, 0, 0, 25);
+  Widget.setPadding(0, 0, 0, 15);
 
   const column = Widget.addStack()
   column.layoutVertically()
@@ -278,12 +288,12 @@ function generateModule(Widget,str,usage, total) {
   let valRow = column.addStack()
   // valRow.layoutHorizontally()
   const iconImg = valRow.addImage(UsageBar(usage, total))
-  iconImg.imageSize = new Size(7, 45)
+  iconImg.imageSize = new Size(7, 42)
   valRow.addSpacer(5)//图片与文字距离
   let valRowLine = valRow.addStack()
   valRowLine.layoutVertically()
   const usageText = valRowLine.addText(String(ToSize(usage, 1, 1, 1)))
-  const totalText = valRowLine.addText(String(ToSize(total, 1, 0, 1)) + '(' + (usage / total * 100).toFixed(0) + '%)')
+  const totalText = valRowLine.addText(total==0? '无限 ':String(ToSize(total, 1, 0, 1)) + '(' + (usage / total * 100).toFixed(0) + '%)')
   usageText.font = Font.mediumMonospacedSystemFont(20)
   totalText.font = Font.mediumRoundedSystemFont(15)
   usageText.textColor = DynamicText
@@ -429,11 +439,10 @@ async function BoxJsData() {
 
     let req = new Request(url)
     data = await (req.loadJSON())
+    if(SetVal != '') SetVal *= 1048576
+    if(SetVal1 != '') SetVal1 *=1048579
 
     if(getdata('isData')=='1'){
-
-      if(SetVal != '') SetVal *= 1048576
-      if(SetVal1 != '') SetVal1 *=1048579
 
       ArrayQuery = JSON.parse(data.val)
 
@@ -441,10 +450,10 @@ async function BoxJsData() {
       BillUsed = ArrayQuery.balanceInfo.used || null,//[话用]
       AllLimitUse = ArrayQuery.flowInfo.commonFlow.used,// '[通用]'
       AllLimitLeft = ArrayQuery.flowInfo.commonFlow.balance,// '[通剩]'
-      AllLimit = ArrayQuery.flowInfo.commonFlow.total || SetVal,// '[通总]'
+      AllLimit =  SetVal|| ArrayQuery.flowInfo.commonFlow.total ,// '[通总]'
       AllUnlimitUse = ArrayQuery.flowInfo.specialAmount.used,// '[定用]'
       AllUnlimitLeft = ArrayQuery.flowInfo.specialAmount.balance,// '[定剩]'
-      AllUnlimit = ArrayQuery.flowInfo.specialAmount.total || SetVal1,// '[定总]'
+      AllUnlimit =  SetVal1|| ArrayQuery.flowInfo.specialAmount.total,// '[定总]'
       AllVoiceUsed = ArrayQuery.voiceInfo.used || null,//[语用]
       AllVoiceLeft = ArrayQuery.voiceInfo.balance|| null//[语剩]
 
@@ -453,15 +462,20 @@ async function BoxJsData() {
     if(getdata('isData')=='2'){
       rawData=JSON.parse(data.val)
 
-      AllUnlimit=SetVal1*1048579
+      AllVoiceUsed = ''
+      AllVoiceLeft = ''
+      BillUsed = ''
+      BillLeft = ''
       AllUnlimitUse=(rawData['[所有免流.已用].raw'])*1024
-      AllUnlimitLeft=AllUnlimit-AllUnlimitUse
+      AllUnlimitLeft= (rawData['[所有免流.剩余].raw'])*1024
+      AllUnlimit =SetVal || rawData['[所有免流.总].raw'] *1024
+
   
-      AllLimit=SetVal*1048576
       AllLimitUse=(rawData['[所有通用.已用].raw'])*1024
-      limitbalancetotal=AllLimit-AllLimitUse
-      PhoneBill=''
-      DataBill=''
+      AllLimitLeft=(rawData['[所有通用.剩余].raw'])*1024
+      AllLimit= SetVal1 || rawData['[所有通用.总].raw'] *1024
+
+      console.log(AllLimit+' '+AllLimitLeft+' '+AllLimitUse+`\n`+AllUnlimit+' '+AllUnlimitLeft+' '+AllUnlimitUse);
       
     }
   } catch (e) { 
@@ -480,6 +494,8 @@ async function BoxJsData() {
     VoiceBill: {used:AllVoiceUsed,left:AllVoiceLeft},
     VoiceDataBill: {used:BillUsed,left:BillLeft}
   }
+
+  console.log(Queryinfo);
 
   return Queryinfo
 }

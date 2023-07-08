@@ -470,12 +470,12 @@ async function BoxJsData() {
       BillLeft = ''
       AllUnlimitUse=(rawData['[所有免流.已用].raw'])*1024
       AllUnlimitLeft= (rawData['[所有免流.剩余].raw'])*1024
-      AllUnlimit =SetVal || rawData['[所有免流.总].raw'] *1024
+      AllUnlimit =SetVal1 || rawData['[所有免流.总].raw'] *1024
 
   
       AllLimitUse=(rawData['[所有通用.已用].raw'])*1024
       AllLimitLeft=(rawData['[所有通用.剩余].raw'])*1024
-      AllLimit= SetVal1 || rawData['[所有通用.总].raw'] *1024
+      AllLimit= SetVal || rawData['[所有通用.总].raw'] *1024
 
       console.log(AllLimit+' '+AllLimitLeft+' '+AllLimitUse+`\n`+AllUnlimit+' '+AllUnlimitLeft+' '+AllUnlimitUse);
       
